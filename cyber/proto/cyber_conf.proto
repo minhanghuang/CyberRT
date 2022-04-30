@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package apollo.cyber.proto;
+
+import "scheduler_conf.proto";
+import "transport_conf.proto";
+import "run_mode_conf.proto";
+import "perf_conf.proto";
+
+message CyberConfig {
+  optional SchedulerConf scheduler_conf = 1;
+  optional TransportConf transport_conf = 2;
+  optional RunModeConf run_mode_conf = 3;
+  optional PerfConf perf_conf = 4;
+}
