@@ -93,6 +93,29 @@ inline bool RunMode_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<RunMode>(
     RunMode_descriptor(), name, value);
 }
+enum ClockMode : int {
+  MODE_CYBER = 0,
+  MODE_MOCK = 1
+};
+bool ClockMode_IsValid(int value);
+constexpr ClockMode ClockMode_MIN = MODE_CYBER;
+constexpr ClockMode ClockMode_MAX = MODE_MOCK;
+constexpr int ClockMode_ARRAYSIZE = ClockMode_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ClockMode_descriptor();
+template<typename T>
+inline const std::string& ClockMode_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, ClockMode>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function ClockMode_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    ClockMode_descriptor(), enum_t_value);
+}
+inline bool ClockMode_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, ClockMode* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<ClockMode>(
+    ClockMode_descriptor(), name, value);
+}
 // ===================================================================
 
 class RunModeConf PROTOBUF_FINAL :
@@ -215,6 +238,7 @@ class RunModeConf PROTOBUF_FINAL :
 
   enum : int {
     kRunModeFieldNumber = 1,
+    kClockModeFieldNumber = 2,
   };
   // optional .apollo.cyber.proto.RunMode run_mode = 1 [default = MODE_REALITY];
   bool has_run_mode() const;
@@ -229,6 +253,19 @@ class RunModeConf PROTOBUF_FINAL :
   void _internal_set_run_mode(::apollo::cyber::proto::RunMode value);
   public:
 
+  // optional .apollo.cyber.proto.ClockMode clock_mode = 2 [default = MODE_CYBER];
+  bool has_clock_mode() const;
+  private:
+  bool _internal_has_clock_mode() const;
+  public:
+  void clear_clock_mode();
+  ::apollo::cyber::proto::ClockMode clock_mode() const;
+  void set_clock_mode(::apollo::cyber::proto::ClockMode value);
+  private:
+  ::apollo::cyber::proto::ClockMode _internal_clock_mode() const;
+  void _internal_set_clock_mode(::apollo::cyber::proto::ClockMode value);
+  public:
+
   // @@protoc_insertion_point(class_scope:apollo.cyber.proto.RunModeConf)
  private:
   class _Internal;
@@ -239,6 +276,7 @@ class RunModeConf PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   int run_mode_;
+  int clock_mode_;
   friend struct ::TableStruct_run_5fmode_5fconf_2eproto;
 };
 // ===================================================================
@@ -281,6 +319,35 @@ inline void RunModeConf::set_run_mode(::apollo::cyber::proto::RunMode value) {
   // @@protoc_insertion_point(field_set:apollo.cyber.proto.RunModeConf.run_mode)
 }
 
+// optional .apollo.cyber.proto.ClockMode clock_mode = 2 [default = MODE_CYBER];
+inline bool RunModeConf::_internal_has_clock_mode() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool RunModeConf::has_clock_mode() const {
+  return _internal_has_clock_mode();
+}
+inline void RunModeConf::clear_clock_mode() {
+  clock_mode_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::apollo::cyber::proto::ClockMode RunModeConf::_internal_clock_mode() const {
+  return static_cast< ::apollo::cyber::proto::ClockMode >(clock_mode_);
+}
+inline ::apollo::cyber::proto::ClockMode RunModeConf::clock_mode() const {
+  // @@protoc_insertion_point(field_get:apollo.cyber.proto.RunModeConf.clock_mode)
+  return _internal_clock_mode();
+}
+inline void RunModeConf::_internal_set_clock_mode(::apollo::cyber::proto::ClockMode value) {
+  assert(::apollo::cyber::proto::ClockMode_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
+  clock_mode_ = value;
+}
+inline void RunModeConf::set_clock_mode(::apollo::cyber::proto::ClockMode value) {
+  _internal_set_clock_mode(value);
+  // @@protoc_insertion_point(field_set:apollo.cyber.proto.RunModeConf.clock_mode)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
@@ -297,6 +364,11 @@ template <> struct is_proto_enum< ::apollo::cyber::proto::RunMode> : ::std::true
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::apollo::cyber::proto::RunMode>() {
   return ::apollo::cyber::proto::RunMode_descriptor();
+}
+template <> struct is_proto_enum< ::apollo::cyber::proto::ClockMode> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::apollo::cyber::proto::ClockMode>() {
+  return ::apollo::cyber::proto::ClockMode_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

@@ -20,11 +20,12 @@
 
 using apollo::cyber::Component;
 using apollo::cyber::ComponentBase;
-using apollo::cyber::examples::proto::Chatter;
+using apollo::cyber::examples::proto::Driver;
 
-class CommonComponentSample : public Component<Chatter> {
+class CommonComponentSample : public Component<Driver, Driver> {
  public:
   bool Init() override;
-  bool Proc(const std::shared_ptr<Chatter>& msg1) override;
+  bool Proc(const std::shared_ptr<Driver>& msg0,
+            const std::shared_ptr<Driver>& msg1) override;
 };
 CYBER_REGISTER_COMPONENT(CommonComponentSample)

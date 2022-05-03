@@ -4,82 +4,58 @@ project(examples VERSION 1.0.0)
 
 SET(CMAKE_CXX_FLAGS "-std=c++11 -pthread -latomic ")
 
-
 add_executable(cyber_example_talker talker.cc proto/examples.pb.cc)
 target_link_libraries(cyber_example_talker
-    ${glog_LIBRARIES}
-    ${gflags_LIBRARIES}
-    ${Protobuf_LIBRARY}
-    ${fastrtps_LIBRARIES}
-    # gflags
+    ${TARGET_NAME}
     pthread
-    Cyber::init
-    Cyber::rate
-    Cyber::time
-    # FastRTPS::fastrtps
-    # Protobuf::libprotobuf
-    Cyber::component_base
-    Cyber::transmitter
-    Cyber::blocker_manager
-    Cyber::core
 )
 
 add_executable(cyber_example_listener listener.cc proto/examples.pb.cc)
 target_link_libraries(cyber_example_listener
-    ${glog_LIBRARIES}
-    ${gflags_LIBRARIES}
-    ${Protobuf_LIBRARY}
-    ${fastrtps_LIBRARIES}
+    ${TARGET_NAME}
     pthread
-    Cyber::init
-    Cyber::rate
-    Cyber::time
-    Cyber::component_base
-    Cyber::transmitter
-    Cyber::blocker_manager
-    Cyber::core
 )
 
-add_executable(cyber_example_paramserver paramserver.cc proto/examples.pb.cc)
-target_link_libraries(cyber_example_paramserver
-    ${glog_LIBRARIES}
-    ${fastrtps_LIBRARIES}
-    ${gflags_LIBRARIES}
-    ${Protobuf_LIBRARY}
-    Cyber::init
-    Cyber::parameter
-    Cyber::parameter_server
-    Cyber::parameter_client
-    Cyber::component_base
-    Cyber::core
-    Cyber::pb_parameter
-)
+# add_executable(cyber_example_paramserver paramserver.cc proto/examples.pb.cc)
+# target_link_libraries(cyber_example_paramserver
+#     ${glog_LIBRARIES}
+#     ${fastrtps_LIBRARIES}
+#     ${gflags_LIBRARIES}
+#     ${Protobuf_LIBRARY}
+#     Cyber::init
+#     Cyber::parameter
+#     Cyber::parameter_server
+#     Cyber::parameter_client
+#     Cyber::component_base
+#     Cyber::core
+#     Cyber::pb_parameter
+# )
 
-add_executable(cyber_example_record record.cc proto/examples.pb.cc)
-target_link_libraries(cyber_example_record
-    ${glog_LIBRARIES}
-    ${fastrtps_LIBRARIES}
-    ${gflags_LIBRARIES}
-    ${Protobuf_LIBRARY}
-    Cyber::init
-    Cyber::component_base
-    Cyber::record_reader
-    Cyber::record_writer
-    Cyber::pb_record
-)
+# add_executable(cyber_example_record record.cc proto/examples.pb.cc)
+# target_link_libraries(cyber_example_record
+#     ${glog_LIBRARIES}
+#     ${fastrtps_LIBRARIES}
+#     ${gflags_LIBRARIES}
+#     ${Protobuf_LIBRARY}
+#     Cyber::init
+#     Cyber::component_base
+#     Cyber::record_reader
+#     Cyber::record_writer
+#     Cyber::pb_record
+# )
 
-add_executable(cyber_example_service service.cc proto/examples.pb.cc)
-target_link_libraries(cyber_example_service
-    ${glog_LIBRARIES}
-    ${fastrtps_LIBRARIES}
-    ${gflags_LIBRARIES}
-    ${Protobuf_LIBRARY}
-    pthread
-    Cyber::init
-    Cyber::core
-    Cyber::component_base
-    Cyber::endpoint
-)
+# add_executable(cyber_example_service service.cc proto/examples.pb.cc)
+# target_link_libraries(cyber_example_service
+#     ${glog_LIBRARIES}
+#     ${fastrtps_LIBRARIES}
+#     ${gflags_LIBRARIES}
+#     ${Protobuf_LIBRARY}
+#     pthread
+#     Cyber::init
+#     Cyber::core
+#     Cyber::component_base
+#     Cyber::endpoint
+# )
 # add_subdirectory(common_component_example)
 # add_subdirectory(timer_component_example)
 # install(TARGETS

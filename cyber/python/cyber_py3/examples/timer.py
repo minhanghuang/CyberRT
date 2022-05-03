@@ -20,8 +20,8 @@
 
 import time
 
-from cyber_py3 import cyber
-from cyber_py3 import cyber_timer
+from cyber.python.cyber_py3 import cyber
+from cyber.python.cyber_py3 import cyber_timer
 
 
 count = 0
@@ -48,6 +48,7 @@ def test_timer():
     ct2.stop()
 
     cyber.shutdown()
+
 
 if __name__ == '__main__':
     test_timer()

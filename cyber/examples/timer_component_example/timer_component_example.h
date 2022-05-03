@@ -24,7 +24,7 @@ using apollo::cyber::Component;
 using apollo::cyber::ComponentBase;
 using apollo::cyber::TimerComponent;
 using apollo::cyber::Writer;
-using apollo::cyber::examples::proto::Chatter;
+using apollo::cyber::examples::proto::Driver;
 
 class TimerComponentSample : public TimerComponent {
  public:
@@ -32,6 +32,6 @@ class TimerComponentSample : public TimerComponent {
   bool Proc() override;
 
  private:
-  std::shared_ptr<Writer<Chatter>> chatter_writer_ = nullptr;
+  std::shared_ptr<Writer<Driver>> driver_writer_ = nullptr;
 };
 CYBER_REGISTER_COMPONENT(TimerComponentSample)

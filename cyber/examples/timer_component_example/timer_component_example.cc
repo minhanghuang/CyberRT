@@ -21,15 +21,15 @@
 #include "cyber/examples/proto/examples.pb.h"
 
 bool TimerComponentSample::Init() {
-  chatter_writer_ = node_->CreateWriter<Chatter>("channel/chatter");
+  driver_writer_ = node_->CreateWriter<Driver>("/carstatus/channel");
   return true;
 }
 
 bool TimerComponentSample::Proc() {
   static int i = 0;
-  auto out_msg = std::make_shared<Chatter>();
-  out_msg->set_seq(i++);
-  chatter_writer_->Write(out_msg);
+  auto out_msg = std::make_shared<Driver>();
+  out_msg->set_msg_id(i++);
+  driver_writer_->Write(out_msg);
   AINFO << "timer_component_example: Write drivermsg->"
         << out_msg->ShortDebugString();
   return true;

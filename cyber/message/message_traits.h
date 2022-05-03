@@ -30,7 +30,7 @@ namespace apollo {
 namespace cyber {
 namespace message {
 
-DEFINE_TYPE_TRAIT(HasByteSize, ByteSize)
+DEFINE_TYPE_TRAIT(HasByteSize, ByteSizeLong)
 DEFINE_TYPE_TRAIT(HasType, TypeName)
 DEFINE_TYPE_TRAIT(HasSetType, SetTypeName)
 DEFINE_TYPE_TRAIT(HasGetDescriptorString, GetDescriptorString)
@@ -122,7 +122,7 @@ typename std::enable_if<!HasSetType<T>::value, void>::type SetTypeName(
 template <typename T>
 typename std::enable_if<HasByteSize<T>::value, int>::type ByteSize(
     const T& message) {
-  return message.ByteSize();
+  return static_cast<int>(message.ByteSizeLong());
 }
 
 template <typename T>
@@ -219,6 +219,9 @@ SerializeToHC(const T& message, void* data, int size) {
   MessageHeader header;
   header.set_msg_type(type_name.data(), type_name.size());
   header.set_content_size(msg_size);
+  if (sizeof(header) > static_cast<size_t>(size)) {
+    return false;
+  }
   char* ptr = reinterpret_cast<char*>(data);
   memcpy(ptr, static_cast<const void*>(&header), sizeof(header));
   ptr += sizeof(header);

@@ -1,3 +1,4 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("//tools:cpplint.bzl", "cpplint")
 
 package(default_visibility = ["//visibility:public"])
@@ -18,7 +19,7 @@ cc_test(
     srcs = ["logger_test.cc"],
     deps = [
         "//cyber",
-        "@gtest//:main",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -39,7 +40,7 @@ cc_test(
     srcs = ["async_logger_test.cc"],
     deps = [
         "//cyber",
-        "@gtest//:main",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -60,7 +61,7 @@ cc_test(
     srcs = ["log_file_object_test.cc"],
     deps = [
         "//cyber",
-        "@gtest//:main",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -79,7 +80,7 @@ cc_test(
     srcs = ["logger_util_test.cc"],
     deps = [
         "//cyber",
-        "@gtest//:main",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 

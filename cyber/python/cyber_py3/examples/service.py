@@ -18,7 +18,7 @@
 # -*- coding: utf-8 -*-
 """Module for example of listener."""
 
-from cyber_py3 import cyber
+from cyber.python.cyber_py3 import cyber
 from cyber.proto.unit_test_pb2 import ChatterBenchmark
 
 
@@ -37,6 +37,7 @@ def test_service_class():
     r = node.create_service(
         "server_01", ChatterBenchmark, ChatterBenchmark, callback)
     node.spin()
+
 
 if __name__ == '__main__':
     cyber.init()

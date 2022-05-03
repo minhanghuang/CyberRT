@@ -38,7 +38,7 @@ static void InitDefaultsscc_info_RunModeConf_run_5fmode_5fconf_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_RunModeConf_run_5fmode_5fconf_2eproto}, {}};
 
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_run_5fmode_5fconf_2eproto[1];
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_run_5fmode_5fconf_2eproto[1];
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_run_5fmode_5fconf_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_run_5fmode_5fconf_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_run_5fmode_5fconf_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -48,10 +48,12 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_run_5fmode_5fconf_2eproto::off
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::apollo::cyber::proto::RunModeConf, run_mode_),
+  PROTOBUF_FIELD_OFFSET(::apollo::cyber::proto::RunModeConf, clock_mode_),
   0,
+  1,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 6, sizeof(::apollo::cyber::proto::RunModeConf)},
+  { 0, 7, sizeof(::apollo::cyber::proto::RunModeConf)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -60,10 +62,12 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_run_5fmode_5fconf_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\023run_mode_conf.proto\022\022apollo.cyber.prot"
-  "o\"J\n\013RunModeConf\022;\n\010run_mode\030\001 \001(\0162\033.apo"
-  "llo.cyber.proto.RunMode:\014MODE_REALITY*0\n"
-  "\007RunMode\022\020\n\014MODE_REALITY\020\000\022\023\n\017MODE_SIMUL"
-  "ATION\020\001"
+  "o\"\211\001\n\013RunModeConf\022;\n\010run_mode\030\001 \001(\0162\033.ap"
+  "ollo.cyber.proto.RunMode:\014MODE_REALITY\022="
+  "\n\nclock_mode\030\002 \001(\0162\035.apollo.cyber.proto."
+  "ClockMode:\nMODE_CYBER*0\n\007RunMode\022\020\n\014MODE"
+  "_REALITY\020\000\022\023\n\017MODE_SIMULATION\020\001**\n\tClock"
+  "Mode\022\016\n\nMODE_CYBER\020\000\022\r\n\tMODE_MOCK\020\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_run_5fmode_5fconf_2eproto_deps[1] = {
 };
@@ -72,7 +76,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_run
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_run_5fmode_5fconf_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_run_5fmode_5fconf_2eproto = {
-  false, false, descriptor_table_protodef_run_5fmode_5fconf_2eproto, "run_mode_conf.proto", 167,
+  false, false, descriptor_table_protodef_run_5fmode_5fconf_2eproto, "run_mode_conf.proto", 275,
   &descriptor_table_run_5fmode_5fconf_2eproto_once, descriptor_table_run_5fmode_5fconf_2eproto_sccs, descriptor_table_run_5fmode_5fconf_2eproto_deps, 1, 0,
   schemas, file_default_instances, TableStruct_run_5fmode_5fconf_2eproto::offsets,
   file_level_metadata_run_5fmode_5fconf_2eproto, 1, file_level_enum_descriptors_run_5fmode_5fconf_2eproto, file_level_service_descriptors_run_5fmode_5fconf_2eproto,
@@ -97,6 +101,20 @@ bool RunMode_IsValid(int value) {
   }
 }
 
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ClockMode_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_run_5fmode_5fconf_2eproto);
+  return file_level_enum_descriptors_run_5fmode_5fconf_2eproto[1];
+}
+bool ClockMode_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 
@@ -105,6 +123,9 @@ class RunModeConf::_Internal {
   using HasBits = decltype(std::declval<RunModeConf>()._has_bits_);
   static void set_has_run_mode(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
+  }
+  static void set_has_clock_mode(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
   }
 };
 
@@ -118,12 +139,17 @@ RunModeConf::RunModeConf(const RunModeConf& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  run_mode_ = from.run_mode_;
+  ::memcpy(&run_mode_, &from.run_mode_,
+    static_cast<size_t>(reinterpret_cast<char*>(&clock_mode_) -
+    reinterpret_cast<char*>(&run_mode_)) + sizeof(clock_mode_));
   // @@protoc_insertion_point(copy_constructor:apollo.cyber.proto.RunModeConf)
 }
 
 void RunModeConf::SharedCtor() {
-  run_mode_ = 0;
+  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+      reinterpret_cast<char*>(&run_mode_) - reinterpret_cast<char*>(this)),
+      0, static_cast<size_t>(reinterpret_cast<char*>(&clock_mode_) -
+      reinterpret_cast<char*>(&run_mode_)) + sizeof(clock_mode_));
 }
 
 RunModeConf::~RunModeConf() {
@@ -157,7 +183,12 @@ void RunModeConf::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  run_mode_ = 0;
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    ::memset(&run_mode_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&clock_mode_) -
+        reinterpret_cast<char*>(&run_mode_)) + sizeof(clock_mode_));
+  }
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -179,6 +210,18 @@ const char* RunModeConf::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
             _internal_set_run_mode(static_cast<::apollo::cyber::proto::RunMode>(val));
           } else {
             ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // optional .apollo.cyber.proto.ClockMode clock_mode = 2 [default = MODE_CYBER];
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::apollo::cyber::proto::ClockMode_IsValid(val))) {
+            _internal_set_clock_mode(static_cast<::apollo::cyber::proto::ClockMode>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(2, val, mutable_unknown_fields());
           }
         } else goto handle_unusual;
         continue;
@@ -219,6 +262,13 @@ failure:
       1, this->_internal_run_mode(), target);
   }
 
+  // optional .apollo.cyber.proto.ClockMode clock_mode = 2 [default = MODE_CYBER];
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      2, this->_internal_clock_mode(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -235,13 +285,21 @@ size_t RunModeConf::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // optional .apollo.cyber.proto.RunMode run_mode = 1 [default = MODE_REALITY];
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_run_mode());
-  }
+  if (cached_has_bits & 0x00000003u) {
+    // optional .apollo.cyber.proto.RunMode run_mode = 1 [default = MODE_REALITY];
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_run_mode());
+    }
 
+    // optional .apollo.cyber.proto.ClockMode clock_mode = 2 [default = MODE_CYBER];
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_clock_mode());
+    }
+
+  }
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -273,8 +331,15 @@ void RunModeConf::MergeFrom(const RunModeConf& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_run_mode()) {
-    _internal_set_run_mode(from._internal_run_mode());
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      run_mode_ = from.run_mode_;
+    }
+    if (cached_has_bits & 0x00000002u) {
+      clock_mode_ = from.clock_mode_;
+    }
+    _has_bits_[0] |= cached_has_bits;
   }
 }
 
@@ -300,7 +365,12 @@ void RunModeConf::InternalSwap(RunModeConf* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  swap(run_mode_, other->run_mode_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(RunModeConf, clock_mode_)
+      + sizeof(RunModeConf::clock_mode_)
+      - PROTOBUF_FIELD_OFFSET(RunModeConf, run_mode_)>(
+          reinterpret_cast<char*>(&run_mode_),
+          reinterpret_cast<char*>(&other->run_mode_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata RunModeConf::GetMetadata() const {

@@ -14,16 +14,16 @@
  * limitations under the License.
  *****************************************************************************/
 
-#include "cyber/cyber.h"
 #include "cyber/examples/proto/examples.pb.h"
+
+#include "cyber/cyber.h"
 
 using apollo::cyber::examples::proto::Chatter;
 
+
 void MessageCallback(const std::shared_ptr<Chatter>& msg) {
-  AINFO << "Received message seq-> " << msg->seq();
-  // AINFO << "msgcontent->" << msg->content();
-  // std::cout << "Received " << msg->content() << std::endl;
-  // std::cout << "ssss " << std::endl;
+  std::cout << "Received message seq-> " << msg->seq() << std::endl;
+  std::cout << "msgcontent-> " << msg->content() << std::endl;
 }
 
 int main(int argc, char* argv[]) {

@@ -20,8 +20,8 @@
 
 import sys
 
-from cyber_py3 import cyber
-from cyber_py3 import record
+from cyber.python.cyber_py3 import cyber
+from cyber.python.cyber_py3 import record
 from cyber.proto import record_pb2
 
 
@@ -52,6 +52,7 @@ def print_channel_info(file_path):
             (channel, count, len(desc)))
         # print(desc)
     print("++++++++++++Finish Channel Info Statistics++++++++++++++\n")
+
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:

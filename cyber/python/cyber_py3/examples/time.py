@@ -20,7 +20,7 @@
 
 import time
 
-from cyber_py3 import cyber_time
+from cyber.python.cyber_py3 import cyber_time
 
 
 def test_time():
@@ -72,6 +72,7 @@ def test_rate():
     print(rt1)
     print(rt2)
     print(rt3)
+
 
 if __name__ == '__main__':
     print("test time", "-" * 50)

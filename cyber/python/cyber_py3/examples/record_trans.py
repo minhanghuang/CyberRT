@@ -20,8 +20,8 @@
 
 import sys
 
-from cyber_py3 import cyber
-from cyber_py3 import record
+from cyber.python.cyber_py3 import cyber
+from cyber.python.cyber_py3 import record
 
 
 TEST_RECORD_FILE = "trans_ret.record"
@@ -51,6 +51,7 @@ def test_record_trans(reader_path):
     channel_list = fread.get_channellist()
     print('Channel count: %d' % len(channel_list))
     print(channel_list)
+
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:

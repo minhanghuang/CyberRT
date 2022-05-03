@@ -1,3 +1,4 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("//tools:cpplint.bzl", "cpplint")
 
 package(default_visibility = ["//visibility:public"])
@@ -17,7 +18,7 @@ cc_test(
     srcs = ["component_test.cc"],
     deps = [
         "//cyber",
-        "@gtest",
+        "@com_google_googletest//:gtest",
     ],
 )
 
@@ -29,11 +30,8 @@ cc_library(
         ":component_base",
         "//cyber/blocker:blocker_manager",
         "//cyber/timer",
-        "//cyber/transport:history",
-        "//cyber/transport:hybrid_transmitter",
-        "//cyber/transport:intra_transmitter",
-        "//cyber/transport:rtps_transmitter",
-        "//cyber/transport:shm_transmitter",
+        "//cyber/transport/message:history",
+        "//cyber/transport/transmitter",
     ],
 )
 
@@ -43,7 +41,7 @@ cc_test(
     srcs = ["timer_component_test.cc"],
     deps = [
         "//cyber",
-        "@gtest//:main",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -55,6 +53,7 @@ cc_library(
         "//cyber/base:thread_pool",
         "//cyber/class_loader",
         "//cyber/node",
+        "@com_github_gflags_gflags//:gflags",
     ],
 )
 
