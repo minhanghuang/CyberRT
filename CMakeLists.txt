@@ -7,22 +7,44 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread -latomic -mcx16")
 
 find_package(Threads REQUIRED)
 find_package(PkgConfig REQUIRED)
+pkg_check_modules(Protobuf REQUIRED protobuf)
+pkg_check_modules(Glog REQUIRED libglog)
+pkg_check_modules(Gflags REQUIRED gflags)
 
-SET(fastcdr_LIBRARIES "/usr/local/lib/libfastcdr.so")
-SET(fastrtps_LIBRARIES "/usr/local/lib/libfastrtps.so")
-SET(glog_LIBRARIES "/usr/local/lib/libglog.so")
-SET(gflags_LIBRARIES "/usr/local/lib/libgflags.so")
-SET(Protobuf_LIBRARY "/usr/local/lib/libprotobuf.so") # /opt/protobuf3/bin/protoc -I=. --cpp_out=. *.proto
+message(${Protobuf_INCLUDE_DIRS})
+message(${Protobuf_LIBRARY_DIRS})
+message(${Protobuf_LIBRARIES})
+message(${Glog_INCLUDE_DIRS})
+message(${Glog_LIBRARY_DIRS})
+message(${Glog_LIBRARIES})
+message(${Gflags_INCLUDE_DIRS})
+message(${Gflags_LIBRARY_DIRS})
+message(${Gflags_LIBRARIES})
+
+
+
+SET(fastcdr_LIBRARIES "/opt/cyber/lib/libfastcdr.so")
+SET(fastrtps_LIBRARIES "/opt/cyber/lib/libfastrtps.so")
+# SET(glog_LIBRARIES "/usr/local/lib/libglog.so")
+SET(glog_LIBRARIES ${Glog_LIBRARIES})
+# SET(gflags_LIBRARIES "/usr/local/lib/libgflags.so")
+SET(gflags_LIBRARIES ${Gflags_LIBRARIES})
+# SET(Protobuf_LIBRARY "/usr/local/lib/libprotobuf.so") # /opt/protobuf3/bin/protoc -I=. --cpp_out=. *.proto
+SET(Protobuf_LIBRARY ${Protobuf_LIBRARIES}) # /opt/protobuf3/bin/protoc -I=. --cpp_out=. *.proto
 
 include_directories(
-    /opt/protobuf3/include
-    /usr/local/include
+    /opt/cyber/include
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${Protobuf_INCLUDE_DIRS}
+    ${Glog_INCLUDE_DIRS}
+    ${Gflags_INCLUDE_DIRS}
 )
 
 link_directories(
-    /opt/protobuf3/lib
-    /usr/local/lib
+    /opt/cyber/lib
+    ${Protobuf_LIBRARY_DIRS}
+    ${Glog_LIBRARY_DIRS}
+    ${Gflags_LIBRARY_DIRS}
 )
 
 add_subdirectory(cyber/proto)
@@ -47,8 +69,12 @@ add_subdirectory(cyber/service_discovery)
 add_subdirectory(cyber/task)
 add_subdirectory(cyber/timer)
 add_subdirectory(cyber)
+add_subdirectory(cyber/mainboard)
+add_subdirectory(cyber/py_wrapper)
 
 # add_subdirectory(cyber/mainboard)
 add_subdirectory(cyber/examples)
 
-
+file(COPY cyber/conf/
+  DESTINATION ${CMAKE_BINARY_DIR}/cyber/conf/
+)

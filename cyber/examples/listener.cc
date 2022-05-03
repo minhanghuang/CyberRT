@@ -17,22 +17,20 @@
 #include "cyber/cyber.h"
 #include "cyber/examples/proto/examples.pb.h"
 
-void MessageCallback(const std::shared_ptr<apollo::cyber::examples::proto::Chatter>& msg) {
-  // AINFO << "Received message seq-> " << msg->seq();
+using apollo::cyber::examples::proto::Chatter;
+
+void MessageCallback(const std::shared_ptr<Chatter>& msg) {
+  AINFO << "Received message seq-> " << msg->seq();
   // AINFO << "msgcontent->" << msg->content();
   // std::cout << "Received " << msg->content() << std::endl;
-    std::cout << "ssss " << std::endl;
+  // std::cout << "ssss " << std::endl;
 }
 
 int main(int argc, char* argv[]) {
-  // init cyber framework
   apollo::cyber::Init(argv[0]);
-  // create listener node
-  auto listener_node = apollo::cyber::CreateNode("listener");
-  // create listener
-  auto listener =
-      listener_node->CreateReader<apollo::cyber::examples::proto::Chatter>("chatter", MessageCallback);
-    std::cout << "listener " << std::endl;
+  auto node = apollo::cyber::CreateNode("sub");
+  auto sub = node->CreateReader<Chatter>("/topic", MessageCallback);
+  std::cout << "listener " << std::endl;
   apollo::cyber::WaitForShutdown();
   return 0;
 }

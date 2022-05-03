@@ -192,12 +192,33 @@ void Manager::OnRemoteChange(const std::string& msg_str) {
   }
 
   ChangeMsg msg;
-  RETURN_IF(!message::ParseFromString(msg_str, &msg));
+  // RETURN_IF(!message::ParseFromString(msg_str, &msg));
+  if (message::HasParseFromString<ChangeMsg>::value) {
+    msg.ParseFromString(msg_str);
+  }
+  else {
+    AWARN << "HasParseFromString<ChangeMsg> is not met.";
+    return;
+  }
+
   if (IsFromSameProcess(msg)) {
     return;
   }
   RETURN_IF(!Check(msg.role_attr()));
   Dispose(msg);
+
+  // if (is_shutdown_.load()) {
+  //   ADEBUG << "the manager has been shut down.";
+  //   return;
+  // }
+
+  // ChangeMsg msg;
+  // RETURN_IF(!message::ParseFromString(msg_str, &msg));
+  // if (IsFromSameProcess(msg)) {
+  //   return;
+  // }
+  // RETURN_IF(!Check(msg.role_attr()));
+  // Dispose(msg);
 }
 
 bool Manager::Publish(const ChangeMsg& msg) {

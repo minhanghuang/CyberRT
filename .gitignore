@@ -1,0 +1,25 @@
+# IDEA #
+*.iml
+
+.idea
+.vscode
+.local
+
+*.pyc
+*.log
+.DS_Store
+
+build/
+cmake-build*
+thirdparty/
+build_thirdparty.sh
+*.db
+install/
+log/
+
+__pycache__
+log/*
+!log/.gitkeep
+.clang-format
+
+.cache

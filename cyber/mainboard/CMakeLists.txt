@@ -20,18 +20,18 @@ target_link_libraries(cyber_mainboard
     cyber_init
     cyber_node
     cyber_global_data
-    ${Glog_LIBRARY}
-    gflags
+    ${Glog_LIBRARIES}
+    ${Gflags_LIBRARIES}
     Cyber::dag_conf
     Cyber::perf_conf
     )
 
-file(GLOB HEADERS *.h)
+# file(GLOB HEADERS *.h)
 
-install(FILES ${HEADERS}
-    DESTINATION ${CYBER_INSTALL_INCLUDE_DIR}/cyber/mainboard/
-    )
+# install(FILES ${HEADERS}
+#     DESTINATION ${CYBER_INSTALL_INCLUDE_DIR}/cyber/mainboard/
+#     )
 
-install(TARGETS cyber_mainboard
-    DESTINATION  ${CYBER_INSTALL_DIR}/bin
-    )
+# install(TARGETS cyber_mainboard
+#     DESTINATION  ${CYBER_INSTALL_DIR}/bin
+#     )

@@ -70,28 +70,28 @@ target_include_directories(_cyber_parameter_py3 PUBLIC  ${PYTHON_INCLUDE_DIRS})
 target_link_libraries(_cyber_parameter_py3 ${PYTHON_LIBRARIES})
 set_target_properties(_cyber_parameter_py3 PROPERTIES OUTPUT_NAME _cyber_parameter_py3 PREFIX  "")
 
-file(GLOB HEADERS *.h)
+# file(GLOB HEADERS *.h)
 
-install(FILES ${HEADERS}
-    DESTINATION ${CYBER_INSTALL_INCLUDE_DIR}/cyber/py_wrapper/
-    )
+# install(FILES ${HEADERS}
+#     DESTINATION ${CYBER_INSTALL_INCLUDE_DIR}/cyber/py_wrapper/
+#     )
 
-install(TARGETS cyber_py_wrapper
-    DESTINATION  ${CYBER_INSTALL_LIB_DIR}
-    )
+# install(TARGETS cyber_py_wrapper
+#     DESTINATION  ${CYBER_INSTALL_LIB_DIR}
+#     )
 
-install(TARGETS _cyber_py3
-    DESTINATION  ${CYBER_INSTALL_LIB_DIR}
-    )
-install(TARGETS _cyber_record_py3
-    DESTINATION  ${CYBER_INSTALL_LIB_DIR}
-    )
-install(TARGETS _cyber_timer_py3
-    DESTINATION  ${CYBER_INSTALL_LIB_DIR}
-    )
-install(TARGETS _cyber_time_py3
-    DESTINATION  ${CYBER_INSTALL_LIB_DIR}
-    )
-install(TARGETS _cyber_parameter_py3
-    DESTINATION  ${CYBER_INSTALL_LIB_DIR}
-    )
+# install(TARGETS _cyber_py3
+#     DESTINATION  ${CYBER_INSTALL_LIB_DIR}
+#     )
+# install(TARGETS _cyber_record_py3
+#     DESTINATION  ${CYBER_INSTALL_LIB_DIR}
+#     )
+# install(TARGETS _cyber_timer_py3
+#     DESTINATION  ${CYBER_INSTALL_LIB_DIR}
+#     )
+# install(TARGETS _cyber_time_py3
+#     DESTINATION  ${CYBER_INSTALL_LIB_DIR}
+#     )
+# install(TARGETS _cyber_parameter_py3
+#     DESTINATION  ${CYBER_INSTALL_LIB_DIR}
+#     )
