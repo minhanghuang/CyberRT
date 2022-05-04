@@ -11,6 +11,7 @@ Ubuntu18
 ```shell
 sudo apt install libpoco-dev
 sudo apt install uuid-dev
+sudo apt install libtinyxml2-dev 
 ```
 
 
