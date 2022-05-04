@@ -58,4 +58,3 @@
 
 
 #endif /* _FASTRTPS_LOG_COLORS_H_ */
-
