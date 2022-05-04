@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.5)
 
 project(examples VERSION 1.0.0)
 
-SET(CMAKE_CXX_FLAGS "-std=c++11 -pthread -latomic ")
-
 add_executable(cyber_example_talker talker.cc proto/examples.pb.cc)
 target_link_libraries(cyber_example_talker
     ${TARGET_NAME}
