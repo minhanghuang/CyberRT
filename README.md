@@ -25,7 +25,7 @@ cd CyberRT
 source env/setup.sh
 ```
 
-1. generate protobuf
+3. generate protobuf
 
 ```shell
 env/bin/protoc -I=cyber/proto/ --cpp_out=cyber/proto cyber/proto/*.proto
