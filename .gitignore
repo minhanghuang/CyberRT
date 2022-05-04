@@ -15,7 +15,6 @@ thirdparty/
 build_thirdparty.sh
 *.db
 install/
-log/
 
 __pycache__
 log/*

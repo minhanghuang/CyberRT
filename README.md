@@ -8,6 +8,12 @@
 Ubuntu18
 ```
 
+```shell
+sudo apt install libpoco-dev
+sudo apt install uuid-dev
+```
+
+
 ## #2 build
 
 1. download
@@ -19,7 +25,7 @@ cd CyberRT
 
 2. export library path
 
-> third party(gflag gtest glog fastdds fastcdr...)
+> third party(gflag gtest glog fastrtps fastcdr...)
 
 ```shell
 source env/setup.sh
