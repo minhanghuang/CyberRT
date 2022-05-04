@@ -1,0 +1,10 @@
+prefix=/home/trunk/work/code/github/CyberRT/env
+exec_prefix=${prefix}
+libdir=/home/trunk/work/code/github/CyberRT/env/lib
+includedir=/home/trunk/work/code/github/CyberRT/env/include
+
+Name: TinyXML2
+Description: simple, small, C++ XML parser
+Version: 4.0.1
+Libs: -L${libdir} -ltinyxml2
+Cflags: -I${includedir}

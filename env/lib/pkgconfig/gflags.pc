@@ -1,0 +1,14 @@
+prefix=/home/trunk/work/code/github/CyberRT/env
+exec_prefix=${prefix}
+bindir=${exec_prefix}/bin
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: gflags
+Version: 2.2.2
+Description: A commandline flags library that allows for distributed flags.
+URL: http://gflags.github.io/gflags
+Requires:
+Libs: -L${libdir} -lgflags
+Libs.private: -lpthread 
+Cflags: -I${includedir}

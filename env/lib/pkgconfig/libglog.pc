@@ -1,0 +1,10 @@
+prefix=/home/trunk/work/code/github/CyberRT/env
+exec_prefix=/home/trunk/work/code/github/CyberRT/env/bin
+libdir=/home/trunk/work/code/github/CyberRT/env/lib
+includedir=/home/trunk/work/code/github/CyberRT/env/include
+
+Name: libglog
+Description: Google Log (glog) C++ logging framework
+Version: 0.4.0
+Libs: -L${libdir} -lglog
+Cflags: -I${includedir}
