@@ -62,9 +62,11 @@ make
 ```shell
 export GLOG_alsologtostderr=1
 export CYBER_PATH=cyber/
+./cyber/examples/cyber_example_talker
 ```
 
 ```shell
+export GLOG_alsologtostderr=1
+export CYBER_PATH=cyber/
 ./cyber/examples/cyber_example_talker
-./cyber/examples/cyber_example_listener
 ```
