@@ -59,14 +59,17 @@ make
 
 5. run examples
 
-```shell
-export GLOG_alsologtostderr=1
-export CYBER_PATH=cyber/
-./cyber/examples/cyber_example_talker
-```
+> talker 
 
 ```shell
 export GLOG_alsologtostderr=1
 export CYBER_PATH=cyber/
 ./cyber/examples/cyber_example_talker
+```
+> listener
+
+```shell
+export GLOG_alsologtostderr=1
+export CYBER_PATH=cyber/
+./cyber/examples/cyber_example_listener
 ```
