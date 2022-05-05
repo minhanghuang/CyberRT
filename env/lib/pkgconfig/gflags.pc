@@ -1,4 +1,4 @@
-prefix=/home/trunk/work/code/github/CyberRT/env
+prefix=/opt/cyber/env
 exec_prefix=${prefix}
 bindir=${exec_prefix}/bin
 libdir=${exec_prefix}/lib

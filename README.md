@@ -29,15 +29,24 @@ cd CyberRT
 > third party(gflag gtest glog fastrtps fastcdr...)
 
 ```shell
-source env/setup.sh
+sudo mkdir /opt/cyber
+sudo cp -r env/ /opt/cyber/env
+```
+
+```shell
+// bash 
+source /opt/cyber/env/setup.bash
+
+// zsh 
+source /opt/cyber/env/setup.zsh
 ```
 
 3. generate protobuf
 
 ```shell
-env/bin/protoc -I=cyber/proto/ --cpp_out=cyber/proto cyber/proto/*.proto
+/opt/cyber/env/bin/protoc -I=cyber/proto/ --cpp_out=cyber/proto cyber/proto/*.proto
 
-env/bin/protoc -I=cyber/examples/proto/ --cpp_out=cyber/examples/proto cyber/examples/proto/*.proto
+/opt/cyber/env/bin/protoc -I=cyber/examples/proto/ --cpp_out=cyber/examples/proto cyber/examples/proto/*.proto
 ```
 
 4. build

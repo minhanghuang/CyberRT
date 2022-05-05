@@ -1,7 +1,7 @@
-prefix=/home/trunk/work/code/github/CyberRT/env
-exec_prefix=/home/trunk/work/code/github/CyberRT/env/bin
-libdir=/home/trunk/work/code/github/CyberRT/env/lib
-includedir=/home/trunk/work/code/github/CyberRT/env/include
+prefix=/opt/cyber/env
+exec_prefix=/opt/cyber/env/bin
+libdir=/opt/cyber/env/lib
+includedir=/opt/cyber/env/include
 
 Name: libglog
 Description: Google Log (glog) C++ logging framework

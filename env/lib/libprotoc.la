@@ -17,7 +17,7 @@ old_library='libprotoc.a'
 inherited_linker_flags=' -pthread'
 
 # Libraries that this one depends upon.
-dependency_libs=' /home/trunk/work/code/github/CyberRT/env/lib/libprotobuf.la -lz'
+dependency_libs=' /opt/cyber/env/lib/libprotobuf.la -lz'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/home/trunk/work/code/github/CyberRT/env/lib'
+libdir='/opt/cyber/env/lib'

@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/home/trunk/work/code/github/CyberRT/env/lib'
+libdir='/opt/cyber/env/lib'

@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-_SETUP_PATH=$(cd `dirname $0`; pwd)
+_SETUP_PATH=$(cd `dirname $BASH_SOURCE[0]`; pwd)
 
 PATH=$_SETUP_PATH/bin:$PATH
 PYTHONPATH=$_SETUP_PATH/lib/python3.6/site-packages:$PYTHONPATH
