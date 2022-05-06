@@ -14,3 +14,23 @@ target_link_libraries(cyber_example_listener
     pthread
 )
 
+add_executable(cyber_example_paramserver paramserver.cc)
+target_link_libraries(cyber_example_paramserver
+    ${TARGET_NAME}
+)
+
+add_executable(cyber_example_record record.cc)
+target_link_libraries(cyber_example_record
+    ${TARGET_NAME}
+)
+
+add_executable(cyber_example_server server.cc proto/examples.pb.cc)
+target_link_libraries(cyber_example_server
+    ${TARGET_NAME}
+)
+
+add_executable(cyber_example_cilent client.cc proto/examples.pb.cc)
+target_link_libraries(cyber_example_cilent
+    ${TARGET_NAME}
+)
+

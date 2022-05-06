@@ -24,18 +24,29 @@ using apollo::cyber::ParameterServer;
 
 int main(int argc, char** argv) {
   apollo::cyber::Init(*argv);
-  std::shared_ptr<apollo::cyber::Node> node =
-      apollo::cyber::CreateNode("parameter");
-  auto param_server = std::make_shared<ParameterServer>(node);
-  auto param_client = std::make_shared<ParameterClient>(node, "parameter");
-  param_server->SetParameter(Parameter("int", 1));
+
+  std::string server_node_name = "parameter";
+  std::shared_ptr<apollo::cyber::Node> server_node =
+      apollo::cyber::CreateNode(server_node_name);
+  std::shared_ptr<apollo::cyber::Node> client_node =
+      apollo::cyber::CreateNode("example_client");
+  auto param_server = std::make_shared<ParameterServer>(server_node);
+  auto param_client =
+      std::make_shared<ParameterClient>(client_node, server_node_name);
+
+  param_server->SetParameter(
+      Parameter("map_path", "/opt/apollo/shared/hdmap/data/map.json"));
+
   Parameter parameter;
-  param_server->GetParameter("int", &parameter);
-  AINFO << "int: " << parameter.AsInt64();
-  param_client->SetParameter(Parameter("string", "test"));
-  param_client->GetParameter("string", &parameter);
-  AINFO << "string: " << parameter.AsString();
-  param_client->GetParameter("int", &parameter);
-  AINFO << "int: " << parameter.AsInt64();
+  param_server->GetParameter("map_path", &parameter);
+  AINFO << "map_path: "
+        << parameter.AsString();  // /opt/apollo/shared/hdmap/data/map.json
+
+  param_client->SetParameter(
+      Parameter("config_path", "/opt/apollo/config.yaml"));
+  param_client->GetParameter("config_path", &parameter);
+  AINFO << "config_path: " << parameter.AsString();  // /opt/apollo/config.yaml
+
   return 0;
 }
+
