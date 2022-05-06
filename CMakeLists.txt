@@ -1,11 +1,9 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.5.1)
 
 project(cyber)
 
-set(CMAKE_CXX_STANDARD 11)
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread -latomic -mcx16")
+set(CMAKE_CXX_STANDARD 14)
 set(TARGET_NAME ${PROJECT_NAME})
-set(CYBER_PROTO ${PROJECT_NAME}_proto)
 
 enable_language(ASM)
 
@@ -36,14 +34,6 @@ link_directories(
 )
 
 aux_source_directory("cyber/proto/" CYBER_PROTO_SRCS)
-
-add_library(${CYBER_PROTO} SHARED
-  ${CYBER_PROTO_SRCS}
-)
-
-target_link_libraries(${CYBER_PROTO}
-  ${Protobuf_LIBRARIES}
-)
 
 file(GLOB CYBER_SRCS 
     "cyber/base/*.cc"
@@ -80,9 +70,8 @@ file(GLOB CYBER_SRCS
 
 list(FILTER CYBER_SRCS EXCLUDE REGEX .*test[.]cc)
 
-add_library(${TARGET_NAME} SHARED ${CYBER_SRCS})
+add_library(${TARGET_NAME} SHARED ${CYBER_PROTO_SRCS} ${CYBER_SRCS})
 target_link_libraries(${TARGET_NAME} 
-    ${CYBER_PROTO}
     ${Glog_LIBRARIES}
     ${Gflags_LIBRARIES}
     ${Protobuf_LIBRARIES}
