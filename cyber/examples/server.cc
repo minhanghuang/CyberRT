@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
         AINFO << "server: i am driver server";
         static uint64_t id = 0;
         ++id;
-        response->set_msg_id(0);
+        response->set_msg_id(id);
       });
 
   apollo::cyber::WaitForShutdown();
