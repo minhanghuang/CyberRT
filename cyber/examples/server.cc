@@ -30,8 +30,8 @@ int main(int argc, char* argv[]) {
                       std::shared_ptr<Driver>& response) {
         AINFO << "server: i am driver server";
         static uint64_t id = 0;
-        ++id;
         response->set_msg_id(id);
+        id++;
       });
 
   apollo::cyber::WaitForShutdown();

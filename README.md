@@ -11,7 +11,7 @@ Ubuntu18
 ```shell
 sudo apt install libpoco-dev
 sudo apt install uuid-dev
-sudo apt install libtinyxml2-dev 
+~~sudo apt install libtinyxml2-dev~~
 ```
 
 
@@ -59,6 +59,8 @@ make
 
 5. run examples
 
+- pub/sub
+
 > talker 
 
 ```shell
@@ -73,3 +75,22 @@ export GLOG_alsologtostderr=1
 export CYBER_PATH=cyber/
 ./cyber/examples/cyber_example_listener
 ```
+
+- server/client
+
+> server 
+
+```shell
+export GLOG_alsologtostderr=1
+export CYBER_PATH=cyber/
+./cyber/examples/cyber_example_server
+```
+
+> client 
+
+```shell
+export GLOG_alsologtostderr=1
+export CYBER_PATH=cyber/
+./cyber/examples/cyber_example_cilent
+```
+
