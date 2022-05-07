@@ -186,36 +186,13 @@ void Manager::Convert(const RoleAttributes& attr, RoleType role,
 void Manager::Notify(const ChangeMsg& msg) { signal_(msg); }
 
 void Manager::OnRemoteChange(const std::string& msg_str) {
-  // if (is_shutdown_.load()) {
-  //   ADEBUG << "the manager has been shut down.";
-  //   return;
-  // }
-
-  // ChangeMsg msg;
-  // RETURN_IF(!message::ParseFromString(msg_str, &msg));
-  // if (IsFromSameProcess(msg)) {
-  //   return;
-  // }
-  // RETURN_IF(!Check(msg.role_attr()));
-  // Dispose(msg);
-
-  // TODO: 不修改这里,订阅不到消息 
-  // https://github.com/ApolloAuto/apollo/issues/7749#issuecomment-481939116
   if (is_shutdown_.load()) {
     ADEBUG << "the manager has been shut down.";
     return;
   }
 
   ChangeMsg msg;
-  // RETURN_IF(!message::ParseFromString(msg_str, &msg));
-  if (message::HasParseFromString<ChangeMsg>::value) {
-    msg.ParseFromString(msg_str);
-  }
-  else {
-    AWARN << "HasParseFromString<ChangeMsg> is not met.";
-    return;
-  }
-
+  RETURN_IF(!message::ParseFromString(msg_str, &msg));
   if (IsFromSameProcess(msg)) {
     return;
   }
