@@ -726,6 +726,7 @@ namespace eprosima
                  * @exception exception::NotEnoughMemoryException This exception is thrown when trying to serialize a position that exceeds the internal memory size.
                  */
                 Cdr& serialize(const char *string_t);
+                Cdr& serialize(const char *string_t, size_t length);
 
                 /*!
                  * @brief This function serializes a string with a different endianness.
@@ -735,6 +736,7 @@ namespace eprosima
                  * @exception exception::NotEnoughMemoryException This exception is thrown when trying to serialize a position that exceeds the internal memory size.
                  */
                 Cdr& serialize(const char *string_t, Endianness endianness);
+                Cdr& serialize(const char *string_t, size_t length, Endianness endianness);
 
 				//TODO
 				inline Cdr& serialize(char *string_t) {return serialize((const char*)string_t);}
@@ -749,7 +751,7 @@ namespace eprosima
                  * @exception exception::NotEnoughMemoryException This exception is thrown when trying to serialize a position that exceeds the internal memory size.
                  */
 				inline
-					Cdr& serialize(const std::string &string_t) {return serialize(string_t.c_str());}
+					Cdr& serialize(const std::string &string_t) {return serialize(string_t.c_str(), string_t.size());}
 
                 /*!
                  * @brief This function serializes a std::string with a different endianness.
@@ -759,7 +761,7 @@ namespace eprosima
                  * @exception exception::NotEnoughMemoryException This exception is thrown when trying to serialize a position that exceeds the internal memory size.
                  */
 				inline
-                Cdr& serialize(const std::string &string_t, Endianness endianness)  {return serialize(string_t.c_str(), endianness);}
+                Cdr& serialize(const std::string &string_t, Endianness endianness)  {return serialize(string_t.c_str(), string_t.size(), endianness);}
 
 #if HAVE_CXX0X
                 /*!

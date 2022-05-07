@@ -61,7 +61,7 @@ public:
 	IPFinder();
 	virtual ~IPFinder();
 
-	RTPS_DllAPI static bool getIPs(std::vector<info_IP>* vec_name, bool return_loopback = false);
+	RTPS_DllAPI static bool getIPs(std::vector<info_IP>* vec_name, bool return_loopback = true);
 
 	/**
     * Get the IP4Adresses in all interfaces.

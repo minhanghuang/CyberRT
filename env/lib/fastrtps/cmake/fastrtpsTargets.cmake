@@ -55,7 +55,7 @@ add_library(fastrtps SHARED IMPORTED)
 
 set_target_properties(fastrtps PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "-lpthread;/usr/lib/x86_64-linux-gnu/libtinyxml2.so"
+  INTERFACE_LINK_LIBRARIES "-lpthread;/opt/cyber/env/lib/libtinyxml2.so"
 )
 
 if(CMAKE_VERSION VERSION_LESS 2.8.12)

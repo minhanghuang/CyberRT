@@ -29,22 +29,22 @@ namespace fastrtps{
 namespace rtps{
 
 // //!@brief Enumeration of the different Submessages types
-#define PAD 0x01
-#define ACKNACK 0x06
-#define HEARTBEAT 0x07
-#define GAP 0x08
-#define INFO_TS 0x09
-#define INFO_SRC 0x0c
-#define INFO_REPLY_IP4 0x0d
-#define INFO_DST 0x0e
-#define INFO_REPLY 0x0f
-#define NACK_FRAG 0x12
-#define HEARTBEAT_FRAG 0x13
-#define DATA 0x15
-#define DATA_FRAG 0x16
-#define SEC_PREFIX 0x31
-#define SRTPS_PREFIX 0x33
 
+const int PAD = 0x01;
+const int ACKNACK = 0x06;
+const int HEARTBEAT = 0x07;
+const int GAP = 0x08;
+const int INFO_TS = 0x09;
+const int INFO_SRC = 0x0c;
+const int INFO_REPLY_IP4 = 0x0d;
+const int INFO_DST = 0x0e;
+const int INFO_REPLY = 0x0f;
+const int NACK_FRAG = 0x12;
+const int HEARTBEAT_FRAG = 0x13;
+const int DATA = 0x15;
+const int DATA_FRAG = 0x16;
+const int SEC_PREFIX = 0x31;
+const int SRTPS_PREFIX = 0x33;
 //!@brief Structure Header_t, RTPS Message Header Structure.
 //!@ingroup COMMON_MODULE
  struct Header_t{

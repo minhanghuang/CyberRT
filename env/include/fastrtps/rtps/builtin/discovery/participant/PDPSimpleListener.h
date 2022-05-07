@@ -70,9 +70,9 @@ public:
 	 */
 	bool getKey(CacheChange_t* change);
 	//!Temporal RTPSParticipantProxyData object used to read the messages.
-	ParticipantProxyData m_ParticipantProxyData;
+	//ParticipantProxyData m_ParticipantProxyData;
 	//!Auxiliary message.
-	CDRMessage_t aux_msg;
+	//CDRMessage_t aux_msg;
 };
 
 

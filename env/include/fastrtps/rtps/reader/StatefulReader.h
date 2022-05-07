@@ -165,6 +165,7 @@ class StatefulReader:public RTPSReader
          */
         inline size_t getMatchedWritersSize() const { return matched_writers.size(); }
 
+        void sendFragAck(WriterProxy *mp_WP, CacheChange_t *cit);
         /*!
          * @brief Returns there is a clean state with all Writers.
          * It occurs when the Reader received all samples sent by Writers. In other words,

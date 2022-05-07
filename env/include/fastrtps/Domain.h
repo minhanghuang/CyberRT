@@ -19,7 +19,7 @@
 
 #ifndef DOMAIN_H_
 #define DOMAIN_H_
-
+#include <mutex>
 #include "attributes/ParticipantAttributes.h"
 
 namespace eprosima{
@@ -164,7 +164,7 @@ private:
 
     static std::vector<t_p_Participant> m_participants;
     static bool default_xml_profiles_loaded;
-
+    static std::mutex m_lock;
 };
 
 } /* namespace  */
