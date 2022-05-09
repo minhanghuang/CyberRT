@@ -11,6 +11,7 @@ Ubuntu18
 ```shell
 sudo apt install libpoco-dev
 sudo apt install uuid-dev
+pip3 install protobuf
 ```
 
 
@@ -63,15 +64,13 @@ make
 > talker 
 
 ```shell
-export GLOG_alsologtostderr=1
-export CYBER_PATH=cyber/
+source setup.bash
 ./cyber/examples/cyber_example_talker
 ```
 > listener
 
 ```shell
-export GLOG_alsologtostderr=1
-export CYBER_PATH=cyber/
+source setup.bash
 ./cyber/examples/cyber_example_listener
 ```
 
@@ -80,16 +79,21 @@ export CYBER_PATH=cyber/
 > server 
 
 ```shell
-export GLOG_alsologtostderr=1
-export CYBER_PATH=cyber/
+source setup.bash
 ./cyber/examples/cyber_example_server
 ```
 
 > client 
 
 ```shell
-export GLOG_alsologtostderr=1
-export CYBER_PATH=cyber/
+source setup.bash
 ./cyber/examples/cyber_example_cilent
+```
+
+## #3 tools
+
+```
+source setup.bash
+cyber_channel list
 ```
 
