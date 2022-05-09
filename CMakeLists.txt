@@ -83,9 +83,34 @@ target_link_libraries(${TARGET_NAME}
 )
 
 add_subdirectory(cyber/examples)
+add_subdirectory(cyber/python)
+add_subdirectory(cyber/tools)
+
+install(DIRECTORY cyber/
+    DESTINATION include/cyber/
+    FILES_MATCHING
+    PATTERN "*.h"
+)
 
 file(COPY cyber/conf/
-  DESTINATION ${CMAKE_BINARY_DIR}/cyber/conf/
+  DESTINATION ${CMAKE_BINARY_DIR}/share/conf/
+)
+install(DIRECTORY ${CMAKE_BINARY_DIR}/share/conf/ 
+  DESTINATION share/conf/
+)
+
+file(COPY setup.zsh setup.bash 
+  DESTINATION ${CMAKE_BINARY_DIR}
+)
+install(FILES ${CMAKE_BINARY_DIR}/setup.zsh ${CMAKE_BINARY_DIR}/setup.bash
+  DESTINATION . 
+)
+
+file(COPY cyber/python/
+  DESTINATION ${CMAKE_BINARY_DIR}/cyber/python/
+)
+install(DIRECTORY ${CMAKE_BINARY_DIR}/cyber/python/
+  DESTINATION lib/python3.6/site-packages/cyber/python/
 )
 
 install(TARGETS ${TARGET_NAME}
@@ -94,4 +119,5 @@ install(TARGETS ${TARGET_NAME}
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
 )
+
 
