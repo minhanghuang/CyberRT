@@ -90,6 +90,15 @@ source setup.bash
 ./cyber/examples/cyber_example_cilent
 ```
 
+- component
+
+```shell
+source setup.bash
+cyber_launch start share/examples/common.launch
+./cyber/examples/common_component_example/channel_prediction_writer
+./cyber/examples/common_component_example/channel_test_writer
+```
+
 ## #3 tools
 
 ```
