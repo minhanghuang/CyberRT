@@ -37,3 +37,5 @@ target_link_libraries(cyber_example_cilent
     ${TARGET_NAME}
 )
 
+add_subdirectory(common_component_example)
+

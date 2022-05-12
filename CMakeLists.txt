@@ -82,6 +82,19 @@ target_link_libraries(${TARGET_NAME}
     uuid
 )
 
+
+# mainboard bin 
+add_executable(mainboard 
+  cyber/mainboard/mainboard.cc
+  cyber/mainboard/module_argument.cc 
+  cyber/mainboard/module_controller.cc
+)
+target_link_libraries(mainboard
+  pthread
+  ${TARGET_NAME}
+)
+set_target_properties(mainboard PROPERTIES RUNTIME_OUTPUT_DIRECTORY "bin/")
+
 add_subdirectory(cyber/examples)
 add_subdirectory(cyber/python)
 add_subdirectory(cyber/tools)
