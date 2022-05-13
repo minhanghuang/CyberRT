@@ -18,6 +18,7 @@ install/
 
 __pycache__
 log/*
+*.INFO*
 !log/.gitkeep
 .clang-format
 
