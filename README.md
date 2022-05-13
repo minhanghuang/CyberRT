@@ -11,6 +11,9 @@ Ubuntu18
 ```shell
 sudo apt install libpoco-dev
 sudo apt install uuid-dev
+sudo apt install libncurses5-dev
+// required libpython3.x.so
+sudo apt install python3.6-dev 
 pip3 install protobuf
 ```
 
@@ -101,8 +104,73 @@ cyber_launch start share/examples/common.launch
 
 ## #3 tools
 
+- channel 
+
+> list
+
 ```
 source setup.bash
 cyber_channel list
+
+// The number of channels is:  1
+// /apollo/test
+```
+
+> echo 
+```shell
+source setup.bash
+cyber_channel echo /apollo/test
+```
+![example](docs/cyber_echo.png)
+
+> more ...
+
+```shell
+Commands:
+	cyber_channel list	list active channels
+	cyber_channel info	print information about active channel
+	cyber_channel echo	print messages to screen
+	cyber_channel hz	display publishing rate of channel
+	cyber_channel bw	display bandwidth used by channel
+	cyber_channel type	print channel type
+```
+
+- node 
+
+```shell
+Commands:
+	cyber_node list 	List active nodes.
+	cyber_node info 	Print node info.
+```
+
+- service 
+
+```shell
+Commands:
+	cyber_service list	list active services
+	cyber_service info	print information about active service
+```
+
+- launch 
+
+```shell
+cyber_launch start share/examples/common.launch
+```
+
+- monitor 
+
+```shell
+cyber_monitor
+```
+
+- recorder 
+
+```shell
+Commands: 
+  	cyber_recorder info	Show information of an exist record.
+	cyber_recorder play	Play an exist record.
+	cyber_recorder record	Record same topic.
+	cyber_recorder split	Split an exist record.
+	cyber_recorder recover	Recover an exist record.
 ```
 
