@@ -4,6 +4,10 @@ project(cyber)
 
 set(CMAKE_CXX_STANDARD 14)
 set(TARGET_NAME ${PROJECT_NAME})
+set(CYBER_PYTHON_PATH "lib/python3.6/site-packages/cyber/python")
+set(CYBER_PYTHON_INTERNAL_PATH "${CYBER_PYTHON_PATH}/internal")
+set(CYBER_PYTHON_PROTOBUF_PATH "lib/python3.6/site-packages/cyber/proto")
+set(CYBER_PYTHON_LIB "/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/libpython3.6.so")
 
 enable_language(ASM)
 
@@ -82,8 +86,7 @@ target_link_libraries(${TARGET_NAME}
     uuid
 )
 
-
-# mainboard bin 
+# mainboard  
 add_executable(mainboard 
   cyber/mainboard/mainboard.cc
   cyber/mainboard/module_argument.cc 
@@ -99,12 +102,14 @@ add_subdirectory(cyber/examples)
 add_subdirectory(cyber/python)
 add_subdirectory(cyber/tools)
 
+# cyber .h files 
 install(DIRECTORY cyber/
     DESTINATION include/cyber/
     FILES_MATCHING
     PATTERN "*.h"
 )
 
+# apollo conf 
 file(COPY cyber/conf/
   DESTINATION ${CMAKE_BINARY_DIR}/share/conf/
 )
@@ -112,6 +117,7 @@ install(DIRECTORY ${CMAKE_BINARY_DIR}/share/conf/
   DESTINATION share/conf/
 )
 
+# setup.zsh 
 file(COPY setup.zsh setup.bash 
   DESTINATION ${CMAKE_BINARY_DIR}
 )
@@ -119,18 +125,34 @@ install(FILES ${CMAKE_BINARY_DIR}/setup.zsh ${CMAKE_BINARY_DIR}/setup.bash
   DESTINATION . 
 )
 
+# cyber python api 
 file(COPY cyber/python/
-  DESTINATION ${CMAKE_BINARY_DIR}/cyber/python/
+  DESTINATION ${CMAKE_BINARY_DIR}/${CYBER_PYTHON_PATH}
 )
-install(DIRECTORY ${CMAKE_BINARY_DIR}/cyber/python/
-  DESTINATION lib/python3.6/site-packages/cyber/python/
+install(DIRECTORY ${CMAKE_BINARY_DIR}/${CYBER_PYTHON_PATH}/
+  DESTINATION ${CYBER_PYTHON_PATH}
+  FILES_MATCHING
+  PATTERN "*.py"
 )
 
+# cyber python protobuf
+file(WRITE ${CMAKE_BINARY_DIR}/${CYBER_PYTHON_PROTOBUF_PATH}/__init__.py "import os\n")
+file(APPEND ${CMAKE_BINARY_DIR}/${CYBER_PYTHON_PROTOBUF_PATH}/__init__.py "import sys\n")
+file(APPEND ${CMAKE_BINARY_DIR}/${CYBER_PYTHON_PROTOBUF_PATH}/__init__.py "sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))\n")
+file(COPY cyber/proto/
+  DESTINATION ${CMAKE_BINARY_DIR}/${CYBER_PYTHON_PROTOBUF_PATH}
+  FILES_MATCHING
+  PATTERN "*.py"
+)
+install(DIRECTORY ${CMAKE_BINARY_DIR}/${CYBER_PYTHON_PROTOBUF_PATH}/
+  DESTINATION ${CYBER_PYTHON_PROTOBUF_PATH}
+)
+
+# install 
 install(TARGETS ${TARGET_NAME}
     EXPORT ${TARGET_NAME}-targets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
 )
-
 
