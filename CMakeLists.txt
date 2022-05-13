@@ -98,6 +98,7 @@ target_link_libraries(mainboard
 )
 set_target_properties(mainboard PROPERTIES RUNTIME_OUTPUT_DIRECTORY "bin/")
 
+
 add_subdirectory(cyber/examples)
 add_subdirectory(cyber/python)
 add_subdirectory(cyber/tools)
@@ -149,7 +150,7 @@ install(DIRECTORY ${CMAKE_BINARY_DIR}/${CYBER_PYTHON_PROTOBUF_PATH}/
 )
 
 # install 
-install(TARGETS ${TARGET_NAME}
+install(TARGETS ${TARGET_NAME} mainboard
     EXPORT ${TARGET_NAME}-targets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
