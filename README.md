@@ -47,7 +47,7 @@ source /opt/cyber/env/setup.zsh
 3. generate protobuf
 
 ```shell
-/opt/cyber/env/bin/protoc -I=cyber/proto/ --cpp_out=cyber/proto cyber/proto/*.proto
+/opt/cyber/env/bin/protoc -I=cyber/proto/ --cpp_out=cyber/proto --python_out=cyber/proto cyber/proto/*.proto
 
 /opt/cyber/env/bin/protoc -I=cyber/examples/proto/ --cpp_out=cyber/examples/proto cyber/examples/proto/*.proto
 ```
