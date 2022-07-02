@@ -174,3 +174,12 @@ Commands:
 	cyber_recorder recover	Recover an exist record.
 ```
 
+## #4 打包安装 
+
+```shell
+cmake -DCMAKE_INSTALL_PREFIX=安装路径 ..
+make 
+make package
+sudo dpkg -i package/libcyber_xxx.deb
+```
+

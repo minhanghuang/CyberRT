@@ -183,7 +183,7 @@ configure_package_config_file(
   PATH_VARS CMAKE_INSTALL_INCLUDEDIR CMAKE_INSTALL_LIBDIR TARGET_NAME
 )
 
-write_basic_package_version_file(${TARGET_NAME}-config-version.cmake
+write_basic_package_version_file(cmake/${TARGET_NAME}-config-version.cmake
   VERSION ${PROJECT_VERSION}
   COMPATIBILITY AnyNewerVersion
 )
@@ -194,8 +194,8 @@ install(FILES
 )
 
 install(FILES 
-  "${PROJECT_BINARY_DIR}/${TARGET_NAME}-config.cmake"
-  "${PROJECT_BINARY_DIR}/${TARGET_NAME}-config-version.cmake"
+  "${PROJECT_BINARY_DIR}/cmake/${TARGET_NAME}-config.cmake"
+  "${PROJECT_BINARY_DIR}/cmake/${TARGET_NAME}-config-version.cmake"
   DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/${TARGET_NAME}"
 )
 
