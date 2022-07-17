@@ -180,6 +180,6 @@ Commands:
 cmake -DCMAKE_INSTALL_PREFIX=安装路径 ..
 make 
 make package
-sudo dpkg -i package/libcyber_xxx.deb
+sudo dpkg -i package/*.deb
 ```
 
