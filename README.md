@@ -11,6 +11,7 @@ Ubuntu18
 ```shell
 sudo apt install libpoco-dev
 sudo apt install uuid-dev
+apt-get install libncurses5-dev
 sudo apt install libncurses5-dev
 // required libpython3.x.so
 sudo apt install python3.6-dev 
