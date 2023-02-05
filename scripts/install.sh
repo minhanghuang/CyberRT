@@ -31,6 +31,18 @@ function build_setup() {
   popd
 }
 
+function build_nlohmann_json() {
+  echo "############### Build Nlohmann Json. ################"
+  local NAME="nlohmann_json"
+  download "https://github.com/nlohmann/json.git" "$NAME"
+  pushd "$CURRENT_PATH/../third_party/$NAME/"
+  mkdir -p build && cd build
+  cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DBUILD_SHARED_LIBS=ON ..
+  make -j$(nproc)
+  sudo make install
+  popd
+}
+
 function build_fastdds() {
   echo "############### Build Fast-DDS. ################"
   # download "https://github.com/eProsima/Fast-RTPS.git" "Fast-RTPS"
@@ -82,7 +94,7 @@ function build_gfamily() {
 
   # glog
   pushd "$CURRENT_PATH/../third_party/glog/"
-  git checkout v0.3.5
+  git checkout v0.4.0
   mkdir -p build && cd build
   if [ "$ARCH" == "x86_64" ]; then
     CXXFLAGS="-fPIC" cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DBUILD_SHARED_LIBS=ON ..
@@ -94,7 +106,7 @@ function build_gfamily() {
   make -j$(nproc)
   sudo make install
   popd
-  
+ 
   # googletest
   pushd "$CURRENT_PATH/../third_party/googletest/"
   git checkout release-1.10.0
@@ -117,6 +129,7 @@ function build_gfamily() {
 function main() {
   echo "############### Install Third Party. ################"
   build_setup
+  build_nlohmann_json
   build_gfamily
   build_fastdds
   return

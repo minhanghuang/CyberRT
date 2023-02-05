@@ -5,7 +5,8 @@ add_library(_cyber_wrapper SHARED
 )
 target_link_libraries(_cyber_wrapper
   ${TARGET_NAME}
-  ${CYBER_PYTHON_LIB}
+  # ${CYBER_PYTHON_LIB}
+  ${Python_LIBRARIES}
 )
 add_library(py_cyber ALIAS _cyber_wrapper)
 
@@ -14,7 +15,8 @@ add_library(_cyber_record_wrapper SHARED
 )
 target_link_libraries(_cyber_record_wrapper
   ${TARGET_NAME}
-  ${CYBER_PYTHON_LIB}
+  # ${CYBER_PYTHON_LIB}
+  ${Python_LIBRARIES}
 )
 add_library(py_record ALIAS _cyber_record_wrapper)
 
@@ -23,7 +25,8 @@ add_library(_cyber_time_wrapper SHARED
 )
 target_link_libraries(_cyber_time_wrapper
   ${TARGET_NAME}
-  ${CYBER_PYTHON_LIB}
+  # ${CYBER_PYTHON_LIB}
+  ${Python_LIBRARIES}
 )
 add_library(py_time ALIAS _cyber_time_wrapper)
 
@@ -32,7 +35,8 @@ add_library(_cyber_parameter_wrapper SHARED
 )
 target_link_libraries(_cyber_parameter_wrapper
   ${TARGET_NAME}
-  ${CYBER_PYTHON_LIB}
+  # ${CYBER_PYTHON_LIB}
+  ${Python_LIBRARIES}
 )
 add_library(py_parameter ALIAS _cyber_parameter_wrapper)
 

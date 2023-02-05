@@ -1,14 +1,10 @@
 cmake_minimum_required(VERSION 3.5.1)
 
-project(cyber VERSION 1.1.0)
+project(cyber VERSION 8.0.0) # Apollo Version
 
 set(CMAKE_CXX_STANDARD 14)
 set(TARGET_NAME ${PROJECT_NAME})
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CYBER_PYTHON_PATH "lib/python3.6/site-packages/cyber/python")
-set(CYBER_PYTHON_INTERNAL_PATH "${CYBER_PYTHON_PATH}/internal")
-set(CYBER_PYTHON_PROTOBUF_PATH "lib/python3.6/site-packages/cyber/proto")
-set(CYBER_PYTHON_LIB "/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/libpython3.6.so")
 
 enable_language(ASM)
 
@@ -20,30 +16,40 @@ find_package(PkgConfig REQUIRED)
 find_package(fastrtps REQUIRED)
 find_package(fastcdr REQUIRED)
 find_package(Poco REQUIRED COMPONENTS Foundation)
-pkg_check_modules(Protobuf REQUIRED protobuf)
-pkg_check_modules(Glog REQUIRED libglog)
+find_package(glog REQUIRED)
+find_package(Protobuf REQUIRED)
+find_package(Python REQUIRED COMPONENTS Interpreter Development)
 pkg_check_modules(Gflags REQUIRED gflags)
+pkg_check_modules(NlohmannJson REQUIRED nlohmann_json)
+
+set(Python_VERSION "${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}")
+set(CYBER_PYTHON_PATH "lib/python${Python_VERSION}/site-packages/cyber/python")
+set(CYBER_PYTHON_INTERNAL_PATH "${CYBER_PYTHON_PATH}/internal")
+set(CYBER_PYTHON_PROTOBUF_PATH "lib/python${Python_VERSION}/site-packages/cyber/proto")
+# set(CYBER_PYTHON_LIB "/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/libpython3.6.so")
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${fastcdr_INCLUDE_DIR}
     ${fastrtps_INCLUDE_DIR}
     ${Protobuf_INCLUDE_DIRS}
+    ${Python_INCLUDE_DIRS}
     ${Glog_INCLUDE_DIRS}
     ${Gflags_INCLUDE_DIRS}
+    ${NlohmannJson_INCLUDE_DIRS}
 )
 
 link_directories(
     ${fastcdr_LIB_DIR}
     ${fastrtps_LIB_DIR}
     ${Protobuf_LIBRARIES_DIRS}
+    ${Python_LIBRARIES_DIRS}
     ${Glog_LIBRARY_DIRS}
     ${Gflags_LIBRARY_DIRS}
+    ${NlohmannJson_LIBRARY_DIRS}
 )
 
-aux_source_directory("cyber/proto/" CYBER_PROTO_SRCS)
-
-file(GLOB CYBER_SRCS 
+file(GLOB CYBER_SRCS
     "cyber/base/*.cc"
     "cyber/blocker/*.cc"
     "cyber/class_loader/*.cc"
@@ -69,47 +75,81 @@ file(GLOB CYBER_SRCS
     "cyber/service_discovery/*/*.cc"
     "cyber/task/*.cc" 
     "cyber/time/*.cc"
-    "cyber/timer/*.cc"	
+    "cyber/timer/*.cc"
     "cyber/transport/*.cc"
     "cyber/transport/*/*.cc"
     "cyber/*.cc"
     "cyber/sysmo/*.cc"
 )
 
+file(GLOB CYBER_PROTO_FILES 
+  "${CMAKE_CURRENT_SOURCE_DIR}/modules/common_msgs/*/*.proto"
+  "${CMAKE_CURRENT_SOURCE_DIR}/cyber/proto/*.proto"
+  "${CMAKE_CURRENT_SOURCE_DIR}/cyber/examples/proto/*.proto"
+)
+
+SET(PROTO_META_BASE_DIR ${CMAKE_CURRENT_BINARY_DIR})
+
+LIST(APPEND PROTO_FLAGS
+ -I${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+FOREACH(FIL ${CYBER_PROTO_FILES})
+  GET_FILENAME_COMPONENT(FIL_WE ${FIL} NAME_WE)
+  string(REGEX REPLACE ".+/(.+)\\..*" "\\1" FILE_NAME ${FIL})
+  string(REGEX REPLACE "(.+)\\${FILE_NAME}.*" "\\1" FILE_PATH ${FIL})
+  string(REGEX MATCH "(/modules/common_msgs.*|/cyber/proto/.*|/cyber/examples/proto/.*)" OUT_PATH ${FILE_PATH})
+  set(PROTO_SRCS "${CMAKE_CURRENT_BINARY_DIR}${OUT_PATH}${FIL_WE}.pb.cc")
+  set(PROTO_HDRS "${CMAKE_CURRENT_BINARY_DIR}${OUT_PATH}${FIL_WE}.pb.h")
+  EXECUTE_PROCESS(
+    COMMAND ${PROTOBUF_PROTOC_EXECUTABLE} ${PROTO_FLAGS} --cpp_out=${PROTO_META_BASE_DIR} ${FIL}
+  )
+  file(COPY ${PROTO_SRCS} DESTINATION ${FILE_PATH})
+  file(COPY ${PROTO_HDRS} DESTINATION ${FILE_PATH})
+  LIST(APPEND ALL_PROTO_SRCS ${PROTO_SRCS})
+  LIST(APPEND ALL_PROTO_HDRS ${PROTO_HDRS})
+ENDFOREACH()
+
 list(FILTER CYBER_SRCS EXCLUDE REGEX .*test[.]cc)
 
-add_library(${TARGET_NAME} SHARED ${CYBER_PROTO_SRCS} ${CYBER_SRCS})
-target_link_libraries(${TARGET_NAME} 
+add_library(${TARGET_NAME} SHARED
+    ${ALL_PROTO_HDRS}
+    ${ALL_PROTO_SRCS}
+    ${CYBER_SRCS}
+)
+
+target_link_libraries(${TARGET_NAME}
     ${Glog_LIBRARIES}
     ${Gflags_LIBRARIES}
+    ${NlohmannJson_LIBRARIES}
     ${Protobuf_LIBRARIES}
     ${Poco_LIBRARIES}
+    glog
     fastrtps
     fastcdr
     atomic
     uuid
 )
 
-add_executable(mainboard 
+add_executable(mainboard
   cyber/mainboard/mainboard.cc
-  cyber/mainboard/module_argument.cc 
+  cyber/mainboard/module_argument.cc
   cyber/mainboard/module_controller.cc
 )
+
 target_link_libraries(mainboard
-  pthread
-  ${TARGET_NAME}
+    ${TARGET_NAME}
+    pthread
 )
 set_target_properties(mainboard PROPERTIES RUNTIME_OUTPUT_DIRECTORY "bin/")
-
 
 add_subdirectory(cyber/examples)
 add_subdirectory(cyber/python)
 add_subdirectory(cyber/tools)
-
 # --------------------------------------------------------------
 #                      CPack
 # --------------------------------------------------------------
-# 打包方式 
+# 打包方式
 include(InstallRequiredSystemLibraries)
 if (APPLE)
 elseif (UNIX)
@@ -193,7 +233,7 @@ install(FILES
   DESTINATION "${CMAKE_INSTALL_DATADIR}/pkgconfig"
 )
 
-install(FILES 
+install(FILES
   "${PROJECT_BINARY_DIR}/cmake/${TARGET_NAME}-config.cmake"
   "${PROJECT_BINARY_DIR}/cmake/${TARGET_NAME}-config-version.cmake"
   DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/${TARGET_NAME}"
@@ -203,14 +243,14 @@ install(EXPORT ${TARGET_NAME}-targets
   DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/${TARGET_NAME}"
 )
 
-# cyber .h files 
+# cyber .h files
 install(DIRECTORY cyber/
     DESTINATION include/cyber/
     FILES_MATCHING
     PATTERN "*.h"
 )
 
-# apollo conf 
+# apollo conf
 file(COPY cyber/conf/
   DESTINATION ${CMAKE_BINARY_DIR}/share/conf/
 )
@@ -218,15 +258,7 @@ install(DIRECTORY ${CMAKE_BINARY_DIR}/share/conf/
   DESTINATION share/conf/
 )
 
-# setup.zsh 
-file(COPY setup.zsh setup.bash 
-  DESTINATION ${CMAKE_BINARY_DIR}
-)
-install(FILES ${CMAKE_BINARY_DIR}/setup.zsh ${CMAKE_BINARY_DIR}/setup.bash
-  DESTINATION . 
-)
-
-# cyber python api 
+# cyber python api
 file(COPY cyber/python/
   DESTINATION ${CMAKE_BINARY_DIR}/${CYBER_PYTHON_PATH}
 )
@@ -250,7 +282,7 @@ install(DIRECTORY ${CMAKE_BINARY_DIR}/${CYBER_PYTHON_PROTOBUF_PATH}/
   DESTINATION ${CYBER_PYTHON_PROTOBUF_PATH}
 )
 
-# install 
+# install
 install(TARGETS ${TARGET_NAME} mainboard
     EXPORT ${TARGET_NAME}-targets
     ARCHIVE DESTINATION lib

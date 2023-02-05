@@ -14,6 +14,7 @@
  * limitations under the License.
  *****************************************************************************/
 
+#include <iostream>
 #include "cyber/examples/proto/examples.pb.h"
 
 #include "cyber/cyber.h"
@@ -22,6 +23,8 @@ void MessageCallback(
     const std::shared_ptr<apollo::cyber::examples::proto::Chatter>& msg) {
   AINFO << "Received message seq-> " << msg->seq();
   AINFO << "msgcontent->" << msg->content();
+  std::cout << "Received message seq-> " << msg->seq() << std::endl;
+  std::cout << "msgcontent->" << msg->content() << std::endl;
 }
 
 int main(int argc, char* argv[]) {
