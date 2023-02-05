@@ -29,7 +29,7 @@ git clone --depth=1 https://github.com/minhanghuang/CyberRT.git
 cd CyberRT
 ```
 
-2. export library path
+2. install third party library
 
 > third party(gflag glog fastrtps fastcdr...)
 
@@ -37,7 +37,11 @@ cd CyberRT
 ./scripts/install.sh
 ```
 
-3. build
+```shell
+source install/setup.bash
+```
+
+3. build cyber
 
 ```shell
 mkdir build && cd build
@@ -60,22 +64,6 @@ source setup.bash
 ```shell
 source setup.bash
 ./cyber/examples/cyber_example_listener
-```
-
-- server/client
-
-> server
-
-```shell
-source setup.bash
-./cyber/examples/cyber_example_server
-```
-
-> client
-
-```shell
-source setup.bash
-./cyber/examples/cyber_example_cilent
 ```
 
 - component
