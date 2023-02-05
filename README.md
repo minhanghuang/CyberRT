@@ -6,14 +6,16 @@
 
 ```shell
 Ubuntu18
+Ubuntu20
 ```
 
 ```shell
 sudo apt install libpoco-dev
 sudo apt install uuid-dev
 sudo apt install libncurses5-dev
-// required libpython3.x.so
-sudo apt install python3.6-dev 
+sudo apt install python3.6-dev
+// Ubuntu18 : python3.6-dev
+// Ubuntu20 : python3.9-dev
 pip3 install protobuf
 ```
 
@@ -23,48 +25,31 @@ pip3 install protobuf
 1. download
 
 ```shell
-git clone https://github.com/minhanghuang/CyberRT.git
+git clone --depth=1 https://github.com/minhanghuang/CyberRT.git
 cd CyberRT
 ```
 
 2. export library path
 
-> third party(gflag gtest glog fastrtps fastcdr...)
+> third party(gflag glog fastrtps fastcdr...)
 
 ```shell
-sudo mkdir /opt/cyber
-sudo cp -r env/ /opt/cyber/env
+./scripts/install.sh
 ```
 
-```shell
-// bash 
-source /opt/cyber/env/setup.bash
-
-// zsh 
-source /opt/cyber/env/setup.zsh
-```
-
-3. generate protobuf
-
-```shell
-/opt/cyber/env/bin/protoc -I=cyber/proto/ --cpp_out=cyber/proto --python_out=cyber/proto cyber/proto/*.proto
-
-/opt/cyber/env/bin/protoc -I=cyber/examples/proto/ --cpp_out=cyber/examples/proto cyber/examples/proto/*.proto
-```
-
-4. build
+3. build
 
 ```shell
 mkdir build && cd build
-cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
-make 
+cmake ..
+make -j$(nproc)
 ```
 
-5. run examples
+4. run examples
 
 - pub/sub
 
-> talker 
+> talker
 
 ```shell
 source setup.bash
@@ -79,14 +64,14 @@ source setup.bash
 
 - server/client
 
-> server 
+> server
 
 ```shell
 source setup.bash
 ./cyber/examples/cyber_example_server
 ```
 
-> client 
+> client
 
 ```shell
 source setup.bash
@@ -104,7 +89,7 @@ cyber_launch start share/examples/common.launch
 
 ## #3 tools
 
-- channel 
+- channel
 
 > list
 
@@ -135,7 +120,7 @@ Commands:
 	cyber_channel type	print channel type
 ```
 
-- node 
+- node
 
 ```shell
 Commands:
@@ -143,7 +128,7 @@ Commands:
 	cyber_node info 	Print node info.
 ```
 
-- service 
+- service
 
 ```shell
 Commands:
@@ -151,22 +136,22 @@ Commands:
 	cyber_service info	print information about active service
 ```
 
-- launch 
+- launch
 
 ```shell
 cyber_launch start share/examples/common.launch
 ```
 
-- monitor 
+- monitor
 
 ```shell
 cyber_monitor
 ```
 
-- recorder 
+- recorder
 
 ```shell
-Commands: 
+Commands:
   	cyber_recorder info	Show information of an exist record.
 	cyber_recorder play	Play an exist record.
 	cyber_recorder record	Record same topic.
@@ -174,10 +159,10 @@ Commands:
 	cyber_recorder recover	Recover an exist record.
 ```
 
-## #4 打包安装 
+## #4 package
 
 ```shell
-cmake -DCMAKE_INSTALL_PREFIX=安装路径 ..
+cmake -DCMAKE_INSTALL_PREFIX=/you/install/path ..
 make 
 make package
 sudo dpkg -i package/*.deb
