@@ -3,6 +3,13 @@ load("//tools:cpplint.bzl", "cpplint")
 
 package(default_visibility = ["//visibility:public"])
 
+filegroup(
+    name = "cyber_parameter_hdrs",
+    srcs = glob([
+        "*.h",
+    ]),
+)
+
 cc_library(
     name = "parameter",
     srcs = ["parameter.cc"],
@@ -11,6 +18,7 @@ cc_library(
         "//cyber/message:protobuf_factory",
         "//cyber/proto:parameter_cc_proto",
     ],
+    alwayslink = True,
 )
 
 cc_test(
@@ -21,6 +29,7 @@ cc_test(
         "//cyber",
         "@com_google_googletest//:gtest_main",
     ],
+    linkstatic = True,
 )
 
 cc_library(
@@ -34,6 +43,7 @@ cc_library(
         "//cyber/service:client",
         "@fastrtps",
     ],
+    alwayslink = True,
 )
 
 cc_test(
@@ -44,6 +54,7 @@ cc_test(
         "//cyber",
         "@com_google_googletest//:gtest_main",
     ],
+    linkstatic = True,
 )
 
 cc_library(
@@ -57,6 +68,7 @@ cc_library(
         "//cyber/service",
         "@fastrtps",
     ],
+    alwayslink = True,
 )
 
 cc_test(
@@ -67,6 +79,7 @@ cc_test(
         "//cyber",
         "@com_google_googletest//:gtest_main",
     ],
+    linkstatic = True,
 )
 
 cc_library(

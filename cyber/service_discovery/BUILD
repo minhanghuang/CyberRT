@@ -3,6 +3,14 @@ load("//tools:cpplint.bzl", "cpplint")
 
 package(default_visibility = ["//visibility:public"])
 
+filegroup(
+    name = "cyber_service_discovery_hdrs",
+    srcs = glob([
+        "*.h",
+        "**/*.h",
+    ]),
+)
+
 cc_library(
     name = "topology_manager",
     srcs = ["topology_manager.cc"],
@@ -41,6 +49,7 @@ cc_test(
         "//cyber",
         "@com_google_googletest//:gtest_main",
     ],
+    linkstatic = True,
 )
 
 cc_library(
@@ -153,6 +162,7 @@ cc_test(
         "//cyber/proto:unit_test_cc_proto",
         "@com_google_googletest//:gtest_main",
     ],
+    linkstatic = True,
 )
 
 cc_library(
@@ -174,6 +184,7 @@ cc_test(
         "//cyber",
         "@com_google_googletest//:gtest_main",
     ],
+    linkstatic = True,
 )
 
 cc_library(
@@ -195,6 +206,7 @@ cc_test(
         "//cyber",
         "@com_google_googletest//:gtest_main",
     ],
+    linkstatic = True,
 )
 
 cpplint()

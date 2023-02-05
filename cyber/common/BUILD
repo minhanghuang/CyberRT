@@ -24,6 +24,7 @@ cc_library(
     deps = [
         "//cyber/common:log",
         "@com_google_protobuf//:protobuf",
+        "@com_github_nlohmann_json//:json",
     ],
 )
 
@@ -55,6 +56,7 @@ cc_test(
         "//cyber",
         "@com_google_googletest//:gtest_main",
     ],
+    linkstatic = True,
 )
 
 cc_library(

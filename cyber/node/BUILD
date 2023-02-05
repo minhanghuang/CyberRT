@@ -3,6 +3,13 @@ load("//tools:cpplint.bzl", "cpplint")
 
 package(default_visibility = ["//visibility:public"])
 
+filegroup(
+    name = "cyber_node_hdrs",
+    srcs = glob([
+        "*.h",
+    ]),
+)
+
 cc_library(
     name = "node",
     srcs = ["node.cc"],
@@ -36,6 +43,7 @@ cc_test(
         "//cyber/proto:unit_test_cc_proto",
         "@com_google_googletest//:gtest_main",
     ],
+    linkstatic = True,
 )
 
 cc_library(
@@ -60,6 +68,7 @@ cc_test(
         "//cyber/proto:unit_test_cc_proto",
         "@com_google_googletest//:gtest_main",
     ],
+    linkstatic = True,
 )
 
 cc_library(
@@ -97,6 +106,7 @@ cc_test(
         "//cyber/proto:unit_test_cc_proto",
         "@com_google_googletest//:gtest",
     ],
+    linkstatic = True,
 )
 
 cc_library(
@@ -130,6 +140,7 @@ cc_test(
         "//cyber/proto:unit_test_cc_proto",
         "@com_google_googletest//:gtest",
     ],
+    linkstatic = True,
 )
 
 cc_test(
@@ -142,6 +153,7 @@ cc_test(
         "//cyber/proto:unit_test_cc_proto",
         "@com_google_googletest//:gtest",
     ],
+    linkstatic = True,
 )
 
 cpplint()

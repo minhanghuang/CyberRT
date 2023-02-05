@@ -29,6 +29,9 @@
 #include <fstream>
 #include <string>
 
+#include "google/protobuf/util/json_util.h"
+#include "nlohmann/json.hpp"
+
 namespace apollo {
 namespace cyber {
 namespace common {
@@ -117,6 +120,24 @@ bool GetProtoFromFile(const std::string &file_name,
 
   return GetProtoFromASCIIFile(file_name, message) ||
          GetProtoFromBinaryFile(file_name, message);
+}
+
+bool GetProtoFromJsonFile(const std::string &file_name,
+                          google::protobuf::Message *message) {
+  using google::protobuf::util::JsonParseOptions;
+  using google::protobuf::util::JsonStringToMessage;
+  std::ifstream ifs(file_name);
+  if (!ifs.is_open()) {
+    AERROR << "Failed to open file " << file_name;
+    return false;
+  }
+  nlohmann::json Json;
+  ifs >> Json;
+  ifs.close();
+  JsonParseOptions options;
+  options.ignore_unknown_fields = true;
+  google::protobuf::util::Status dump_status;
+  return (JsonStringToMessage(Json.dump(), message, options).ok());
 }
 
 bool GetContent(const std::string &file_name, std::string *content) {

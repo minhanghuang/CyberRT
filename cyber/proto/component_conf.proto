@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package apollo.cyber.proto;
 
-import "qos_profile.proto";
+import "cyber/proto/qos_profile.proto";
 
 message ReaderOption {
   optional string channel = 1;

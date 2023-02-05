@@ -2,10 +2,10 @@ syntax = "proto2";
 
 package apollo.cyber.proto;
 
-import "scheduler_conf.proto";
-import "transport_conf.proto";
-import "run_mode_conf.proto";
-import "perf_conf.proto";
+import "cyber/proto/scheduler_conf.proto";
+import "cyber/proto/transport_conf.proto";
+import "cyber/proto/run_mode_conf.proto";
+import "cyber/proto/perf_conf.proto";
 
 message CyberConfig {
   optional SchedulerConf scheduler_conf = 1;
