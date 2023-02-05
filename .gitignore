@@ -1,6 +1,4 @@
-# IDEA #
 *.iml
-
 .idea
 .vscode
 .local
@@ -11,8 +9,8 @@
 
 build/
 cmake-build*
-thirdparty/
-build_thirdparty.sh
+third_party/
+install/
 *.db
 install/
 
@@ -21,5 +19,4 @@ log/*
 *.INFO*
 !log/.gitkeep
 .clang-format
-
 .cache
