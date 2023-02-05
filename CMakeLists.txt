@@ -258,6 +258,14 @@ install(DIRECTORY ${CMAKE_BINARY_DIR}/share/conf/
   DESTINATION share/conf/
 )
 
+# setup.zsh
+file(COPY setup.zsh setup.bash
+  DESTINATION ${CMAKE_BINARY_DIR}
+)
+install(FILES ${CMAKE_BINARY_DIR}/setup.zsh ${CMAKE_BINARY_DIR}/setup.bash
+  DESTINATION .
+)
+
 # cyber python api
 file(COPY cyber/python/
   DESTINATION ${CMAKE_BINARY_DIR}/${CYBER_PYTHON_PATH}
