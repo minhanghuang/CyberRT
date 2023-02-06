@@ -11,6 +11,15 @@ enable_language(ASM)
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 
+set(CROUTINE_FILE "cyber/croutine/detail/swap_x86_64.S")
+if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86_64")
+  set(CROUTINE_FILE "cyber/croutine/detail/swap_x86_64.S")
+  message("### SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR} ${CROUTINE_FILE}")
+else()
+  set(CROUTINE_FILE "cyber/croutine/detail/swap_aarch64.S")
+  message("### SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR} ${CROUTINE_FILE}")
+endif(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86_64")
+
 find_package(Threads REQUIRED)
 find_package(PkgConfig REQUIRED)
 find_package(fastrtps REQUIRED)
@@ -58,7 +67,6 @@ file(GLOB CYBER_SRCS
     "cyber/component/*.cc"
     "cyber/croutine/*.cc"
     "cyber/croutine/*/*.cc"
-    "cyber/croutine/detail/swap_x86_64.S"
     "cyber/data/*.cc"
     "cyber/event/*.cc"
     "cyber/io/*.cc"
@@ -80,9 +88,10 @@ file(GLOB CYBER_SRCS
     "cyber/transport/*/*.cc"
     "cyber/*.cc"
     "cyber/sysmo/*.cc"
+    ${CROUTINE_FILE}
 )
 
-file(GLOB CYBER_PROTO_FILES 
+file(GLOB CYBER_PROTO_FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/modules/common_msgs/*/*.proto"
   "${CMAKE_CURRENT_SOURCE_DIR}/cyber/proto/*.proto"
   "${CMAKE_CURRENT_SOURCE_DIR}/cyber/examples/proto/*.proto"
