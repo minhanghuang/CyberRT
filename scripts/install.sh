@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 set -e
 
 CURRENT_PATH=$(cd $(dirname $0) && pwd)
@@ -48,15 +47,17 @@ function build_fastdds() {
   # download "https://github.com/eProsima/Fast-RTPS.git" "Fast-RTPS"
   # pushd "$CURRENT_PATH/../third_party/Fast-RTPS/"
   # git checkout v1.5.0
-  # git submodule init
-  # git submodule update
+  # git submodule update --init
   # patch -p1 < "$CURRENT_PATH/../scripts/FastRTPS_1.5.0.patch"
   # mkdir -p build && cd build
+  # cmake -DEPROSIMA_BUILD=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/home/trunk/work/code/github/CyberRT/third_party/Fast-RTPS/build/external/install ..
+  # make -j$(nproc)
+  # make install
   # cmake -DEPROSIMA_BUILD=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX ..
   # make -j$(nproc)
   # make install
   # popd
-  
+
   local INSTALL_PATH="$CURRENT_PATH/../third_party/"
   if [[ "${ARCH}" == "x86_64" ]]; then
     PKG_NAME="fast-rtps-1.5.0-1.prebuilt.x86_64.tar.gz"
