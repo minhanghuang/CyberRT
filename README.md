@@ -18,8 +18,8 @@ sudo apt install libpoco-dev
 sudo apt install uuid-dev
 sudo apt install libncurses5-dev
 sudo apt install python3.6-dev
-// Ubuntu18 : sudo apt install python3.6-dev
-// Ubuntu20 : sudo apt install python3.9-dev
+# Ubuntu18 : sudo apt install python3.6-dev
+# Ubuntu20 : sudo apt install python3.9-dev
 pip3 install protobuf
 ```
 
@@ -86,12 +86,12 @@ cyber_launch start share/examples/common.launch
 
 > list
 
-```
+```shell
 source setup.bash
 cyber_channel list
 
-// The number of channels is:  1
-// /apollo/test
+# The number of channels is:  1
+# /apollo/test
 ```
 
 > echo
