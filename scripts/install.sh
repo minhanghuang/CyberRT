@@ -19,6 +19,17 @@ function download() {
   fi
 }
 
+function init() {
+  echo "############### Init. ################"
+  if [ -e $INSTALL_PREFIX ]
+  then
+    echo ""
+  else
+    mkdir -p $INSTALL_PREFIX
+  fi
+  chmod a+w $INSTALL_PREFIX
+}
+
 function build_setup() {
   echo "############### Build Setup. ################"
   local NAME="setup"
@@ -26,7 +37,7 @@ function build_setup() {
   pushd "$CURRENT_PATH/../third_party/$NAME/"
   mkdir -p build && cd build
   cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DBUILD_SHARED_LIBS=ON ..
-  make install
+  sudo make install
   popd
 }
 
@@ -73,8 +84,9 @@ function build_fastdds() {
   fi
   pushd $INSTALL_PATH
   tar -zxf ${PKG_NAME}
-  cp -r fast-rtps-1.5.0-1/* ../install
+  sudo cp -r fast-rtps-1.5.0-1/* ../install
   rm -rf fast-rtps-1.5.0-1
+  popd
 }
 
 function build_gfamily() {
@@ -129,6 +141,7 @@ function build_gfamily() {
 
 function main() {
   echo "############### Install Third Party. ################"
+  init
   build_setup
   build_nlohmann_json
   build_gfamily
