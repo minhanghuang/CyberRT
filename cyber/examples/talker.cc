@@ -40,8 +40,7 @@ int main(int argc, char *argv[]) {
     msg->set_seq(seq);
     msg->set_content("Hello, apollo!");
     talker->Write(msg);
-    // AINFO << "talker sent a message! No. " << seq;
-    std::cout << "talker sent a message! No. " << seq << std::endl;
+    AINFO << "talker sent a message! No. " << seq;
     seq++;
     rate.Sleep();
   }
