@@ -1,5 +1,3 @@
-include_directories(/usr/include/python3.6)
-
 add_library(_cyber_wrapper SHARED 
   py_cyber.cc
 )

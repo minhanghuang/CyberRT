@@ -268,9 +268,8 @@ install(DIRECTORY ${CMAKE_BINARY_DIR}/share/conf/
 )
 
 # setup.zsh
-file(COPY setup.zsh setup.bash
-  DESTINATION ${CMAKE_BINARY_DIR}
-)
+configure_file("setup.bash.in" "${CMAKE_BINARY_DIR}/setup.bash" @ONLY)
+configure_file("setup.zsh.in" "${CMAKE_BINARY_DIR}/setup.zsh" @ONLY)
 install(FILES ${CMAKE_BINARY_DIR}/setup.zsh ${CMAKE_BINARY_DIR}/setup.bash
   DESTINATION .
 )
