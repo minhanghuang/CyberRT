@@ -1,22 +1,22 @@
-# Apollo(v7.0.0) Cyber 
+# Apollo(v7.0.0) Cyber
 
 ![CyberRT](./docs/CyberRT.gif)
 
 ## #1 env
 
 ```shell
-Ubuntu18
+Ubuntu20
 ```
 
 ```shell
 sudo apt install libpoco-dev
 sudo apt install uuid-dev
 sudo apt install libncurses5-dev
+sudo apt install git-lfs
 // required libpython3.x.so
-sudo apt install python3.6-dev 
+sudo apt install python3.8-dev 
 pip3 install protobuf
 ```
-
 
 ## #2 build
 
@@ -64,12 +64,13 @@ make
 
 - pub/sub
 
-> talker 
+> talker
 
 ```shell
 source setup.bash
 ./cyber/examples/cyber_example_talker
 ```
+
 > listener
 
 ```shell
@@ -79,14 +80,14 @@ source setup.bash
 
 - server/client
 
-> server 
+> server
 
 ```shell
 source setup.bash
 ./cyber/examples/cyber_example_server
 ```
 
-> client 
+> client
 
 ```shell
 source setup.bash
@@ -104,7 +105,7 @@ cyber_launch start share/examples/common.launch
 
 ## #3 tools
 
-- channel 
+- channel
 
 > list
 
@@ -116,11 +117,13 @@ cyber_channel list
 // /apollo/test
 ```
 
-> echo 
+> echo
+
 ```shell
 source setup.bash
 cyber_channel echo /apollo/test
 ```
+
 ![example](docs/cyber_echo.png)
 
 > more ...
@@ -135,7 +138,7 @@ Commands:
 	cyber_channel type	print channel type
 ```
 
-- node 
+- node
 
 ```shell
 Commands:
@@ -143,7 +146,7 @@ Commands:
 	cyber_node info 	Print node info.
 ```
 
-- service 
+- service
 
 ```shell
 Commands:
@@ -151,19 +154,19 @@ Commands:
 	cyber_service info	print information about active service
 ```
 
-- launch 
+- launch
 
 ```shell
 cyber_launch start share/examples/common.launch
 ```
 
-- monitor 
+- monitor
 
 ```shell
 cyber_monitor
 ```
 
-- recorder 
+- recorder
 
 ```shell
 Commands: 
@@ -174,7 +177,7 @@ Commands:
 	cyber_recorder recover	Recover an exist record.
 ```
 
-## #4 打包安装 
+## #4 打包安装
 
 ```shell
 cmake -DCMAKE_INSTALL_PREFIX=安装路径 ..
@@ -182,4 +185,3 @@ make
 make package
 sudo dpkg -i package/*.deb
 ```
-
