@@ -1,34 +1,46 @@
 cmake_minimum_required(VERSION 3.5.1)
 
-project(cyber VERSION 1.1.0)
+project(cyber VERSION 7.0.0)
 
 set(CMAKE_CXX_STANDARD 14)
 set(TARGET_NAME ${PROJECT_NAME})
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CYBER_PYTHON_PATH "lib/python3.6/site-packages/cyber/python")
-set(CYBER_PYTHON_INTERNAL_PATH "${CYBER_PYTHON_PATH}/internal")
-set(CYBER_PYTHON_PROTOBUF_PATH "lib/python3.6/site-packages/cyber/proto")
-set(CYBER_PYTHON_LIB "/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/libpython3.6.so")
 
 enable_language(ASM)
 
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 
+set(CROUTINE_FILE "cyber/croutine/detail/swap_x86_64.S")
+if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86_64")
+  set(CROUTINE_FILE "cyber/croutine/detail/swap_x86_64.S")
+  message("### SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR} ${CROUTINE_FILE}")
+else()
+  set(CROUTINE_FILE "cyber/croutine/detail/swap_aarch64.S")
+  message("### SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR} ${CROUTINE_FILE}")
+endif(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86_64")
+
 find_package(Threads REQUIRED)
 find_package(PkgConfig REQUIRED)
 find_package(fastrtps REQUIRED)
 find_package(fastcdr REQUIRED)
 find_package(Poco REQUIRED COMPONENTS Foundation)
+find_package(Python REQUIRED COMPONENTS Interpreter Development)
 pkg_check_modules(Protobuf REQUIRED protobuf)
 pkg_check_modules(Glog REQUIRED libglog)
 pkg_check_modules(Gflags REQUIRED gflags)
+
+set(Python_VERSION "${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}")
+set(CYBER_PYTHON_PATH "lib/python${Python_VERSION}/site-packages/cyber/python")
+set(CYBER_PYTHON_INTERNAL_PATH "${CYBER_PYTHON_PATH}/internal")
+set(CYBER_PYTHON_PROTOBUF_PATH "lib/python${Python_VERSION}/site-packages/cyber/proto")
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${fastcdr_INCLUDE_DIR}
     ${fastrtps_INCLUDE_DIR}
     ${Protobuf_INCLUDE_DIRS}
+    ${Python_INCLUDE_DIRS}
     ${Glog_INCLUDE_DIRS}
     ${Gflags_INCLUDE_DIRS}
 )
@@ -48,11 +60,10 @@ file(GLOB CYBER_SRCS
     "cyber/blocker/*.cc"
     "cyber/class_loader/*.cc"
     "cyber/class_loader/*/*.cc"
-    "cyber/common/*.cc" 
+    "cyber/common/*.cc"
     "cyber/component/*.cc"
     "cyber/croutine/*.cc"
     "cyber/croutine/*/*.cc"
-    "cyber/croutine/detail/swap_x86_64.S"
     "cyber/data/*.cc"
     "cyber/event/*.cc"
     "cyber/io/*.cc"
@@ -67,13 +78,14 @@ file(GLOB CYBER_SRCS
     "cyber/service/*.cc"
     "cyber/service_discovery/*.cc"
     "cyber/service_discovery/*/*.cc"
-    "cyber/task/*.cc" 
+    "cyber/task/*.cc"
     "cyber/time/*.cc"
-    "cyber/timer/*.cc"	
+    "cyber/timer/*.cc"
     "cyber/transport/*.cc"
     "cyber/transport/*/*.cc"
     "cyber/*.cc"
     "cyber/sysmo/*.cc"
+    ${CROUTINE_FILE}
 )
 
 list(FILTER CYBER_SRCS EXCLUDE REGEX .*test[.]cc)
@@ -203,14 +215,14 @@ install(EXPORT ${TARGET_NAME}-targets
   DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/${TARGET_NAME}"
 )
 
-# cyber .h files 
+# cyber .h files
 install(DIRECTORY cyber/
     DESTINATION include/cyber/
     FILES_MATCHING
     PATTERN "*.h"
 )
 
-# apollo conf 
+# apollo conf
 file(COPY cyber/conf/
   DESTINATION ${CMAKE_BINARY_DIR}/share/conf/
 )
@@ -218,15 +230,14 @@ install(DIRECTORY ${CMAKE_BINARY_DIR}/share/conf/
   DESTINATION share/conf/
 )
 
-# setup.zsh 
-file(COPY setup.zsh setup.bash 
-  DESTINATION ${CMAKE_BINARY_DIR}
-)
+# setup.zsh
+configure_file("setup.bash.in" "${CMAKE_BINARY_DIR}/setup.bash" @ONLY)
+configure_file("setup.zsh.in" "${CMAKE_BINARY_DIR}/setup.zsh" @ONLY)
 install(FILES ${CMAKE_BINARY_DIR}/setup.zsh ${CMAKE_BINARY_DIR}/setup.bash
-  DESTINATION . 
+  DESTINATION .
 )
 
-# cyber python api 
+# cyber python api
 file(COPY cyber/python/
   DESTINATION ${CMAKE_BINARY_DIR}/${CYBER_PYTHON_PATH}
 )
@@ -250,7 +261,7 @@ install(DIRECTORY ${CMAKE_BINARY_DIR}/${CYBER_PYTHON_PROTOBUF_PATH}/
   DESTINATION ${CYBER_PYTHON_PROTOBUF_PATH}
 )
 
-# install 
+# install
 install(TARGETS ${TARGET_NAME} mainboard
     EXPORT ${TARGET_NAME}-targets
     ARCHIVE DESTINATION lib
