@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package apollo.cyber.proto;
 
-import "qos_profile.proto";
+import "cyber/proto/qos_profile.proto";
 
 message SocketAddr {
   optional string ip = 1;  // dotted decimal
@@ -27,3 +27,4 @@ message RoleAttributes {
   optional string service_name = 13;
   optional uint64 service_id = 14;  // hash value of service_name
 };
+

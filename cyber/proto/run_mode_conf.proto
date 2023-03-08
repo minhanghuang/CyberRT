@@ -16,3 +16,4 @@ message RunModeConf {
   optional RunMode run_mode = 1 [default = MODE_REALITY];
   optional ClockMode clock_mode = 2 [default = MODE_CYBER];
 }
+

@@ -2,11 +2,16 @@
 
 ![CyberRT](./docs/CyberRT.gif)
 
-## #1 env
+## #1 Env
+
+> support os
 
 ```shell
 Ubuntu18
+Ubuntu20
 ```
+
+> dependence
 
 ```shell
 sudo apt install libpoco-dev
@@ -18,52 +23,40 @@ sudo apt install python3.6-dev
 pip3 install protobuf
 ```
 
+## #2 Build
 
-## #2 build
-
-1. download
+1. clone
 
 ```shell
-git clone https://github.com/minhanghuang/CyberRT.git
+git clone --single-branch --branch v7.0.0 --depth 1  https://github.com/minhanghuang/CyberRT.git
 cd CyberRT
 ```
 
-2. export library path
+2. build third party
 
-> third party(gflag gtest glog fastrtps fastcdr...)
-
-```shell
-sudo mkdir /opt/cyber
-sudo cp -r env/ /opt/cyber/env
-```
+> install
 
 ```shell
-// bash 
-source /opt/cyber/env/setup.bash
-
-// zsh 
-source /opt/cyber/env/setup.zsh
+./scripts/install.sh
 ```
 
-3. generate protobuf
+> export path
 
 ```shell
-/opt/cyber/env/bin/protoc -I=cyber/proto/ --cpp_out=cyber/proto --python_out=cyber/proto cyber/proto/*.proto
-
-/opt/cyber/env/bin/protoc -I=cyber/examples/proto/ --cpp_out=cyber/examples/proto cyber/examples/proto/*.proto
+source install/setup.bash
 ```
 
-4. build
+3. build cyber
 
 ```shell
 mkdir build && cd build
-cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
-make 
+cmake ..
+make -j$(nproc)
 ```
 
-5. run examples
+## #3 Examples
 
-- pub/sub
+1. pub/sub
 
 > talker
 
@@ -78,23 +71,7 @@ source setup.bash
 ./cyber/examples/cyber_example_listener
 ```
 
-- server/client
-
-> server
-
-```shell
-source setup.bash
-./cyber/examples/cyber_example_server
-```
-
-> client
-
-```shell
-source setup.bash
-./cyber/examples/cyber_example_cilent
-```
-
-- component
+2. component
 
 ```shell
 source setup.bash
@@ -103,18 +80,18 @@ cyber_launch start share/examples/common.launch
 ./cyber/examples/common_component_example/channel_test_writer
 ```
 
-## #3 tools
+## #4 Tools
 
-- channel
+1. channel
 
 > list
 
-```
+```shell
 source setup.bash
 cyber_channel list
 
-// The number of channels is:  1
-// /apollo/test
+# The number of channels is:  1
+# /apollo/test
 ```
 
 > echo
@@ -136,7 +113,7 @@ Commands:
 	cyber_channel type	print channel type
 ```
 
-- node
+2. node
 
 ```shell
 Commands:
@@ -144,7 +121,7 @@ Commands:
 	cyber_node info 	Print node info.
 ```
 
-- service
+3. service
 
 ```shell
 Commands:
@@ -152,19 +129,19 @@ Commands:
 	cyber_service info	print information about active service
 ```
 
-- launch
+4. launch
 
 ```shell
 cyber_launch start share/examples/common.launch
 ```
 
-- monitor
+5. monitor
 
 ```shell
 cyber_monitor
 ```
 
-- recorder
+6. recorder
 
 ```shell
 Commands:
@@ -175,12 +152,11 @@ Commands:
 	cyber_recorder recover	Recover an exist record.
 ```
 
-## #4 打包安装
+## #5 Packages
 
 ```shell
-cmake -DCMAKE_INSTALL_PREFIX=安装路径 ..
-make
+cmake -DCMAKE_INSTALL_PREFIX=/you/install/path ..
+make -j$(nproc)
 make package
 sudo dpkg -i package/*.deb
 ```
-

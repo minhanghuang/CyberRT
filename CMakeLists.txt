@@ -26,7 +26,7 @@ find_package(fastrtps REQUIRED)
 find_package(fastcdr REQUIRED)
 find_package(Poco REQUIRED COMPONENTS Foundation)
 find_package(Python REQUIRED COMPONENTS Interpreter Development)
-pkg_check_modules(Protobuf REQUIRED protobuf)
+find_package(Protobuf REQUIRED)
 pkg_check_modules(Glog REQUIRED libglog)
 pkg_check_modules(Gflags REQUIRED gflags)
 
@@ -52,8 +52,6 @@ link_directories(
     ${Glog_LIBRARY_DIRS}
     ${Gflags_LIBRARY_DIRS}
 )
-
-aux_source_directory("cyber/proto/" CYBER_PROTO_SRCS)
 
 file(GLOB CYBER_SRCS 
     "cyber/base/*.cc"
@@ -88,10 +86,39 @@ file(GLOB CYBER_SRCS
     ${CROUTINE_FILE}
 )
 
+file(GLOB CYBER_PROTO_FILES
+  "${CMAKE_CURRENT_SOURCE_DIR}/cyber/proto/*.proto"
+  "${CMAKE_CURRENT_SOURCE_DIR}/cyber/examples/proto/*.proto"
+)
+SET(PROTO_META_BASE_DIR ${CMAKE_CURRENT_BINARY_DIR})
+LIST(APPEND PROTO_FLAGS
+ -I${CMAKE_CURRENT_SOURCE_DIR}
+)
+FOREACH(FIL ${CYBER_PROTO_FILES})
+  GET_FILENAME_COMPONENT(FIL_WE ${FIL} NAME_WE)
+  string(REGEX REPLACE ".+/(.+)\\..*" "\\1" FILE_NAME ${FIL})
+  string(REGEX REPLACE "(.+)\\${FILE_NAME}.*" "\\1" FILE_PATH ${FIL})
+  string(REGEX MATCH "(/cyber/proto/.*|/cyber/examples/proto/.*)" OUT_PATH ${FILE_PATH})
+  set(PROTO_SRCS "${CMAKE_CURRENT_BINARY_DIR}${OUT_PATH}${FIL_WE}.pb.cc")
+  set(PROTO_HDRS "${CMAKE_CURRENT_BINARY_DIR}${OUT_PATH}${FIL_WE}.pb.h")
+  EXECUTE_PROCESS(
+    COMMAND ${PROTOBUF_PROTOC_EXECUTABLE} ${PROTO_FLAGS} --cpp_out=${PROTO_META_BASE_DIR} ${FIL}
+  )
+  file(COPY ${PROTO_SRCS} DESTINATION ${FILE_PATH})
+  file(COPY ${PROTO_HDRS} DESTINATION ${FILE_PATH})
+  LIST(APPEND ALL_PROTO_SRCS ${PROTO_SRCS})
+  LIST(APPEND ALL_PROTO_HDRS ${PROTO_HDRS})
+ENDFOREACH()
+
 list(FILTER CYBER_SRCS EXCLUDE REGEX .*test[.]cc)
 
-add_library(${TARGET_NAME} SHARED ${CYBER_PROTO_SRCS} ${CYBER_SRCS})
-target_link_libraries(${TARGET_NAME} 
+add_library(${TARGET_NAME} SHARED
+  ${ALL_PROTO_HDRS}
+  ${ALL_PROTO_SRCS}
+  ${CYBER_SRCS}
+)
+
+target_link_libraries(${TARGET_NAME}
     ${Glog_LIBRARIES}
     ${Gflags_LIBRARIES}
     ${Protobuf_LIBRARIES}
@@ -102,9 +129,9 @@ target_link_libraries(${TARGET_NAME}
     uuid
 )
 
-add_executable(mainboard 
+add_executable(mainboard
   cyber/mainboard/mainboard.cc
-  cyber/mainboard/module_argument.cc 
+  cyber/mainboard/module_argument.cc
   cyber/mainboard/module_controller.cc
 )
 target_link_libraries(mainboard
@@ -182,7 +209,7 @@ set(CPACK_PACKAGE_FILE_NAME   "${CPACK_PACKAGE_FILE_NAME}_${CPACK_PACKAGE_VERSIO
 
 include(CPack)
 # --------------------------------------------------------------
-#                       package 
+#                       package
 # --------------------------------------------------------------
 configure_file("cmake/${TARGET_NAME}.pc.in"
   "${PROJECT_BINARY_DIR}/pkgconfig/${TARGET_NAME}.pc" @ONLY)
@@ -226,7 +253,7 @@ install(DIRECTORY cyber/
 file(COPY cyber/conf/
   DESTINATION ${CMAKE_BINARY_DIR}/share/conf/
 )
-install(DIRECTORY ${CMAKE_BINARY_DIR}/share/conf/ 
+install(DIRECTORY ${CMAKE_BINARY_DIR}/share/conf/
   DESTINATION share/conf/
 )
 

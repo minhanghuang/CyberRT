@@ -21,3 +21,4 @@ message ChoreographyConf {
   optional string pool_cpuset = 10;
   repeated ChoreographyTask tasks = 11;
 }
+

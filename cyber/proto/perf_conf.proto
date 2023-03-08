@@ -13,3 +13,4 @@ message PerfConf {
   optional bool enable = 1 [default = false];
   optional PerfType type = 2 [default = ALL];
 }
+

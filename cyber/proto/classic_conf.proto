@@ -21,3 +21,4 @@ message SchedGroup {
 message ClassicConf {
   repeated SchedGroup groups = 1;
 }
+

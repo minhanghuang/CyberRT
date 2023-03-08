@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package apollo.cyber.proto;
 
-import "role_attributes.proto";
+import "cyber/proto/role_attributes.proto";
 
 enum ChangeType {
   CHANGE_NODE = 1;
@@ -32,3 +32,4 @@ message ChangeMsg {
   optional RoleType role_type = 4;
   optional RoleAttributes role_attr = 5;
 };
+

@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package apollo.cyber.proto;
 
-import "qos_profile.proto";
+import "cyber/proto/qos_profile.proto";
 
 message ReaderOption {
   optional string channel = 1;
@@ -25,3 +25,4 @@ message TimerComponentConfig {
   optional string flag_file_path = 3;
   optional uint32 interval = 4;  // In milliseconds.
 }
+

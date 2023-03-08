@@ -2,8 +2,8 @@ syntax = "proto2";
 
 package apollo.cyber.proto;
 
-import "classic_conf.proto";
-import "choreography_conf.proto";
+import "cyber/proto/classic_conf.proto";
+import "cyber/proto/choreography_conf.proto";
 
 message InnerThread {
   optional string name = 1;
@@ -21,3 +21,4 @@ message SchedulerConf {
   optional ClassicConf classic_conf = 6;
   optional ChoreographyConf choreography_conf = 7;
 }
+
