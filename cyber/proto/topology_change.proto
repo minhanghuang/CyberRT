@@ -32,4 +32,3 @@ message ChangeMsg {
   optional RoleType role_type = 4;
   optional RoleAttributes role_attr = 5;
 };
-

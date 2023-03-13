@@ -45,7 +45,7 @@ using google::protobuf::io::ZeroCopyInputStream;
 class RecordFileReader : public RecordFileBase {
  public:
   RecordFileReader() = default;
-  virtual ~RecordFileReader();
+  virtual ~RecordFileReader() = default;
   bool Open(const std::string& path) override;
   void Close() override;
   bool Reset();

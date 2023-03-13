@@ -25,4 +25,3 @@ message TimerComponentConfig {
   optional string flag_file_path = 3;
   optional uint32 interval = 4;  // In milliseconds.
 }
-

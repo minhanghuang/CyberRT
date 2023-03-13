@@ -39,4 +39,3 @@ message BoolResult {
 message Params {
   repeated Param param = 1;
 }
-

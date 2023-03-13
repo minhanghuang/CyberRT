@@ -13,4 +13,3 @@ message CyberConfig {
   optional RunModeConf run_mode_conf = 3;
   optional PerfConf perf_conf = 4;
 }
-

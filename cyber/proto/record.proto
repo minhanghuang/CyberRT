@@ -88,4 +88,3 @@ message ChunkBody {
 message Index {
   repeated SingleIndex indexes = 1;
 }
-

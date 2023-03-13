@@ -64,3 +64,4 @@ inline void AsyncShutdown() {
 }  // namespace apollo
 
 #endif  // CYBER_STATE_H_
+

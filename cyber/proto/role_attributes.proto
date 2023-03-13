@@ -27,4 +27,3 @@ message RoleAttributes {
   optional string service_name = 13;
   optional uint64 service_id = 14;  // hash value of service_name
 };
-

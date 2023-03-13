@@ -21,4 +21,3 @@ message SchedulerConf {
   optional ClassicConf classic_conf = 6;
   optional ChoreographyConf choreography_conf = 7;
 }
-
