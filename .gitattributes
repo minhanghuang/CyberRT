@@ -1,3 +1,0 @@
-env/lib/libprotobuf.a filter=lfs diff=lfs merge=lfs -text
-env/lib/libprotoc.so.31.0.1 filter=lfs diff=lfs merge=lfs -text
-env/lib/libprotoc.a filter=lfs diff=lfs merge=lfs -text
