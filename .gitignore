@@ -20,6 +20,5 @@ __pycache__
 log/*
 *.INFO*
 !log/.gitkeep
-.clang-format
 
 .cache
