@@ -2,14 +2,13 @@
 
 ![CyberRT](./docs/CyberRT.gif)
 
+| Target        |  Status  |
+| ------------- | :-----:|
+| Ubuntu18.04   | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v8.0.0-build.yaml) |
+| Ubuntu20.04   | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v8.0.0-build.yaml) |
+| Ubuntu22.04   | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v8.0.0-build.yaml) |
+
 ## #1 Env
-
-> support os
-
-```shell
-Ubuntu18
-Ubuntu20
-```
 
 > dependence
 
