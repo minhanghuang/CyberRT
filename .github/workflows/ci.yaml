@@ -1,0 +1,17 @@
+name: build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install 3td
+        run: |
+          sudo apt update
+          sudo apt install cmake g++ libpoco-dev uuid-dev libncurses5-dev python3.6-dev
+          pip3 install protobuf
+      - name: Install Dependencies
+        run: ./scripts/install.sh
