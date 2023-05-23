@@ -12,7 +12,7 @@ Ubuntu20
 ```
 | OS        |  Status  |
 | ------------- | -----:|
-| Ubuntu20  | [![v7.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml) |  [![v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml) |
+| Ubuntu20  | [![v7.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml) \|  [![v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml) |
 
 > dependence
 
