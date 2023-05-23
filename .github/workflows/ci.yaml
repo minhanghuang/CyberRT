@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} 🚀
 on: [push]
 jobs:
   CyberRT-Build-Actions:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04 # 18.04已经在2022年被移除, 目前只有20 latest版本
     steps:
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out repository code
@@ -13,5 +13,5 @@ jobs:
           ls ${{ github.workspace }}
       - run: |
           sudo apt update
-          sudo apt install g++ cmake libpoco-dev uuid-dev libncurses5-dev python3.6-dev 
+          sudo apt install g++ cmake libpoco-dev uuid-dev libncurses5-dev python3.9-dev
           pip3 install protobuf
