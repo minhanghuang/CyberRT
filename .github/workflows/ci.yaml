@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} 🚀
 on: [push]
 jobs:
   CyberRT-Build-Actions:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out repository code
