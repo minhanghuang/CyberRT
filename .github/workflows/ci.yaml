@@ -1,4 +1,4 @@
-name: CyberRT CI
+name: CI
 run-name: CyberRT build runner 🚀
 
 on: [push]
