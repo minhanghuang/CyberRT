@@ -13,7 +13,7 @@ Ubuntu20
 | OS        |  Status  |
 | ------------- | -----:|
 | Ubuntu20  |  [![CI](https://github.com/ros-visualization/rviz/actions/workflows/ci.yaml/badge.svg?branch=noetic-devel)](https://github.com/ros-visualization/rviz/actions/workflows/ci.yaml?query=branch%3Anoetic-devel) |
-| Ubuntu20  |  [![CI](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml/badge.svg)](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml) |
+| Ubuntu20  |  [![CI](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/ros-visualization/rviz/actions/workflows/ci.yaml?query=branch%3Anoetic-devel) |
 
 > dependence
 
