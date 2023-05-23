@@ -12,8 +12,7 @@ Ubuntu20
 ```
 | OS        |  Status  |
 | ------------- | -----:|
-| Ubuntu20  |  [![CI](https://github.com/ros-visualization/rviz/actions/workflows/ci.yaml/badge.svg?branch=noetic-devel)](https://github.com/ros-visualization/rviz/actions/workflows/ci.yaml?query=branch%3Anoetic-devel) |
-| Ubuntu20  |  [![v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/ros-visualization/rviz/actions/workflows/ci.yaml?query=branch%3Anoetic-devel) |
+| Ubuntu20  | [![v7.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml) |  [![v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml) |
 
 > dependence
 
