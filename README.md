@@ -10,6 +10,9 @@
 Ubuntu18
 Ubuntu20
 ```
+| OS        |  Status  |
+| ------------- | -----:|
+| Ubuntu20      |  ![Ubuntu20](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yml/badge.svg) |
 
 > dependence
 
