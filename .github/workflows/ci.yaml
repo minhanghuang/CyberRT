@@ -1,8 +1,10 @@
 name: CyberRT Build
 run-name: ${{ github.actor }} 🚀
+
 on: [push]
+
 jobs:
-  CyberRT-Build-Actions:
+  build-amd-ubuntu20:
     runs-on: ubuntu-20.04 # 18.04已经在2022年被移除, 目前只有20 22 latest版本
     steps:
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
@@ -11,16 +13,48 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-      - name: Install 3th
+      - name: Check system info
+        run: |
+          uname -a
+          cat /etc/*release
+      - name: Install dependence
         run: |
           sudo apt update
           sudo apt install g++ cmake libpoco-dev uuid-dev libncurses5-dev python3.9-dev
           pip3 install protobuf
-      - name: Install Dependence
-        run: |
           ./scripts/install.sh
+      - name: Build
+        run: |
           source install/setup.bash
           mkdir build && cd build
           cmake ..
           make -j$(nproc)
-  
+
+  build-arm-ubuntu20:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        architecture: [arm64]
+    steps:
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - name: Check system info
+        run: |
+          uname -a
+          cat /etc/*release
+      - name: Install dependence
+        run: |
+          sudo apt update
+          sudo apt install g++ cmake libpoco-dev uuid-dev libncurses5-dev python3.9-dev
+          pip3 install protobuf
+          ./scripts/install.sh
+      - name: Build
+        run: |
+          source install/setup.bash
+          mkdir build && cd build
+          cmake ..
+          make -j$(nproc)
