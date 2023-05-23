@@ -12,7 +12,7 @@ Ubuntu20
 ```
 | OS        |  Status  |
 | ------------- | -----:|
-| Ubuntu20      |  ![Ubuntu20](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yml/badge.svg) |
+| Ubuntu20      |  [![CI](https://github.com/ros-visualization/rviz/actions/workflows/ci.yaml/badge.svg?branch=noetic-devel)](https://github.com/ros-visualization/rviz/actions/workflows/ci.yaml?query=branch%3Anoetic-devel) |
 
 > dependence
 
