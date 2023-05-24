@@ -124,7 +124,7 @@ function build_gfamily() {
   pushd "$CURRENT_PATH/../third_party/googletest/"
   git checkout release-1.10.0
   mkdir -p build && cd build
-  CXXFLAGS="-fPIC" cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DBUILD_SHARED_LIBS=ON ..
+  CXXFLAGS="-fPIC" cmake -DCMAKE_CXX_FLAGS="-w" -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DBUILD_SHARED_LIBS=ON ..
   make -j8
   sudo make install
   popd
