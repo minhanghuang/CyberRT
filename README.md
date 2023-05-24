@@ -4,13 +4,12 @@
 
 | Target        |  Version |  Status  |
 | ------------- | :-----: | :-----:|
-| Ubuntu20  | v7.0.0 | [![build v7.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v7.0.0-build.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v7.0.0-build.yaml) |
-| Ubuntu20  | v8.0.0 | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v8.0.0-build.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v8.0.0-build.yaml) |
-| Ubuntu22  | v7.0.0 | [![build v7.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v7.0.0-build.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v7.0.0-build.yaml) |
-| Ubuntu22  | v7.0.0 | [![build v7.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v8.0.0-build.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v8.0.0-build.yaml) |
+| Ubuntu20.04  | v7.0.0 | [![build v7.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v7.0.0-build.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v7.0.0-build.yaml) |
+| Ubuntu20.04  | v8.0.0 | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v8.0.0-build.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v8.0.0-build.yaml) |
+| Ubuntu22.04  | v7.0.0 | [![build v7.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v7.0.0-build.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v7.0.0-build.yaml) |
+| Ubuntu22.04  | v8.0.0 | [![build v7.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v8.0.0-build.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v8.0.0-build.yaml) |
 | Ubuntu-latest  | v7.0.0 | [![build v7.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v7.0.0-build.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v7.0.0-build.yaml) |
 | Ubuntu-latest  | v8.0.0 | [![build v7.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v8.0.0-build.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v8.0.0-build.yaml) |
-
 
 ## #1 Env
 
