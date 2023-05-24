@@ -1,5 +1,5 @@
 name: v7.0.0 build
-run-name: CyberRT v7.0.0 build runner 🚀
+run-name: CyberRT v7.0.0 build runner on ubuntu-latest 🚀
 
 on: [push]
 
