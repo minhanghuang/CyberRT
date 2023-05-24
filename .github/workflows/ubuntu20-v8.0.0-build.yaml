@@ -1,7 +1,10 @@
 name: v8.0.0 build 
 run-name: CyberRT v8.0.0 build runner on ubuntu20 🚀
 
-on: [push]
+on:
+  push:
+    branches:
+      - v8.0.0
 
 jobs:
   build-amd-ubuntu20:
