@@ -5,6 +5,11 @@ on:
   push:
     branches:
       - v7.0.0
+    paths:
+      - 'cmake/*'
+      - 'cyber/*'
+      - 'CMakeLists.txt'
+      - 'scripts/*'
 
 jobs:
   build-amd-ubuntu-latest:
