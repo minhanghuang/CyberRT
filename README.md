@@ -2,17 +2,13 @@
 
 ![CyberRT](./docs/CyberRT.gif)
 
+| Target        |  Version |  Status  |
+| ------------- | :-----: | :-----:|
+| Ubuntu20  | v7.0.0 | [![build v7.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml) |
+| Ubuntu20  | v8.0.0 | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v8.0.0-build.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v8.0.0-build.yaml) |
+
+
 ## #1 Env
-
-> support os
-
-```shell
-Ubuntu18
-Ubuntu20
-```
-| OS        |  Status  |
-| ------------- | -----:|
-| Ubuntu20  | [![v7.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml) \|  [![v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml/badge.svg?branch=v8.0.0-ci)](https://github.com/minhanghuang/CyberRT/actions/workflows/ci.yaml) |
 
 > dependence
 
