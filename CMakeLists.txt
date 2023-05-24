@@ -123,6 +123,7 @@ target_link_libraries(${TARGET_NAME}
     ${Gflags_LIBRARIES}
     ${Protobuf_LIBRARIES}
     ${Poco_LIBRARIES}
+    glog
     fastrtps
     fastcdr
     atomic
