@@ -13,12 +13,7 @@
 > dependence
 
 ```shell
-sudo apt install libpoco-dev
-sudo apt install uuid-dev
-sudo apt install libncurses5-dev
-sudo apt install python3.6-dev
-# Ubuntu18 : sudo apt install python3.6-dev
-# Ubuntu20 : sudo apt install python3.9-dev
+sudo apt install libpoco-dev uuid-dev libncurses5-dev python3-dev
 pip3 install protobuf
 ```
 

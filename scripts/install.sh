@@ -120,8 +120,8 @@ function build_gfamily() {
   # protobuf
   pushd "$CURRENT_PATH/../third_party/protobuf/"
   git checkout v3.14.0
-  ./autogen.sh
-  ./configure --prefix=$INSTALL_PREFIX --enable-shared
+  cd cmake && mkdir -p build && cd build
+  cmake -Dprotobuf_BUILD_SHARED_LIBS=ON -Dprotobuf_BUILD_TESTS=OFF ..
   make -j$(nproc)
   sudo make install
   popd
