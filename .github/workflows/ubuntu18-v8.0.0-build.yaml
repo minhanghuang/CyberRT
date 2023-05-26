@@ -37,7 +37,7 @@ jobs:
           apt update
           apt install software-properties-common -y
           add-apt-repository ppa:deadsnakes/ppa -y
-          apt install -y sudo build-essential bash git wget pkg-config g++ cmake autoconf automake libpoco-dev uuid-dev libncurses5-dev python3.9-dev
+          apt install -y sudo build-essential bash git wget pkg-config g++ cmake autoconf automake libpoco-dev uuid-dev libncurses5-dev python3-dev
           cd /workspace/CyberRT && ./scripts/install.sh
       - name: Build
         run: |
