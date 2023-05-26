@@ -1,5 +1,5 @@
-name: ubuntu20.04 v7.0.0 build
-run-name: CyberRT v7.0.0 build runner on ubuntu20 🚀
+name: ubuntu18.04 v7.0.0 build
+run-name: CyberRT v7.0.0 build runner on ubuntu18 🚀
 
 on:
   push:
@@ -10,13 +10,13 @@ on:
       - 'cyber/*'
       - 'CMakeLists.txt'
       - 'scripts/*'
-      - '.github/workflows/ubuntu20-v7.0.0-build.yaml'
+      - '.github/workflows/ubuntu18-v7.0.0-build.yaml'
 
 jobs:
-  build-amd-ubuntu20:
+  build-amd-ubuntu18:
     runs-on: ubuntu-latest
     container:
-      image: docker://ubuntu:20.04
+      image: docker://ubuntu:18.04
       options: --volume ${{ github.workspace }}:/workspace/CyberRT
     steps:
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
