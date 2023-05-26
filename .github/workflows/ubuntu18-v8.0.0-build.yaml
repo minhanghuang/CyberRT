@@ -31,6 +31,8 @@ jobs:
           lscpu
           cat /etc/*release
       - name: Install dependence
+        env:
+          DEBIAN_FRONTEND: noninteractive
         run: |
           apt update
           apt install software-properties-common -y

@@ -80,7 +80,7 @@ function build_fastdds() {
   then
     echo ""
   else
-    wget $DOWNLOAD_LINK -P $INSTALL_PATH
+    wget -t 10 $DOWNLOAD_LINK -P $INSTALL_PATH
   fi
   pushd $INSTALL_PATH
   tar -zxf ${PKG_NAME}
