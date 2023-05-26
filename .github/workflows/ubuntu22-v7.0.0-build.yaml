@@ -16,7 +16,7 @@ jobs:
   build-amd-ubuntu22:
     runs-on: ubuntu-latest
     container:
-      image: do0ker://ubuntu:22.04
+      image: docker://ubuntu:22.04
       options: --volume ${{ github.workspace }}:/workspace/CyberRT
     steps:
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
