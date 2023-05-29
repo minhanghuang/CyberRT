@@ -2,6 +2,9 @@ name: ubuntu20.04 v7.0.0 build
 run-name: CyberRT v7.0.0 build runner on ubuntu20 🚀
 
 on:
+  pull_request:
+    branches:
+      - master
   push:
     branches:
       - v7.0.0
