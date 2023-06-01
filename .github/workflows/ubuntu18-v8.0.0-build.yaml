@@ -6,13 +6,12 @@ on:
     branches:
       - master
   push:
-    branches:
-      - v8.0.0
     paths:
-      - 'cmake/*'
-      - 'cyber/*'
+      - 'cmake/**'
+      - 'cyber/**'
+      - 'modules/**'
       - 'CMakeLists.txt'
-      - 'scripts/*'
+      - 'scripts/**'
       - '.github/workflows/ubuntu18-v8.0.0-build.yaml'
 
 jobs:
@@ -20,28 +19,17 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: docker://ubuntu:18.04
-      options: --volume ${{ github.workspace }}:/workspace/CyberRT
+      options: --volume ${{ github.workspace }}:/workspace/${{ github.repository }}
     steps:
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v3
-      - name: List files in the repository
-        run: |
-          ls /workspace/CyberRT
-      - name: Check system info
-        run: |
-          uname -a
-          lscpu
-          cat /etc/*release
-      - name: Install dependence
+      - name: Install
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
           apt update
-          apt install software-properties-common -y
-          add-apt-repository ppa:deadsnakes/ppa -y
-          apt install -y sudo build-essential bash git wget pkg-config g++ cmake autoconf automake libpoco-dev uuid-dev libncurses5-dev python3-dev
-          cd /workspace/CyberRT && ./scripts/install.sh
+          apt install -y git wget pkg-config g++ cmake libpoco-dev uuid-dev libncurses5-dev python3-dev
+          cd /workspace/${{ github.repository }} && ./scripts/install.sh
       - name: Build
         run: |
-          bash -c "cd /workspace/CyberRT && source install/setup.bash && mkdir -p build && cd build && cmake .. && make -j$(nproc)"
+          bash -c "cd /workspace/${{ github.repository }} && source install/setup.bash && mkdir -p build && cd build && cmake .. && make -j$(nproc)"

@@ -37,7 +37,7 @@ function build_setup() {
   pushd "$CURRENT_PATH/../third_party/$NAME/"
   mkdir -p build && cd build
   cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DBUILD_SHARED_LIBS=ON ..
-  sudo make install
+  make install -j$(nproc)
   popd
 }
 
@@ -48,8 +48,7 @@ function build_nlohmann_json() {
   pushd "$CURRENT_PATH/../third_party/$NAME/"
   mkdir -p build && cd build
   cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DBUILD_SHARED_LIBS=ON ..
-  make -j$(nproc)
-  sudo make install
+  make install -j$(nproc)
   popd
 }
 
@@ -84,7 +83,7 @@ function build_fastdds() {
   fi
   pushd $INSTALL_PATH
   tar -zxf ${PKG_NAME}
-  sudo cp -r fast-rtps-1.5.0-1/* ../install
+  cp -r fast-rtps-1.5.0-1/* ../install
   rm -rf fast-rtps-1.5.0-1
   popd
 }
@@ -101,8 +100,7 @@ function build_gfamily() {
   git checkout v2.2.0
   mkdir -p build && cd build
   CXXFLAGS="-fPIC" cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DBUILD_SHARED_LIBS=ON ..
-  make -j$(nproc)
-  sudo make install
+  make install -j$(nproc)
   popd
 
   # glog
@@ -116,8 +114,7 @@ function build_gfamily() {
   else
       echo "not support $ARCH"
   fi
-  make -j$(nproc)
-  sudo make install
+  make install -j$(nproc)
   popd
  
   # googletest
@@ -125,8 +122,7 @@ function build_gfamily() {
   git checkout release-1.10.0
   mkdir -p build && cd build
   CXXFLAGS="-fPIC" cmake -DCMAKE_CXX_FLAGS="-w" -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DBUILD_SHARED_LIBS=ON ..
-  make -j8
-  sudo make install
+  make install -j$(nproc)
   popd
 
   # protobuf
@@ -134,8 +130,7 @@ function build_gfamily() {
   git checkout v3.14.0
   cd cmake && mkdir -p build && cd build
   cmake -Dprotobuf_BUILD_SHARED_LIBS=ON -Dprotobuf_BUILD_TESTS=OFF ..
-  make -j$(nproc)
-  sudo make install
+  make install -j$(nproc)
   popd
 }
 
