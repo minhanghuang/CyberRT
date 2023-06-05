@@ -95,7 +95,7 @@ function build_gfamily() {
 
   # glog
   pushd "$CURRENT_PATH/../third_party/glog/"
-  git checkout v0.4.0
+  git checkout v0.5.0
   mkdir -p build && cd build
   if [ "$ARCH" == "x86_64" ]; then
     CXXFLAGS="-fPIC" cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DBUILD_SHARED_LIBS=ON ..
@@ -119,7 +119,8 @@ function build_gfamily() {
 
   # protobuf
   pushd "$CURRENT_PATH/../third_party/protobuf/"
-  git checkout v3.14.0
+#  git checkout v3.14.0
+  git checkout v3.6.1
   cd cmake && mkdir -p build && cd build
   cmake -Dprotobuf_BUILD_SHARED_LIBS=ON -Dprotobuf_BUILD_TESTS=OFF ..
   make -j$(nproc)
