@@ -14,6 +14,7 @@
 > dependence
 
 ```shell
+sudo apt update
 sudo apt install -y libpoco-dev uuid-dev libncurses5-dev python3-dev python3-pip
 python3 -m pip install protobuf
 ```
@@ -23,7 +24,7 @@ python3 -m pip install protobuf
 1. clone
 
 ```shell
-git clone --single-branch --branch v8.0.0  https://github.com/minhanghuang/CyberRT.git
+git clone --single-branch --branch v8.0.0 https://github.com/minhanghuang/CyberRT.git
 cd CyberRT
 ```
 
@@ -32,7 +33,7 @@ cd CyberRT
 > install
 
 ```shell
-./scripts/install.sh
+sudo ./scripts/install.sh
 ```
 
 > export path
