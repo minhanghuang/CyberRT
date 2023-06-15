@@ -39,33 +39,45 @@ set(CYBER_PYTHON_INTERNAL_PATH "${CYBER_PYTHON_PATH}/internal")
 set(CYBER_PYTHON_PROTOBUF_PATH "lib/python${Python_VERSION}/site-packages/cyber/proto")
 # set(CYBER_PYTHON_LIB "/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/libpython3.6.so")
 
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${fastcdr_INCLUDE_DIR}
-    ${fastrtps_INCLUDE_DIR}
-    ${Protobuf_INCLUDE_DIRS}
-    ${Python_INCLUDE_DIRS}
-    ${Glog_INCLUDE_DIRS}
-    ${Gflags_INCLUDE_DIRS}
-    ${NlohmannJson_INCLUDE_DIRS}
+set(DEPENCENCY_INCLUDE_DIRS
+  ${fastcdr_INCLUDE_DIR}
+  ${fastrtps_INCLUDE_DIR}
+  ${Protobuf_INCLUDE_DIRS}
+  ${Python_INCLUDE_DIRS}
+  ${Glog_INCLUDE_DIRS}
+  ${Gflags_INCLUDE_DIRS}
+  ${NlohmannJson_INCLUDE_DIRS}
 )
 
-link_directories(
-    ${fastcdr_LIB_DIR}
-    ${fastrtps_LIB_DIR}
-    ${Protobuf_LIBRARIES_DIRS}
-    ${Python_LIBRARIES_DIRS}
-    ${Glog_LIBRARY_DIRS}
-    ${Gflags_LIBRARY_DIRS}
-    ${NlohmannJson_LIBRARY_DIRS}
+set(DEPENCENCY_LIB_DIRS
+  ${fastcdr_LIB_DIR}
+  ${fastrtps_LIB_DIR}
+  ${Protobuf_LIBRARIES_DIRS}
+  ${Python_LIBRARIES_DIRS}
+  ${Glog_LIBRARY_DIRS}
+  ${Gflags_LIBRARY_DIRS}
+  ${NlohmannJson_LIBRARY_DIRS}
 )
+
+set(DEPENCENCY_LIBS
+  glog
+  ${Glog_LIBRARIES}
+  ${Gflags_LIBRARIES}
+)
+
+include_directories(
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${DEPENCENCY_INCLUDE_DIRS}
+)
+
+link_directories(${DEPENCENCY_LIB_DIRS})
 
 file(GLOB CYBER_SRCS
     "cyber/base/*.cc"
     "cyber/blocker/*.cc"
     "cyber/class_loader/*.cc"
     "cyber/class_loader/*/*.cc"
-    "cyber/common/*.cc" 
+    "cyber/common/*.cc"
     "cyber/component/*.cc"
     "cyber/croutine/*.cc"
     "cyber/croutine/*/*.cc"
@@ -83,7 +95,7 @@ file(GLOB CYBER_SRCS
     "cyber/service/*.cc"
     "cyber/service_discovery/*.cc"
     "cyber/service_discovery/*/*.cc"
-    "cyber/task/*.cc" 
+    "cyber/task/*.cc"
     "cyber/time/*.cc"
     "cyber/timer/*.cc"
     "cyber/transport/*.cc"
