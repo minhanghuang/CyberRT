@@ -39,12 +39,16 @@ set(CYBER_PYTHON_INTERNAL_PATH "${CYBER_PYTHON_PATH}/internal")
 set(CYBER_PYTHON_PROTOBUF_PATH "lib/python${Python_VERSION}/site-packages/cyber/proto")
 # set(CYBER_PYTHON_LIB "/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/libpython3.6.so")
 
+if(NOT DEFINED glog_LIBRARIES)
+  set(glog_LIBRARIES "glog")
+endif()
+
 set(DEPENCENCY_INCLUDE_DIRS
   ${fastcdr_INCLUDE_DIR}
   ${fastrtps_INCLUDE_DIR}
   ${Protobuf_INCLUDE_DIRS}
   ${Python_INCLUDE_DIRS}
-  ${Glog_INCLUDE_DIRS}
+  ${glog_INCLUDE_DIRS}
   ${Gflags_INCLUDE_DIRS}
   ${NlohmannJson_INCLUDE_DIRS}
 )
@@ -54,14 +58,13 @@ set(DEPENCENCY_LIB_DIRS
   ${fastrtps_LIB_DIR}
   ${Protobuf_LIBRARIES_DIRS}
   ${Python_LIBRARIES_DIRS}
-  ${Glog_LIBRARY_DIRS}
+  ${glog_LIBRARY_DIRS}
   ${Gflags_LIBRARY_DIRS}
   ${NlohmannJson_LIBRARY_DIRS}
 )
 
 set(DEPENCENCY_LIBS
-  glog
-  ${Glog_LIBRARIES}
+  ${glog_LIBRARIES}
   ${Gflags_LIBRARIES}
 )
 
@@ -142,12 +145,11 @@ add_library(${TARGET_NAME} SHARED
 )
 
 target_link_libraries(${TARGET_NAME}
-    ${Glog_LIBRARIES}
+    ${glog_LIBRARIES}
     ${Gflags_LIBRARIES}
     ${NlohmannJson_LIBRARIES}
     ${Protobuf_LIBRARIES}
     ${Poco_LIBRARIES}
-    glog
     fastrtps
     fastcdr
     atomic
