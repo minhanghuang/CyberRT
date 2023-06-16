@@ -82,6 +82,30 @@ include_directories(
 
 link_directories(${DEPENCENCY_LIB_DIRS})
 
+file(GLOB CYBER_PROTO_FILES
+  "${CMAKE_CURRENT_SOURCE_DIR}/modules/common_msgs/**/*.proto"
+  "${CMAKE_CURRENT_SOURCE_DIR}/cyber/proto/*.proto"
+  "${CMAKE_CURRENT_SOURCE_DIR}/cyber/examples/proto/*.proto"
+)
+
+FOREACH(FIL ${CYBER_PROTO_FILES})
+  GET_FILENAME_COMPONENT(FIL_WE ${FIL} NAME_WE)
+  string(REGEX REPLACE ".+/(.+)\\..*" "\\1" FILE_NAME ${FIL})
+  string(REGEX REPLACE "(.+)\\${FILE_NAME}.*" "\\1" FILE_PATH ${FIL})
+  EXECUTE_PROCESS(
+    COMMAND ${PROTOBUF_PROTOC_EXECUTABLE} -I${CMAKE_CURRENT_SOURCE_DIR} --cpp_out=${CMAKE_CURRENT_SOURCE_DIR} ${FIL}
+  )
+ENDFOREACH()
+
+file(GLOB CYBER_PROTO_SRCS
+    "cyber/proto/*.pb.cc"
+    "cyber/proto/*.pb.h"
+    "cyber/examples/proto/*.pb.cc"
+    "cyber/examples/proto/*.pb.h"
+    "modules/common_msgs/**/*.pb.cc"
+    "modules/common_msgs/**/*.pb.h"
+)
+
 file(GLOB CYBER_SRCS
     "cyber/base/*.cc"
     "cyber/blocker/*.cc"
@@ -115,39 +139,10 @@ file(GLOB CYBER_SRCS
     ${CROUTINE_FILE}
 )
 
-file(GLOB CYBER_PROTO_FILES
-  "${CMAKE_CURRENT_SOURCE_DIR}/modules/common_msgs/*/*.proto"
-  "${CMAKE_CURRENT_SOURCE_DIR}/cyber/proto/*.proto"
-  "${CMAKE_CURRENT_SOURCE_DIR}/cyber/examples/proto/*.proto"
-)
-
-SET(PROTO_META_BASE_DIR ${CMAKE_CURRENT_BINARY_DIR})
-
-LIST(APPEND PROTO_FLAGS
- -I${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-FOREACH(FIL ${CYBER_PROTO_FILES})
-  GET_FILENAME_COMPONENT(FIL_WE ${FIL} NAME_WE)
-  string(REGEX REPLACE ".+/(.+)\\..*" "\\1" FILE_NAME ${FIL})
-  string(REGEX REPLACE "(.+)\\${FILE_NAME}.*" "\\1" FILE_PATH ${FIL})
-  string(REGEX MATCH "(/modules/common_msgs.*|/cyber/proto/.*|/cyber/examples/proto/.*)" OUT_PATH ${FILE_PATH})
-  set(PROTO_SRCS "${CMAKE_CURRENT_BINARY_DIR}${OUT_PATH}${FIL_WE}.pb.cc")
-  set(PROTO_HDRS "${CMAKE_CURRENT_BINARY_DIR}${OUT_PATH}${FIL_WE}.pb.h")
-  EXECUTE_PROCESS(
-    COMMAND ${PROTOBUF_PROTOC_EXECUTABLE} ${PROTO_FLAGS} --cpp_out=${PROTO_META_BASE_DIR} ${FIL}
-  )
-  file(COPY ${PROTO_SRCS} DESTINATION ${FILE_PATH})
-  file(COPY ${PROTO_HDRS} DESTINATION ${FILE_PATH})
-  LIST(APPEND ALL_PROTO_SRCS ${PROTO_SRCS})
-  LIST(APPEND ALL_PROTO_HDRS ${PROTO_HDRS})
-ENDFOREACH()
-
 list(FILTER CYBER_SRCS EXCLUDE REGEX .*test[.]cc)
 
 add_library(${TARGET_NAME} SHARED
-    ${ALL_PROTO_HDRS}
-    ${ALL_PROTO_SRCS}
+    ${CYBER_PROTO_SRCS}
     ${CYBER_SRCS}
 )
 
@@ -161,7 +156,6 @@ target_link_libraries(${TARGET_NAME}
     fastrtps
     fastcdr
     atomic
-    uuid
 )
 
 add_executable(mainboard
