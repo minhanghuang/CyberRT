@@ -29,6 +29,7 @@ find_package(glog REQUIRED)
 find_package(Protobuf REQUIRED)
 # find_package(Python REQUIRED COMPONENTS Interpreter Development)
 pkg_check_modules(Python REQUIRED python3)
+pkg_check_modules(Uuid REQUIRED uuid)
 pkg_check_modules(Gflags REQUIRED gflags)
 pkg_check_modules(NlohmannJson REQUIRED nlohmann_json)
 
@@ -43,11 +44,16 @@ if(NOT DEFINED glog_LIBRARIES)
   set(glog_LIBRARIES "glog")
 endif()
 
+if(NOT DEFINED Uuid_LIBRARIES)
+  set(Uuid_LIBRARIES "uuid")
+endif()
+
 set(DEPENCENCY_INCLUDE_DIRS
   ${fastcdr_INCLUDE_DIR}
   ${fastrtps_INCLUDE_DIR}
   ${Protobuf_INCLUDE_DIRS}
   ${Python_INCLUDE_DIRS}
+  ${Uuid_INCLUDE_DIRS}
   ${glog_INCLUDE_DIRS}
   ${Gflags_INCLUDE_DIRS}
   ${NlohmannJson_INCLUDE_DIRS}
@@ -58,6 +64,7 @@ set(DEPENCENCY_LIB_DIRS
   ${fastrtps_LIB_DIR}
   ${Protobuf_LIBRARIES_DIRS}
   ${Python_LIBRARIES_DIRS}
+  ${Uuid_LIBRARIES_DIRS}
   ${glog_LIBRARY_DIRS}
   ${Gflags_LIBRARY_DIRS}
   ${NlohmannJson_LIBRARY_DIRS}
@@ -149,6 +156,7 @@ target_link_libraries(${TARGET_NAME}
     ${Gflags_LIBRARIES}
     ${NlohmannJson_LIBRARIES}
     ${Protobuf_LIBRARIES}
+    ${Uuid_LIBRARIES}
     ${Poco_LIBRARIES}
     fastrtps
     fastcdr
