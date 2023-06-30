@@ -129,7 +129,7 @@ function build_gfamily() {
   pushd "$CURRENT_PATH/../third_party/protobuf/"
   git checkout v3.14.0
   cd cmake && mkdir -p build && cd build
-  cmake -Dprotobuf_BUILD_SHARED_LIBS=ON -Dprotobuf_BUILD_TESTS=OFF ..
+  cmake -Dprotobuf_BUILD_SHARED_LIBS=ON -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX ..
   make install -j$(nproc)
   popd
 }
