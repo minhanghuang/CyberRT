@@ -5,6 +5,7 @@ project(cyber VERSION 8.0.0) # Apollo Version
 set(CMAKE_CXX_STANDARD 14)
 set(TARGET_NAME ${PROJECT_NAME})
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_BUILD_TYPE Debug) # Debug or Release
 
 enable_language(ASM)
 
@@ -38,6 +39,7 @@ set(Python_VERSION "${Python_VERSION}")
 set(CYBER_PYTHON_PATH "lib/python${Python_VERSION}/site-packages/cyber/python")
 set(CYBER_PYTHON_INTERNAL_PATH "${CYBER_PYTHON_PATH}/internal")
 set(CYBER_PYTHON_PROTOBUF_PATH "lib/python${Python_VERSION}/site-packages/cyber/proto")
+set(CYBER_MSGS_CACHE ON CACHE BOOL "generate cyber proto msgs flag.")
 # set(CYBER_PYTHON_LIB "/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/libpython3.6.so")
 
 if(NOT DEFINED glog_LIBRARIES)
@@ -88,14 +90,18 @@ file(GLOB CYBER_PROTO_FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/cyber/examples/proto/*.proto"
 )
 
-FOREACH(FIL ${CYBER_PROTO_FILES})
-  GET_FILENAME_COMPONENT(FIL_WE ${FIL} NAME_WE)
-  string(REGEX REPLACE ".+/(.+)\\..*" "\\1" FILE_NAME ${FIL})
-  string(REGEX REPLACE "(.+)\\${FILE_NAME}.*" "\\1" FILE_PATH ${FIL})
-  EXECUTE_PROCESS(
-    COMMAND ${PROTOBUF_PROTOC_EXECUTABLE} -I${CMAKE_CURRENT_SOURCE_DIR} --cpp_out=${CMAKE_CURRENT_SOURCE_DIR} ${FIL}
-  )
-ENDFOREACH()
+if(${CYBER_MSGS_CACHE})
+  set(CYBER_MSGS_CACHE OFF CACHE BOOL "generate cyber proto msgs flag." FORCE)
+  FOREACH(FIL ${CYBER_PROTO_FILES})
+    message("### generate proto file: ${FIL}")
+    GET_FILENAME_COMPONENT(FIL_WE ${FIL} NAME_WE)
+    string(REGEX REPLACE ".+/(.+)\\..*" "\\1" FILE_NAME ${FIL})
+    string(REGEX REPLACE "(.+)\\${FILE_NAME}.*" "\\1" FILE_PATH ${FIL})
+    EXECUTE_PROCESS(
+      COMMAND ${PROTOBUF_PROTOC_EXECUTABLE} -I${CMAKE_CURRENT_SOURCE_DIR} --cpp_out=${CMAKE_CURRENT_SOURCE_DIR} ${FIL}
+    )
+  ENDFOREACH()
+endif(${CYBER_MSGS_CACHE})
 
 file(GLOB CYBER_PROTO_SRCS
     "cyber/proto/*.pb.cc"
