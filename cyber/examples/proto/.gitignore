@@ -1,2 +1,3 @@
 *.pb.cc
 *.pb.h
+*pb2.py
