@@ -148,11 +148,24 @@ Commands:
 	cyber_recorder recover	Recover an exist record.
 ```
 
-## #5 Package
+## #5 Packages
 
 ```shell
 cmake -DCMAKE_INSTALL_PREFIX=/you/install/path ..
-make
+make -j$(nproc)
 make package
 sudo dpkg -i package/*.deb
+```
+
+```
+# CMakeLists.txt
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(Cyber REQUIRED cyber)
+include_directories(
+  ${Cyber_INCLUDE_DIRS}
+)
+link_directories(${Cyber_LIB_DIRS})
+target_link_libraries(${TARGET_NAME}
+  ${Cyber_LIBRARIES}
+)
 ```
