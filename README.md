@@ -4,10 +4,13 @@
 
 | Target        |  Status  |
 | ------------- | :-----:|
-| Ubuntu18.04   | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v8.0.0-build.yaml) |
-| Ubuntu20.04   | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v8.0.0-build.yaml) |
-| Ubuntu22.04   | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v8.0.0-build.yaml) |
-| Ubuntu latest   | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v8.0.0-build.yaml) |
+| Ubuntu18.04 x86-64   | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v8.0.0-build.yaml) |
+| Ubuntu20.04 x86-64  | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v8.0.0-build.yaml) |
+| Ubuntu22.04 x86-64  | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v8.0.0-build.yaml) |
+| Ubuntu latest x86-64  | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v8.0.0-build.yaml) |
+| Ubuntu18.04 arrch64 | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-arrch64-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-arrch64-v8.0.0-build.yaml) |
+| Ubuntu20.04  arrch64 | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-arrch64-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-arrch64-v8.0.0-build.yaml) |
+| Ubuntu22.04 arrch64 | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-arrch64-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-arrch64-v8.0.0-build.yaml) |
 
 ## #1 Env
 

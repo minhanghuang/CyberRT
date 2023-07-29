@@ -1,10 +1,11 @@
-name: ubuntu18.04 v8.0.0 build
-run-name: CyberRT v8.0.0 build runner on ubuntu18 🚀
+name: ubuntu18.04 v8.0.0 build x86-64
+run-name: CyberRT v8.0.0 build runner on ubuntu18 x86-64🚀
 
 on:
   pull_request:
     branches:
-      - master
+      - v8.0.0
+
   push:
     paths:
       - 'cmake/**'
@@ -12,7 +13,7 @@ on:
       - 'modules/**'
       - 'CMakeLists.txt'
       - 'scripts/**'
-      - '.github/workflows/ubuntu18-v8.0.0-build.yaml'
+      - '.github/workflows/*.yaml'
 
 jobs:
   build-amd-ubuntu18:
@@ -23,13 +24,19 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+
       - name: Install
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
           apt update
-          apt install -y git wget pkg-config g++ cmake libpoco-dev uuid-dev libncurses5-dev python3-dev
+          apt install -y lsb-release git wget pkg-config g++ cmake libpoco-dev uuid-dev libncurses5-dev python3-dev
           cd /workspace/${{ github.repository }} && ./scripts/install.sh
+
       - name: Build
         run: |
+          echo "-----------------------"
+          uname -a
+          lsb_release -a
+          echo "-----------------------"
           bash -c "cd /workspace/${{ github.repository }} && source install/setup.bash && mkdir -p build && cd build && cmake .. && make -j$(nproc)"
