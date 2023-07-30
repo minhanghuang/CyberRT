@@ -110,7 +110,7 @@ function build_gfamily() {
   if [ "$ARCH" == "x86_64" ]; then
     CXXFLAGS="-fPIC" cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DBUILD_SHARED_LIBS=ON ..
   elif [ "$ARCH" == "aarch64" ]; then
-    CXXFLAGS="-fPIC" cmake --build=armv8-none-linux -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DBUILD_SHARED_LIBS=ON ..
+    CXXFLAGS="-fPIC" cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DBUILD_SHARED_LIBS=ON ..
   else
       echo "not support $ARCH"
   fi
