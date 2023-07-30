@@ -2,7 +2,7 @@ name: ubuntu22.04 v8.0.0 build arrch64
 run-name: CyberRT v8.0.0 build runner on ubuntu22 arrch64🚀
 
 on:
-  pull_request:
+  push:
     branches:
       - v8.0.0
 

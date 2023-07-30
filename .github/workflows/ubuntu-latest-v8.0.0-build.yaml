@@ -2,7 +2,7 @@ name: ubuntu-latest v8.0.0 build x86-64
 run-name: CyberRT v8.0.0 build runner on ubuntu latest x86-64🚀
 
 on:
-  pull_request:
+  push:
     branches:
       - v8.0.0
 
