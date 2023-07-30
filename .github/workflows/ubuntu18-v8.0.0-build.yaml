@@ -3,16 +3,13 @@ run-name: CyberRT v8.0.0 build runner on ubuntu18 x86-64🚀
 
 on:
   push:
-    branches:
-      - v8.0.0
-
     paths:
       - 'cmake/**'
       - 'cyber/**'
       - 'modules/**'
       - 'CMakeLists.txt'
       - 'scripts/**'
-      - '.github/workflows/*.yaml'
+      - '.github/workflows/ubuntu18-v8.0.0-build.yaml'
 
 jobs:
   build-amd-ubuntu18:
