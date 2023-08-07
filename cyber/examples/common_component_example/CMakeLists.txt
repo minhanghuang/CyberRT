@@ -16,11 +16,11 @@ set_target_properties(common_component_example PROPERTIES LIBRARY_OUTPUT_DIRECTO
 
 
 file(COPY common.dag common.launch
-     DESTINATION ${CMAKE_BINARY_DIR}/share/examples  
+     DESTINATION ${CMAKE_BINARY_DIR}/share/examples/common_component_example
 )
 
 install(FILES common.dag common.launch
-  DESTINATION share/examples/
+  DESTINATION share/examples/common_component_example
 )
 
 install(TARGETS common_component_example
