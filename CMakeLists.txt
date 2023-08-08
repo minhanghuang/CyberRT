@@ -169,18 +169,7 @@ target_link_libraries(${TARGET_NAME}
     atomic
 )
 
-add_executable(mainboard
-  cyber/mainboard/mainboard.cc
-  cyber/mainboard/module_argument.cc
-  cyber/mainboard/module_controller.cc
-)
-
-target_link_libraries(mainboard
-    ${TARGET_NAME}
-    pthread
-)
-set_target_properties(mainboard PROPERTIES RUNTIME_OUTPUT_DIRECTORY "bin/")
-
+add_subdirectory(cyber/mainboard)
 add_subdirectory(cyber/examples)
 add_subdirectory(cyber/python)
 add_subdirectory(cyber/tools)
@@ -248,7 +237,7 @@ set(CPACK_PACKAGE_FILE_NAME   "${CPACK_PACKAGE_FILE_NAME}_${CPACK_PACKAGE_VERSIO
 
 include(CPack)
 # --------------------------------------------------------------
-#                       package 
+#                       package
 # --------------------------------------------------------------
 configure_file("cmake/${TARGET_NAME}.pc.in"
   "${PROJECT_BINARY_DIR}/pkgconfig/${TARGET_NAME}.pc" @ONLY)
@@ -292,7 +281,7 @@ install(DIRECTORY cyber/
 file(COPY cyber/conf/
   DESTINATION ${CMAKE_BINARY_DIR}/share/conf/
 )
-install(DIRECTORY ${CMAKE_BINARY_DIR}/share/conf/ 
+install(DIRECTORY ${CMAKE_BINARY_DIR}/share/conf/
   DESTINATION share/conf/
 )
 
@@ -328,7 +317,7 @@ install(DIRECTORY ${CMAKE_BINARY_DIR}/${CYBER_PYTHON_PROTOBUF_PATH}/
 )
 
 # install
-install(TARGETS ${TARGET_NAME} mainboard
+install(TARGETS ${TARGET_NAME}
     EXPORT ${TARGET_NAME}-targets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib

@@ -74,7 +74,7 @@ source setup.bash
 
 ```shell
 source setup.bash
-cyber_launch start share/examples/common.launch
+cyber_launch start share/examples/common_component_example/common.launch
 ./cyber/examples/common_component_example/channel_prediction_writer
 ./cyber/examples/common_component_example/channel_test_writer
 ```
@@ -131,7 +131,7 @@ Commands:
 4. launch
 
 ```shell
-cyber_launch start share/examples/common.launch
+cyber_launch start share/examples/common_component_example/common.launch
 ```
 
 5. monitor
