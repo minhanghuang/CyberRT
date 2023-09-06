@@ -5,7 +5,9 @@ project(cyber VERSION 8.0.0) # Apollo Version
 set(CMAKE_CXX_STANDARD 14)
 set(TARGET_NAME ${PROJECT_NAME})
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_BUILD_TYPE Debug) # Debug or Release
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Debug) # Debug/Release
+endif()
 
 enable_language(ASM)
 
