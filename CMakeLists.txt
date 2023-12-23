@@ -135,6 +135,7 @@ file(GLOB CYBER_SRCS
     "cyber/message/*.cc"
     "cyber/node/*.cc"
     "cyber/parameter/*.cc"
+    "cyber/plugin_manager/*.cc"
     "cyber/record/*.cc"
     "cyber/record/*/*.cc"
     "cyber/scheduler/*.cc"
