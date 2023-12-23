@@ -52,6 +52,18 @@ function build_nlohmann_json() {
   popd
 }
 
+function build_tinyxml2() {
+  echo "############### Build Tinyxml2. ################"
+  local NAME="tinyxml2"
+  download "https://github.com/leethomason/tinyxml2.git" "$NAME"
+  pushd "$CURRENT_PATH/../third_party/$NAME/"
+  git checkout 8.0.0
+  mkdir -p build && cd build
+  cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DBUILD_SHARED_LIBS=ON ..
+  make install -j$(nproc)
+  popd
+}
+
 function build_fastdds() {
   echo "############### Build Fast-DDS. ################"
   # download "https://github.com/eProsima/Fast-RTPS.git" "Fast-RTPS"
@@ -139,6 +151,7 @@ function main() {
   init
   build_setup
   build_nlohmann_json
+  build_tinyxml2
   build_gfamily
   build_fastdds
   return
