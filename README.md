@@ -1,8 +1,8 @@
-# Apollo(v8.0.0) CyberRT
+# Apollo(v9.0.0) CyberRT
 
 ![CyberRT](./docs/CyberRT.gif)
 
-| Target        |  Status  |
+| Target        |  CI Status  |
 | ------------- | :-----:|
 | Ubuntu18.04 x86-64   | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v8.0.0-build.yaml) |
 | Ubuntu20.04 x86-64  | [![build v8.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v8.0.0-build.yaml/badge.svg?branch=v8.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v8.0.0-build.yaml) |
