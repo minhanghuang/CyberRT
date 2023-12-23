@@ -1,0 +1,4585 @@
+diff --color -Naur common_msgs/BUILD /opt/apollo/modules/common_msgs/BUILD
+--- common_msgs/BUILD	2023-12-23 18:21:36.391614905 +0800
++++ /opt/apollo/modules/common_msgs/BUILD	2023-12-23 18:05:58.947028975 +0800
+@@ -1,211 +1,7 @@
+-load("//tools/install:install.bzl", "install", "install_files", "install_src_files")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(
+     default_visibility = ["//visibility:public"],
+ )
+ 
+-install(
+-    name = "install",
+-    data_dest = "common-msgs",
+-    data = [
+-        ":cyberfile.xml",
+-        ":common-msgs.BUILD",
+-    ],
+-    deps = [
+-        ":pb_hdrs",
+-    ],
+-)
+-
+-install(
+-    name = "pb_hdrs",
+-    data_dest = "common-msgs/include",
+-    data = [
+-        "//modules/common_msgs/audio_msgs:audio_common_cc_proto",
+-        "//modules/common_msgs/audio_msgs:audio_event_cc_proto",
+-        "//modules/common_msgs/audio_msgs:audio_cc_proto",
+-        "//modules/common_msgs/basic_msgs:direction_cc_proto",
+-        "//modules/common_msgs/basic_msgs:drive_event_cc_proto",
+-        "//modules/common_msgs/basic_msgs:drive_state_cc_proto",
+-        "//modules/common_msgs/basic_msgs:error_code_cc_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_cc_proto",
+-        "//modules/common_msgs/basic_msgs:header_cc_proto",
+-        "//modules/common_msgs/basic_msgs:pnc_point_cc_proto",
+-        "//modules/common_msgs/basic_msgs:vehicle_id_cc_proto",
+-        "//modules/common_msgs/basic_msgs:vehicle_signal_cc_proto",
+-        "//modules/common_msgs/chassis_msgs:chassis_cc_proto",
+-        "//modules/common_msgs/chassis_msgs:chassis_detail_cc_proto",
+-        "//modules/common_msgs/control_msgs:control_cmd_cc_proto",
+-        "//modules/common_msgs/control_msgs:input_debug_cc_proto",
+-        "//modules/common_msgs/control_msgs:pad_msg_cc_proto",
+-        "//modules/common_msgs/dreamview_msgs:chart_cc_proto",
+-        "//modules/common_msgs/dreamview_msgs:hmi_status_cc_proto",
+-        "//modules/common_msgs/guardian_msgs:guardian_cc_proto",
+-        "//modules/common_msgs/localization_msgs:gps_cc_proto",
+-        "//modules/common_msgs/localization_msgs:imu_cc_proto",
+-        "//modules/common_msgs/localization_msgs:localization_status_cc_proto",
+-        "//modules/common_msgs/localization_msgs:localization_cc_proto",
+-        "//modules/common_msgs/localization_msgs:pose_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_clear_area_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_crosswalk_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_geometry_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_id_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_junction_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_lane_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_overlap_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_parking_space_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_pnc_junction_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_road_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_rsu_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_signal_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_speed_bump_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_speed_control_cc_proto",
+-	    "//modules/common_msgs/drivers_msgs:can_card_parameter_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_stop_sign_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_yield_sign_cc_proto",
+-        "//modules/common_msgs/map_msgs:map_cc_proto",
+-        "//modules/common_msgs/monitor_msgs:smart_recorder_status_cc_proto",
+-        "//modules/common_msgs/monitor_msgs:system_status_cc_proto",
+-        "//modules/common_msgs/perception_msgs:perception_camera_cc_proto",
+-        "//modules/common_msgs/perception_msgs:perception_lane_cc_proto",
+-        "//modules/common_msgs/perception_msgs:perception_obstacle_cc_proto",
+-        "//modules/common_msgs/perception_msgs:traffic_light_detection_cc_proto",
+-        "//modules/common_msgs/planning_msgs:decision_cc_proto",
+-        "//modules/common_msgs/planning_msgs:navigation_cc_proto",
+-        "//modules/common_msgs/planning_msgs:pad_msg_cc_proto",
+-        "//modules/common_msgs/planning_msgs:planning_internal_cc_proto",
+-        "//modules/common_msgs/planning_msgs:planning_cc_proto",
+-        "//modules/common_msgs/planning_msgs:scenario_type_cc_proto",
+-        "//modules/common_msgs/planning_msgs:sl_boundary_cc_proto",
+-        "//modules/common_msgs/prediction_msgs:feature_cc_proto",
+-        "//modules/common_msgs/prediction_msgs:lane_graph_cc_proto",
+-        "//modules/common_msgs/prediction_msgs:prediction_obstacle_cc_proto",
+-        "//modules/common_msgs/prediction_msgs:prediction_point_cc_proto",
+-        "//modules/common_msgs/prediction_msgs:scenario_cc_proto",
+-        "//modules/common_msgs/routing_msgs:poi_cc_proto",
+-        "//modules/common_msgs/routing_msgs:routing_cc_proto",
+-        "//modules/common_msgs/sensor_msgs:conti_radar_cc_proto",
+-        "//modules/common_msgs/sensor_msgs:delphi_esr_cc_proto",
+-        "//modules/common_msgs/sensor_msgs:gnss_best_pose_cc_proto",
+-        "//modules/common_msgs/sensor_msgs:gnss_raw_observation_cc_proto",
+-        "//modules/common_msgs/sensor_msgs:gnss_cc_proto",
+-        "//modules/common_msgs/sensor_msgs:heading_cc_proto",
+-        "//modules/common_msgs/sensor_msgs:imu_cc_proto",
+-        "//modules/common_msgs/sensor_msgs:ins_cc_proto",
+-        "//modules/common_msgs/sensor_msgs:mobileye_cc_proto",
+-        "//modules/common_msgs/sensor_msgs:pointcloud_cc_proto",
+-        "//modules/common_msgs/sensor_msgs:racobit_radar_cc_proto",
+-        "//modules/common_msgs/sensor_msgs:radar_cc_proto",
+-        "//modules/common_msgs/sensor_msgs:sensor_image_cc_proto",
+-        "//modules/common_msgs/sensor_msgs:smartereye_cc_proto",
+-        "//modules/common_msgs/sensor_msgs:ultrasonic_radar_cc_proto",
+-        "//modules/common_msgs/storytelling_msgs:story_cc_proto",
+-        "//modules/common_msgs/task_manager_msgs:task_manager_cc_proto",
+-        "//modules/common_msgs/transform_msgs:transform_cc_proto",
+-        "//modules/common_msgs/v2x_msgs:v2x_traffic_light_cc_proto",
+-        "//modules/common_msgs/monitor_msgs:monitor_log_cc_proto",
+-        "//modules/common_msgs/config_msgs:vehicle_config_cc_proto",
+-    ],
+-    deps = [":pb_py"]
+-)
+-
+-install_src_files(
+-    name = "install_src",
+-    src_dir = ["."],
+-    dest = "common-msgs/src",
+-    filter = "*",
+-)
+-
+-install_files(
+-    name = "pb_py",
+-    dest = "common-msgs/python/modules/common_msgs",
+-    files = [
+-        "//modules/common_msgs/audio_msgs:audio_common_py_pb2",
+-        "//modules/common_msgs/audio_msgs:audio_event_py_pb2", 
+-        "//modules/common_msgs/audio_msgs:audio_py_pb2",  
+-        "//modules/common_msgs/chassis_msgs:chassis_detail_py_pb2",
+-        "//modules/common_msgs/chassis_msgs:chassis_py_pb2",
+-        "//modules/common_msgs/config_msgs:vehicle_config_py_pb2",
+-        "//modules/common_msgs/control_msgs:control_cmd_py_pb2",
+-        "//modules/common_msgs/control_msgs:input_debug_py_pb2",
+-        "//modules/common_msgs/control_msgs:pad_msg_py_pb2",
+-        "//modules/common_msgs/dreamview_msgs:chart_py_pb2",
+-        "//modules/common_msgs/dreamview_msgs:hmi_status_py_pb2",
+-        "//modules/common_msgs/drivers_msgs:can_card_parameter_py_pb2",
+-        "//modules/common_msgs/guardian_msgs:guardian_py_pb2",
+-        "//modules/common_msgs/localization_msgs:gps_py_pb2",
+-        "//modules/common_msgs/localization_msgs:imu_py_pb2",
+-        "//modules/common_msgs/localization_msgs:localization_status_py_pb2",
+-        "//modules/common_msgs/localization_msgs:localization_py_pb2",
+-        "//modules/common_msgs/localization_msgs:pose_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_clear_area_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_crosswalk_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_geometry_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_id_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_junction_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_lane_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_overlap_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_parking_space_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_pnc_junction_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_road_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_rsu_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_signal_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_speed_bump_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_speed_control_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_stop_sign_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_yield_sign_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_py_pb2",
+-        "//modules/common_msgs/monitor_msgs:monitor_log_py_pb2",
+-        "//modules/common_msgs/monitor_msgs:smart_recorder_status_py_pb2",
+-        "//modules/common_msgs/monitor_msgs:system_status_py_pb2",
+-        "//modules/common_msgs/perception_msgs:perception_camera_py_pb2",
+-        "//modules/common_msgs/perception_msgs:perception_lane_py_pb2",
+-        "//modules/common_msgs/perception_msgs:perception_obstacle_py_pb2",
+-        "//modules/common_msgs/perception_msgs:traffic_light_detection_py_pb2",
+-        "//modules/common_msgs/planning_msgs:decision_py_pb2",
+-        "//modules/common_msgs/planning_msgs:navigation_py_pb2",
+-        "//modules/common_msgs/planning_msgs:pad_msg_py_pb2",
+-        "//modules/common_msgs/planning_msgs:planning_internal_py_pb2",
+-        "//modules/common_msgs/planning_msgs:planning_py_pb2",
+-        "//modules/common_msgs/planning_msgs:scenario_type_py_pb2",
+-        "//modules/common_msgs/planning_msgs:sl_boundary_py_pb2",
+-        "//modules/common_msgs/prediction_msgs:feature_py_pb2",
+-        "//modules/common_msgs/prediction_msgs:lane_graph_py_pb2",
+-        "//modules/common_msgs/prediction_msgs:prediction_obstacle_py_pb2",
+-        "//modules/common_msgs/prediction_msgs:prediction_point_py_pb2",
+-        "//modules/common_msgs/prediction_msgs:scenario_py_pb2",
+-        "//modules/common_msgs/routing_msgs:poi_py_pb2",
+-        "//modules/common_msgs/routing_msgs:routing_py_pb2",
+-        "//modules/common_msgs/sensor_msgs:conti_radar_py_pb2",
+-        "//modules/common_msgs/sensor_msgs:delphi_esr_py_pb2",
+-        "//modules/common_msgs/sensor_msgs:gnss_best_pose_py_pb2",
+-        "//modules/common_msgs/sensor_msgs:gnss_raw_observation_py_pb2",
+-        "//modules/common_msgs/sensor_msgs:gnss_py_pb2",
+-        "//modules/common_msgs/sensor_msgs:heading_py_pb2",
+-        "//modules/common_msgs/sensor_msgs:imu_py_pb2",
+-        "//modules/common_msgs/sensor_msgs:ins_py_pb2",
+-        "//modules/common_msgs/sensor_msgs:mobileye_py_pb2",
+-        "//modules/common_msgs/sensor_msgs:pointcloud_py_pb2",
+-        "//modules/common_msgs/sensor_msgs:racobit_radar_py_pb2",
+-        "//modules/common_msgs/sensor_msgs:radar_py_pb2",
+-        "//modules/common_msgs/sensor_msgs:sensor_image_py_pb2",
+-        "//modules/common_msgs/sensor_msgs:smartereye_py_pb2",
+-        "//modules/common_msgs/sensor_msgs:ultrasonic_radar_py_pb2",
+-        "//modules/common_msgs/simulation_msgs:agent_py_pb2",
+-        "//modules/common_msgs/simulation_msgs:grading_condition_py_pb2",
+-        "//modules/common_msgs/simulation_msgs:grading_metric_py_pb2",
+-        "//modules/common_msgs/simulation_msgs:scenario_py_pb2",
+-        "//modules/common_msgs/storytelling_msgs:story_py_pb2",
+-        "//modules/common_msgs/task_manager_msgs:task_manager_py_pb2",
+-        "//modules/common_msgs/transform_msgs:transform_py_pb2",
+-        "//modules/common_msgs/v2x_msgs:v2x_traffic_light_py_pb2",
+-        "//modules/common_msgs/basic_msgs:direction_py_pb2",
+-        "//modules/common_msgs/basic_msgs:drive_state_py_pb2",
+-        "//modules/common_msgs/basic_msgs:error_code_py_pb2",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/basic_msgs:pnc_point_py_pb2",
+-        "//modules/common_msgs/basic_msgs:vehicle_signal_py_pb2",
+-        "//modules/common_msgs/basic_msgs:drive_event_py_pb2",
+-        "//modules/common_msgs/basic_msgs:vehicle_id_py_pb2",
+-    ],
+-)
++apollo_package()
+diff --color -Naur common_msgs/README.md /opt/apollo/modules/common_msgs/README.md
+--- common_msgs/README.md	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/README.md	2023-12-23 18:05:58.947028975 +0800
+@@ -0,0 +1,36 @@
++# common-msgs
++
++## Introduction
++This package includes all the message definitions that need to be transmitted in the channel.
++
++## Directory Structure
++```shell
++modules/common_msgs/
++├── audio_msgs              // Message definitions of audio
++├── basic_msgs              // Common message definitions
++├── BUILD
++├── chassis_msgs            // Message definitions of chassis 
++├── config_msgs             // Message definitions of config in multiple modules
++├── control_msgs            // Message definitions of control 
++├── cyberfile.xml
++├── dreamview_msgs          // Message definitions of dreamview
++├── drivers_msgs            // Message definitions of drivers component
++├── external_command_msgs   // Message definitions of external_command   
++├── guardian_msgs           // Message definitions of guardian_msgs 
++├── localization_msgs       // Message definitions of localization
++├── map_msgs                // Message definitions of map
++├── monitor_msgs            // Message definitions of monitor
++├── perception_msgs         // Message definitions of perception
++├── planning_msgs           // Message definitions of planning
++├── prediction_msgs         // Message definitions of prediction
++├── README.md
++├── routing_msgs            // Message definitions of routing
++├── sensor_msgs             // Message definitions of multiple sensors
++├── simulation_msgs         // Message definitions for simulation
++├── storytelling_msgs       // Message definitions of storytelling
++├── task_manager_msgs       // Message definitions of task-manager
++├── transform_msgs          // Message definitions of transform
++└── v2x_msgs                // Message definitions of v2x
++```
++
++
+diff --color -Naur common_msgs/audio_msgs/BUILD /opt/apollo/modules/common_msgs/audio_msgs/BUILD
+--- common_msgs/audio_msgs/BUILD	2023-12-23 18:21:36.391614905 +0800
++++ /opt/apollo/modules/common_msgs/audio_msgs/BUILD	2023-12-23 18:05:58.947028975 +0800
+@@ -1,42 +1,12 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "audio_cc_proto",
+-    deps = [
+-        ":audio_proto",
+-    ],
+-)
+-
+ proto_library(
+-    name = "audio_proto",
+-    srcs = ["audio.proto"],
+-    deps = [
+-        ":audio_common_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_proto",
+-        "//modules/common_msgs/basic_msgs:header_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "audio_py_pb2",
+-    deps = [
+-        ":audio_proto",
+-        ":audio_common_py_pb2",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "audio_event_cc_proto",
+-    deps = [
+-        ":audio_event_proto",
+-    ],
++    name = "audio_common_proto",
++    srcs = ["audio_common.proto"],
+ )
+ 
+ proto_library(
+@@ -49,31 +19,14 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "audio_event_py_pb2",
+-    deps = [
+-        ":audio_event_proto",
+-        ":audio_common_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/localization_msgs:pose_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "audio_common_cc_proto",
+-    deps = [
+-        ":audio_common_proto",
+-    ],
+-)
+-
+ proto_library(
+-    name = "audio_common_proto",
+-    srcs = ["audio_common.proto"],
+-)
+-
+-py_proto_library(
+-    name = "audio_common_py_pb2",
++    name = "audio_proto",
++    srcs = ["audio.proto"],
+     deps = [
+         ":audio_common_proto",
++        "//modules/common_msgs/basic_msgs:geometry_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
+     ],
+ )
++
++apollo_package()
+diff --color -Naur common_msgs/basic_msgs/BUILD /opt/apollo/modules/common_msgs/basic_msgs/BUILD
+--- common_msgs/basic_msgs/BUILD	2023-12-23 18:21:36.391614905 +0800
++++ /opt/apollo/modules/common_msgs/basic_msgs/BUILD	2023-12-23 18:05:58.947028975 +0800
+@@ -1,76 +1,9 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "header_cc_proto",
+-    deps = [
+-        ":header_proto",
+-    ],
+-)
+-
+-proto_library(
+-    name = "header_proto",
+-    srcs = ["header.proto"],
+-    deps = [
+-        ":error_code_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "header_py_pb2",
+-    deps = [
+-        ":header_proto",
+-        ":error_code_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "vehicle_id_cc_proto",
+-    deps = [
+-        ":vehicle_id_proto",
+-    ],
+-)
+-
+-proto_library(
+-    name = "vehicle_id_proto",
+-    srcs = ["vehicle_id.proto"],
+-)
+-
+-py_proto_library(
+-    name = "vehicle_id_py_pb2",
+-    deps = [
+-        ":vehicle_id_proto",
+-    ],
+-)
+-cc_proto_library(
+-    name = "direction_cc_proto",
+-    deps = [
+-        ":direction_proto",
+-    ],
+-)
+-
+-proto_library(
+-    name = "direction_proto",
+-    srcs = ["direction.proto"],
+-)
+-
+-py_proto_library(
+-    name = "direction_py_pb2",
+-    deps = [
+-        ":direction_proto",
+-    ],
+-)
+-cc_proto_library(
+-    name = "drive_event_cc_proto",
+-    deps = [
+-        ":drive_event_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "drive_event_proto",
+     srcs = ["drive_event.proto"],
+@@ -80,56 +13,32 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "drive_event_py_pb2",
+-    deps = [
+-        ":drive_event_proto",
+-        ":header_py_pb2",
+-        "//modules/common_msgs/localization_msgs:pose_py_pb2",
+-    ],
++proto_library(
++    name = "vehicle_signal_proto",
++    srcs = ["vehicle_signal.proto"],
+ )
+ 
+-cc_proto_library(
+-    name = "geometry_cc_proto",
+-    deps = [
+-        ":geometry_proto",
+-    ],
++proto_library(
++    name = "error_code_proto",
++    srcs = ["error_code.proto"],
+ )
+ 
+ proto_library(
+-    name = "geometry_proto",
+-    srcs = ["geometry.proto"],
++    name = "drive_state_proto",
++    srcs = ["drive_state.proto"],
+ )
+ 
+-py_proto_library(
+-    name = "geometry_py_pb2",
+-    deps = [
+-        ":geometry_proto",
+-    ],
+-)
+-cc_proto_library(
+-    name = "vehicle_signal_cc_proto",
++proto_library(
++    name = "header_proto",
++    srcs = ["header.proto"],
+     deps = [
+-        ":vehicle_signal_proto",
++        ":error_code_proto",
+     ],
+ )
+ 
+ proto_library(
+-    name = "vehicle_signal_proto",
+-    srcs = ["vehicle_signal.proto"],
+-)
+-
+-py_proto_library(
+-    name = "vehicle_signal_py_pb2",
+-    deps = [
+-        ":vehicle_signal_proto",
+-    ],
+-)
+-cc_proto_library(
+-    name = "pnc_point_cc_proto",
+-    deps = [
+-        ":pnc_point_proto",
+-    ],
++    name = "direction_proto",
++    srcs = ["direction.proto"],
+ )
+ 
+ proto_library(
+@@ -137,45 +46,14 @@
+     srcs = ["pnc_point.proto"],
+ )
+ 
+-py_proto_library(
+-    name = "pnc_point_py_pb2",
+-    deps = [
+-        ":pnc_point_proto",
+-    ],
+-)
+-cc_proto_library(
+-    name = "drive_state_cc_proto",
+-    deps = [
+-        ":drive_state_proto",
+-    ],
+-)
+-
+ proto_library(
+-    name = "drive_state_proto",
+-    srcs = ["drive_state.proto"],
+-)
+-
+-py_proto_library(
+-    name = "drive_state_py_pb2",
+-    deps = [
+-        ":drive_state_proto",
+-    ],
+-)
+-cc_proto_library(
+-    name = "error_code_cc_proto",
+-    deps = [
+-        ":error_code_proto",
+-    ],
++    name = "geometry_proto",
++    srcs = ["geometry.proto"],
+ )
+ 
+ proto_library(
+-    name = "error_code_proto",
+-    srcs = ["error_code.proto"],
++    name = "vehicle_id_proto",
++    srcs = ["vehicle_id.proto"],
+ )
+ 
+-py_proto_library(
+-    name = "error_code_py_pb2",
+-    deps = [
+-        ":error_code_proto",
+-    ],
+-)
++apollo_package()
+diff --color -Naur common_msgs/chassis_msgs/BUILD /opt/apollo/modules/common_msgs/chassis_msgs/BUILD
+--- common_msgs/chassis_msgs/BUILD	2023-12-23 18:21:36.394614905 +0800
++++ /opt/apollo/modules/common_msgs/chassis_msgs/BUILD	2023-12-23 18:05:58.947028975 +0800
+@@ -1,14 +1,15 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "chassis_cc_proto",
++proto_library(
++    name = "chassis_detail_proto",
++    srcs = ["chassis_detail.proto"],
+     deps = [
+         ":chassis_proto",
++        "//modules/common_msgs/basic_msgs:vehicle_id_proto",
+     ],
+ )
+ 
+@@ -21,42 +22,8 @@
+         "//modules/common_msgs/basic_msgs:header_proto",
+         "//modules/common_msgs/basic_msgs:vehicle_id_proto",
+         "//modules/common_msgs/basic_msgs:vehicle_signal_proto",
++        "@com_google_protobuf//:any_proto",
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "chassis_py_pb2",
+-    deps = [
+-        ":chassis_proto",
+-        "//modules/common_msgs/basic_msgs:drive_state_py_pb2",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/basic_msgs:vehicle_id_py_pb2",
+-        "//modules/common_msgs/basic_msgs:vehicle_signal_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "chassis_detail_cc_proto",
+-    deps = [
+-        ":chassis_detail_proto",
+-    ],
+-)
+-
+-proto_library(
+-    name = "chassis_detail_proto",
+-    srcs = ["chassis_detail.proto"],
+-    deps = [
+-        "//modules/common_msgs/basic_msgs:vehicle_id_proto",
+-        ":chassis_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "chassis_detail_py_pb2",
+-    deps = [
+-        ":chassis_detail_proto",
+-        "//modules/common_msgs/basic_msgs:vehicle_id_py_pb2",
+-        ":chassis_py_pb2",
+-    ],
+-)
+\ No newline at end of file
++apollo_package()
+diff --color -Naur common_msgs/chassis_msgs/chassis.proto /opt/apollo/modules/common_msgs/chassis_msgs/chassis.proto
+--- common_msgs/chassis_msgs/chassis.proto	2023-12-23 18:21:36.394614905 +0800
++++ /opt/apollo/modules/common_msgs/chassis_msgs/chassis.proto	2023-12-23 18:05:58.947028975 +0800
+@@ -2,6 +2,7 @@
+ 
+ package apollo.canbus;
+ 
++import "google/protobuf/any.proto";
+ import "modules/common_msgs/basic_msgs/drive_state.proto";
+ import "modules/common_msgs/basic_msgs/geometry.proto";
+ import "modules/common_msgs/basic_msgs/header.proto";
+@@ -151,6 +152,9 @@
+   optional BumperEvent back_bumper_event = 39;
+ 
+   optional CheckResponse check_response = 40;
++
++  // Custom chassis operation command defined by user for extensibility.
++  optional google.protobuf.Any custom_status = 41;
+ }
+ 
+ message ChassisGPS {
+diff --color -Naur common_msgs/config_msgs/BUILD /opt/apollo/modules/common_msgs/config_msgs/BUILD
+--- common_msgs/config_msgs/BUILD	2023-12-23 18:21:36.396614904 +0800
++++ /opt/apollo/modules/common_msgs/config_msgs/BUILD	2023-12-23 18:05:58.947028975 +0800
+@@ -1,34 +1,17 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "vehicle_config_cc_proto",
+-    deps = [
+-        ":vehicle_config_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "vehicle_config_proto",
+     srcs = ["vehicle_config.proto"],
+     deps = [
+-        "//modules/common_msgs/basic_msgs:header_proto",
+         "//modules/common_msgs/basic_msgs:geometry_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
+         "//modules/common_msgs/basic_msgs:vehicle_id_proto",
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "vehicle_config_py_pb2",
+-    deps = [
+-        ":vehicle_config_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:vehicle_id_py_pb2",
+-    ],
+-)
+-
++apollo_package()
+diff --color -Naur common_msgs/control_msgs/BUILD /opt/apollo/modules/common_msgs/control_msgs/BUILD
+--- common_msgs/control_msgs/BUILD	2023-12-23 18:21:36.396614904 +0800
++++ /opt/apollo/modules/common_msgs/control_msgs/BUILD	2023-12-23 18:05:58.948028975 +0800
+@@ -1,74 +1,29 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "control_cmd_cc_proto",
+-    deps = [
+-        ":control_cmd_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "control_cmd_proto",
+     srcs = ["control_cmd.proto"],
+     deps = [
++        ":input_debug_proto",
++        ":control_pad_msg_proto",
+         "//modules/common_msgs/basic_msgs:drive_state_proto",
+         "//modules/common_msgs/basic_msgs:header_proto",
+         "//modules/common_msgs/basic_msgs:pnc_point_proto",
+         "//modules/common_msgs/basic_msgs:vehicle_signal_proto",
+         "//modules/common_msgs/chassis_msgs:chassis_proto",
+-        ":input_debug_proto",
+-        ":pad_msg_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "control_cmd_py_pb2",
+-    deps = [
+-        ":control_cmd_proto",
+-        "//modules/common_msgs/basic_msgs:drive_state_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/basic_msgs:pnc_point_py_pb2",
+-        "//modules/common_msgs/basic_msgs:vehicle_signal_py_pb2",
+-        "//modules/common_msgs/chassis_msgs:chassis_py_pb2",
+-        ":input_debug_py_pb2",
+-        ":pad_msg_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "pad_msg_cc_proto",
+-    deps = [
+-        ":pad_msg_proto",
++        "@com_google_protobuf//:any_proto"
+     ],
+ )
+ 
+ proto_library(
+-    name = "pad_msg_proto",
++    name = "control_pad_msg_proto",
+     srcs = ["pad_msg.proto"],
+     deps = [
+         "//modules/common_msgs/basic_msgs:header_proto",
+-        "//modules/common_msgs/chassis_msgs:chassis_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "pad_msg_py_pb2",
+-    deps = [
+-        ":pad_msg_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/chassis_msgs:chassis_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "input_debug_cc_proto",
+-    deps = [
+-        ":input_debug_proto",
+     ],
+ )
+ 
+@@ -80,11 +35,4 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "input_debug_py_pb2",
+-    deps = [
+-        ":input_debug_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
++apollo_package()
+diff --color -Naur common_msgs/control_msgs/control_cmd.proto /opt/apollo/modules/common_msgs/control_msgs/control_cmd.proto
+--- common_msgs/control_msgs/control_cmd.proto	2023-12-23 18:21:36.396614904 +0800
++++ /opt/apollo/modules/common_msgs/control_msgs/control_cmd.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -1,6 +1,7 @@
+ syntax = "proto2";
+ package apollo.control;
+ 
++import "google/protobuf/any.proto";
+ import "modules/common_msgs/basic_msgs/drive_state.proto";
+ import "modules/common_msgs/basic_msgs/header.proto";
+ import "modules/common_msgs/basic_msgs/pnc_point.proto";
+@@ -108,6 +109,13 @@
+   optional apollo.common.TrajectoryPoint current_reference_point = 33;
+   optional apollo.common.TrajectoryPoint preview_reference_point = 34;
+   optional double acceleration_lookup_limit = 35;
++  optional double vehicle_pitch = 36;
++  optional bool is_epb_brake = 37;
++  optional double current_steer_interval = 38;
++  optional bool is_wait_steer = 39;
++  optional bool is_stop_reason_by_destination = 40;
++  optional bool is_stop_reason_by_prdestrian = 41;
++  optional bool is_full_stop_soft = 42;
+ }
+ 
+ message SimpleLateralDebug {
+@@ -226,6 +234,25 @@
+   optional double jerk_reference = 47;
+   optional double jerk_feedback = 48;
+   optional double jerk_error = 49;
++
++  // modified lateral_error and heading_error with look-ahead or look-back
++  // station, as the feedback term for control usage
++  optional double lateral_error_feedback = 50;
++  optional double heading_error_feedback = 51;
++  // Augmented feedback control term in addition to MPC control
++  optional double steer_angle_feedback_augment = 52;
++  optional apollo.common.TrajectoryPoint current_matched_point = 53;
++  optional apollo.common.TrajectoryPoint current_reference_point = 54;
++  optional apollo.common.TrajectoryPoint preview_reference_point = 55;
++  optional double preview_station_error = 56;
++  optional double preview_speed_reference = 57;
++  optional double preview_speed_error = 58;
++  optional double preview_acceleration_reference = 59;
++  optional double vehicle_pitch = 60;
++  optional double slope_offset_compensation = 61;
++  optional double path_remain = 62;
++  optional double acceleration_lookup_offset = 63;
++  optional double acceleration_vrf = 64;
+ }
+ 
+ message MracDebug {
+diff --color -Naur common_msgs/control_msgs/pad_msg.proto /opt/apollo/modules/common_msgs/control_msgs/pad_msg.proto
+--- common_msgs/control_msgs/pad_msg.proto	2023-12-23 18:21:36.396614904 +0800
++++ /opt/apollo/modules/common_msgs/control_msgs/pad_msg.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -2,10 +2,8 @@
+ package apollo.control;
+ 
+ import "modules/common_msgs/basic_msgs/header.proto";
+-import "modules/common_msgs/chassis_msgs/chassis.proto";
+ 
+ enum DrivingAction {
+-  STOP = 0;
+   START = 1;
+   RESET = 2;
+   VIN_REQ = 3;
+@@ -15,9 +13,6 @@
+   // control mode, set mode according to low level definition
+   optional apollo.common.Header header = 1;
+ 
+-  // send driving mode to drive
+-  optional apollo.canbus.Chassis.DrivingMode driving_mode = 2;
+-
+   // action in the driving_mode
+-  optional DrivingAction action = 3;
++  optional DrivingAction action = 2;
+ }
+diff --color -Naur common_msgs/cyberfile.xml /opt/apollo/modules/common_msgs/cyberfile.xml
+--- common_msgs/cyberfile.xml	2023-12-23 18:21:36.397614904 +0800
++++ /opt/apollo/modules/common_msgs/cyberfile.xml	2023-12-23 18:05:58.948028975 +0800
+@@ -4,22 +4,24 @@
+   <description>
+     This module contains code that is not specific to any module but is useful for the functioning of Apollo.
+   </description>
+-  
++
+   <maintainer email="apollo-support@baidu.com">Apollo</maintainer>
+   <license>Apache License 2.0</license>
+   <url type="website">https://www.apollo.auto/</url>
+   <url type="repository">https://github.com/ApolloAuto/apollo</url>
+   <url type="bugtracker">https://github.com/ApolloAuto/apollo/issues</url>
+ 
+-  <type>module-wrapper</type>
++  <type>module</type>
+   <src_path url="https://github.com/ApolloAuto/apollo">//modules/common_msgs</src_path>
+ 
+-  <depend expose="False">3rd-rules-python-dev</depend>
+-  <depend expose="False">3rd-grpc-dev</depend>
+-  <depend expose="False">3rd-gpus-dev</depend>
+-  <depend expose="False">3rd-rules-proto-dev</depend>
+-  <depend expose="False">3rd-bazel-skylib-dev</depend>
+-  
+-  <depend lib_names="protobuf" repo_name="com_google_protobuf">3rd-protobuf-dev</depend>
++  <depend expose="False">3rd-rules-python</depend>
++  <depend expose="False">3rd-grpc</depend>
++  <depend expose="False">3rd-gpus</depend>
++  <depend expose="False">3rd-rules-proto</depend>
++  <depend expose="False">3rd-py</depend>
++  <depend>bazel-extend-tools</depend>
++  <depend expose="False">3rd-bazel-skylib</depend>
++
++  <depend lib_names="protobuf" repo_name="com_google_protobuf">3rd-protobuf</depend>
+ 
+ </package>
+diff --color -Naur common_msgs/dreamview_msgs/BUILD /opt/apollo/modules/common_msgs/dreamview_msgs/BUILD
+--- common_msgs/dreamview_msgs/BUILD	2023-12-23 18:21:36.397614904 +0800
++++ /opt/apollo/modules/common_msgs/dreamview_msgs/BUILD	2023-12-23 18:05:58.948028975 +0800
+@@ -1,17 +1,9 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "chart_cc_proto",
+-    deps = [
+-        ":chart_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "chart_proto",
+     srcs = ["chart.proto"],
+@@ -20,37 +12,42 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "chart_py_pb2",
++proto_library(
++    name = "hmi_status_proto",
++    srcs = ["hmi_status.proto"],
+     deps = [
+-        ":chart_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
++        "//modules/common_msgs/basic_msgs:geometry_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
++        "//modules/common_msgs/monitor_msgs:system_status_proto",
+     ],
+ )
+ 
+-cc_proto_library(
+-    name = "hmi_status_cc_proto",
++proto_library(
++    name = "hmi_mode_proto",
++    srcs = ["hmi_mode.proto"],
+     deps = [
+-        ":hmi_status_proto",
++        "//modules/common_msgs/dreamview_msgs:hmi_status_proto"
+     ],
+ )
+ 
+ proto_library(
+-    name = "hmi_status_proto",
+-    srcs = ["hmi_status.proto"],
+-    deps = [
+-        "//modules/common_msgs/basic_msgs:header_proto",
+-        "//modules/common_msgs/monitor_msgs:system_status_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_proto",
+-    ],
++    name = "hmi_config_proto",
++    srcs = ["hmi_config.proto"],
+ )
+ 
+-py_proto_library(
+-    name = "hmi_status_py_pb2",
++proto_library(
++    name = "simulation_world_proto",
++    srcs = ["simulation_world.proto"],
+     deps = [
+-        ":hmi_status_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/monitor_msgs:system_status_py_pb2",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
++        "//modules/common_msgs/chassis_msgs:chassis_proto",
++        "//modules/common_msgs/monitor_msgs:monitor_log_proto",
++        "//modules/common_msgs/basic_msgs:pnc_point_proto",
++        "//modules/common_msgs/perception_msgs:perception_obstacle_proto",
++        "//modules/common_msgs/planning_msgs:planning_internal_proto",
++        "//modules/common_msgs/prediction_msgs:feature_proto",
++        "//modules/common_msgs/routing_msgs:routing_geometry_proto",
++        "//modules/common_msgs/config_msgs:vehicle_config_proto",
+     ],
+ )
++
++apollo_package()
+diff --color -Naur common_msgs/dreamview_msgs/hmi_config.proto /opt/apollo/modules/common_msgs/dreamview_msgs/hmi_config.proto
+--- common_msgs/dreamview_msgs/hmi_config.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/dreamview_msgs/hmi_config.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -0,0 +1,56 @@
++syntax = "proto2";
++
++package apollo.dreamview;
++
++enum HMIAction {
++  // Simple HMI action without any parameter.
++  NONE = 0;
++  SETUP_MODE = 1;       // Setup current mode.
++  RESET_MODE = 2;       // Reset current mode.
++  ENTER_AUTO_MODE = 3;  // Enter into auto driving mode.
++  DISENGAGE = 4;        // Disengage from auto driving mode.
++
++  // HMI action with a value string parameter.
++  CHANGE_MODE = 5;     // value = mode_name
++  CHANGE_MAP = 6;      // value = map_name
++  CHANGE_VEHICLE = 7;  // value = vehicle_name
++  START_MODULE = 8;    // value = module_name
++  STOP_MODULE = 9;     // value = module_name
++  CHANGE_SCENARIO = 10;     // value = scenario_id
++  CHANGE_SCENARIO_SET = 11;      // value = scenario_set_id
++  LOAD_SCENARIOS = 12; // 加载全部scenarios
++  DELETE_SCENARIO_SET = 13; // value = scenario_set_id
++  LOAD_DYNAMIC_MODELS = 14; // 加载全部动力学模型
++  CHANGE_DYNAMIC_MODEL = 15; // 切换动力学模型 value = dynamic_model_name
++  DELETE_DYNAMIC_MODEL = 16; // 删除动力学模型 value = dynamic_model_name
++  CHANGE_RECORD = 17; //value = record_id
++  DELETE_RECORD = 18; //value = record_id
++  LOAD_RECORDS = 19;     // Load all records
++  STOP_RECORD = 20; //value = module_name
++  CHANGE_OPERATION = 21; //value = operation_name
++  DELETE_VEHICLE_CONF = 22; // Delete the parameters of a vehicle.
++  DELETE_V2X_CONF = 23; // Delete the parameters of a v2x.
++  DELETE_MAP = 24; // Delete map that value = map_name
++  LOAD_RTK_RECORDS = 25; // Load all rtk records
++  CHANGE_RTK_RECORD = 26; // change rtk records
++  LOAD_RECORD = 27;     // Load record
++}
++
++message HMIConfig {
++  map<string, string> modes = 1;     // {mode_name: mode_path}
++  map<string, string> maps = 2;      // {map_name: map_path}
++  map<string, string> vehicles = 3;  // {vehicle_name: vehicle_path}
++}
++
++message VehicleData {
++  // Upon switching vehicle, we need to copy source data to the dest path to
++  // make it in effect.
++  message DataFile {
++    // Source path is a path relative to the vehicle data directory.
++    optional string source_path = 1;
++    // Dest path is where the data file could become in effect.
++    optional string dest_path = 2;
++  }
++  repeated DataFile data_files = 1;
++}
++
+diff --color -Naur common_msgs/dreamview_msgs/hmi_mode.proto /opt/apollo/modules/common_msgs/dreamview_msgs/hmi_mode.proto
+--- common_msgs/dreamview_msgs/hmi_mode.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/dreamview_msgs/hmi_mode.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -0,0 +1,130 @@
++syntax = "proto2";
++
++package apollo.dreamview;
++
++// This proto defines a mode showing in Dreamview, including how you will
++// display them and monitor their status.
++
++import "modules/common_msgs/dreamview_msgs/hmi_status.proto";
++
++// For ProcessMonitor.
++message ProcessMonitorConfig {
++  repeated string command_keywords = 1;
++}
++
++// For ModuleMonitor
++message ModuleMonitorConfig {
++  repeated string node_name = 1;
++}
++
++// For ChannelMonitor.
++message ChannelMonitorConfig {
++  optional string name = 1;
++  optional double delay_fatal = 2 [default = 3.0];  // In seconds.
++
++  // The fields will be checked to make sure they are existing
++  // Specify in the format of "a.b.c"
++  repeated string mandatory_fields = 3;
++
++  // Minimum and maximum frequency allowed for this channel
++  optional double min_frequency_allowed = 4 [default = 0.0];
++  optional double max_frequency_allowed = 5 [default = 1000.0];
++}
++
++// For ResourceMonitor.
++message ResourceMonitorConfig {
++  message DiskSpace {
++    // Path to monitor space. Support wildcards like ? and *.
++    // If the path does't exist, raise UNKNWON which will be ignored.
++    optional string path = 1;
++    optional int32 insufficient_space_warning = 2;  // In GB.
++    optional int32 insufficient_space_error = 3;
++  }
++
++  message CPUUsage {
++    optional float high_cpu_usage_warning = 1;
++    optional float high_cpu_usage_error = 2;
++    // The process's dag path, if not set it will check the system's overall CPU
++    // usage
++    optional string process_dag_path = 3;
++  }
++
++  message MemoryUsage {
++    optional int32 high_memory_usage_warning = 1;
++    optional int32 high_memory_usage_error = 2;
++    // The process's dag path, if not set it will check the system's overall
++    // memory usage
++    optional string process_dag_path = 3;
++  }
++
++  message DiskLoad {
++    optional int32 high_disk_load_warning = 1;
++    optional int32 high_disk_load_error = 2;
++    // Disk device name, such as sda, sdb and etc
++    optional string device_name = 3;
++  }
++
++  repeated DiskSpace disk_spaces = 1;
++  repeated CPUUsage cpu_usages = 2;
++  repeated MemoryUsage memory_usages = 3;
++  repeated DiskLoad disk_load_usages = 4;
++}
++
++// A monitored component will be listed on HMI which only shows its status but
++// user cannot operate.
++// The whole config will generate SystemStatus.components[i].summary by Monitor
++// module, which is generally the most severe one of process, channel or
++// resource status.
++message MonitoredComponent {
++  // Generate SystemStatus.components[i].process_status.
++  // OK if the process is running.
++  // FATAL if the process is down.
++  optional ProcessMonitorConfig process = 1;
++
++  // Generate SystemStatus.components[i].channel_status.
++  // OK if delay is not notable.
++  // FATAL if delay is larger than fatal_delay.
++  optional ChannelMonitorConfig channel = 2;
++
++  // Generate SystemStatus.components[i].resource_status.
++  // OK if all requirements are met.
++  // WARN/ERROR/FATAL if any requirement is below expectation.
++  optional ResourceMonitorConfig resource = 3;
++
++  // Whether to trigger safe-mode if the component is down.
++  optional bool required_for_safety = 4 [default = true];
++
++  // Generate SystemStatus.components[i].module_status.
++  // OK if the module is running.
++  // FATAL if the module is down.
++  optional ModuleMonitorConfig module = 5;
++}
++
++// A module which can be started and stopped by HMI.
++message Module {
++  optional string start_command = 1;
++  optional string stop_command = 2;
++
++  // We use the config in ProcessMonitor to check if the module is running.
++  optional ProcessMonitorConfig process_monitor_config = 3;
++  // Whether to trigger safe-mode if the module is down.
++  optional bool required_for_safety = 4 [default = true];
++}
++
++// A CyberModule will be translated to a regular Module upon loading.
++message CyberModule {
++  repeated string dag_files = 1;
++  optional bool required_for_safety = 2 [default = true];
++  optional string process_group = 3;
++}
++
++message HMIMode {
++  map<string, CyberModule> cyber_modules = 1;
++  map<string, Module> modules = 2;
++  map<string, MonitoredComponent> monitored_components = 3;
++  map<string, ProcessMonitorConfig> other_components = 4;
++  repeated HMIModeOperation operations = 5;
++  optional HMIModeOperation default_operation = 6;
++  optional string layout = 7;
++  map<string, MonitoredComponent> global_components = 8;
++}
+diff --color -Naur common_msgs/dreamview_msgs/hmi_status.proto /opt/apollo/modules/common_msgs/dreamview_msgs/hmi_status.proto
+--- common_msgs/dreamview_msgs/hmi_status.proto	2023-12-23 18:21:36.397614904 +0800
++++ /opt/apollo/modules/common_msgs/dreamview_msgs/hmi_status.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -6,19 +6,69 @@
+ import "modules/common_msgs/monitor_msgs/system_status.proto";
+ import "modules/common_msgs/basic_msgs/geometry.proto";
+ 
++
+ message ScenarioInfo {
+   optional string scenario_id = 1;
+   optional string scenario_name = 2;
+   optional string map_name = 3;
+   optional apollo.common.Point2D start_point = 4;
++  optional apollo.common.Point2D end_point = 5;
+ }
+ 
+ message ScenarioSet {
+-  // id 是key
++  // id is key
+   optional string scenario_set_name = 1;
+   repeated ScenarioInfo scenarios = 2;
+ }
+ 
++enum PlayRecordStatus{
++  // action:play continue
++  RUNNING = 0;
++  // action: pause
++  PAUSED = 1;
++  // action: default kill
++  CLOSED = 2;
++}
++
++message RecordStatus{
++  optional string current_record_id = 1 [default = ""];
++  optional PlayRecordStatus play_record_status = 2 [default = CLOSED];
++  optional double curr_time_s = 4 [default = 0];
++}
++
++enum HMIModeOperation {
++  // None
++  None = 0;
++  // 仿真调试
++  SIM_DEBUG = 1;
++  // 自由仿真
++  Sim_Control = 2;
++  // 实车自动驾驶
++  Auto_Drive=3;
++  // 循迹
++  TRACE=4;
++  // 场景仿真
++  Scenario_Sim = 5;
++  // 播包
++  Record = 6;
++  // 循迹
++  Waypoint_Follow=7;
++}
++
++enum LoadRecordStatus {
++  NOT_LOAD = 1;
++  LOADING = 2;
++  LOADED = 3;
++}
++
++message LoadRecordInfo{
++  optional LoadRecordStatus load_record_status = 1 [default = NOT_LOAD];
++  optional double total_time_s = 2 [default = 0];
++  optional string record_file_path = 3 [default = ""];
++  // Compatible with dv download scenario use plugin,only dv use it.
++  optional int32 download_status = 4 [default = 0];
++}
++
+ message HMIStatus {
+   optional apollo.common.Header header = 1;
+ 
+@@ -49,9 +99,31 @@
+   optional string current_scenario_id = 17 [default = ""];
+   repeated string dynamic_models = 18;
+   optional string current_dynamic_model = 19;
++  // for dreamview(1.0 version)
+   optional string current_record_id = 20 [default = ""];
+-  map<string, int32> records = 21;
++  // for dv1.0: map value no used,is also equals to empty object
++  // for dv2.0: map value equals to loadrecordinfo object which includes
++  // record total time(s),load record status and record file path
++  map<string, LoadRecordInfo> records = 21;
+   optional sint32 current_vehicle_type = 22;
+   optional string current_camera_sensor_channel = 23;
+   optional string current_point_cloud_channel = 24;
++
++  // dv2.0: add operation concept
++  // operations is related to hmiMode
++  repeated HMIModeOperation operations = 25;
++  optional HMIModeOperation current_operation = 26;
++  optional string current_layout = 27;
++  optional RecordStatus current_record_status = 28;
++  // Mark global component status.
++  map<string, apollo.monitor.Component> global_components = 29;
++  // Mark the expected number of modules to be opened
++  optional uint32 expected_modules = 30 [default = 0];
++
++  // {module_name: Used to identify whether the user clicks on the module}
++  map<string, bool> modules_lock = 31;
++  // Used to identify whether the backend triggers automatic shutdown.
++  optional bool backend_shutdown = 32 [default = false];
++  repeated string rtk_records = 33;
++  optional string current_rtk_record_id = 34 [default = ""];
+ }
+diff --color -Naur common_msgs/dreamview_msgs/simulation_world.proto /opt/apollo/modules/common_msgs/dreamview_msgs/simulation_world.proto
+--- common_msgs/dreamview_msgs/simulation_world.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/dreamview_msgs/simulation_world.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -0,0 +1,303 @@
++syntax = "proto2";
++
++package apollo.dreamview;
++
++import "modules/common_msgs/chassis_msgs/chassis.proto";
++import "modules/common_msgs/monitor_msgs/monitor_log.proto";
++import "modules/common_msgs/basic_msgs/pnc_point.proto";
++import "modules/common_msgs/perception_msgs/perception_obstacle.proto";
++import "modules/common_msgs/planning_msgs/planning_internal.proto";
++import "modules/common_msgs/prediction_msgs/feature.proto";
++import "modules/common_msgs/routing_msgs/geometry.proto";
++import "modules/common_msgs/config_msgs/vehicle_config.proto";
++
++// Next-id: 4
++message PolygonPoint {
++  optional double x = 1;
++  optional double y = 2;
++  optional double z = 3 [default = 0.0];
++
++  // Gaussian probability information
++  optional apollo.common.GaussianInfo gaussian_info = 4;
++}
++
++// Next-id: 3
++message Prediction {
++  optional double probability = 1;
++  repeated PolygonPoint predicted_trajectory = 2;
++}
++
++// Next-id: 13
++message Decision {
++  enum Type {
++    IGNORE = 0;    // Ignore the object
++    STOP = 1;      // Stop at a distance from the object
++    NUDGE = 2;     // Go around the object
++    YIELD = 3;     // Go after the object
++    OVERTAKE = 4;  // Go before the object
++    FOLLOW = 5;    // Follow the object in the same lane
++    SIDEPASS = 6;  // Pass the object in neighboring lane
++  }
++  optional Type type = 1 [default = IGNORE];
++
++  // Shape Info
++  // Can be used for corners of nudge region
++  repeated PolygonPoint polygon_point = 2;
++
++  // Position Info
++  // Can be used for stop fence
++  optional double heading = 3;
++  optional double latitude = 4;
++  optional double longitude = 5;
++  optional double position_x = 6;
++  optional double position_y = 7;
++  optional double length = 8 [default = 2.8];
++  optional double width = 9 [default = 1.4];
++  optional double height = 10 [default = 1.8];
++
++  enum StopReasonCode {
++    STOP_REASON_HEAD_VEHICLE = 1;
++    STOP_REASON_DESTINATION = 2;
++    STOP_REASON_PEDESTRIAN = 3;
++    STOP_REASON_OBSTACLE = 4;
++    STOP_REASON_SIGNAL = 100;
++    STOP_REASON_STOP_SIGN = 101;
++    STOP_REASON_YIELD_SIGN = 102;
++    STOP_REASON_CLEAR_ZONE = 103;
++    STOP_REASON_CROSSWALK = 104;
++    STOP_REASON_EMERGENCY = 105;
++    STOP_REASON_NOT_READY = 106;
++    STOP_REASON_PULL_OVER = 107;
++  }
++  optional StopReasonCode stopReason = 11;
++  optional apollo.routing.ChangeLaneType change_lane_type = 12;
++}
++
++// Next-id: 41
++message Object {
++  // ID
++  optional string id = 1;  // primary identifier for each object
++
++  // Shape Info
++  repeated PolygonPoint polygon_point = 2;  // corners of an object
++
++  // Position Info
++  optional double heading = 3;
++  optional double latitude = 4;
++  optional double longitude = 5;
++  optional double position_x = 6;
++  optional double position_y = 7;
++  optional double length = 8 [default = 2.8];
++  optional double width = 9 [default = 1.4];
++  optional double height = 10 [default = 1.8];
++
++  // Motion Info
++  // For objects with motion info such as ADC.
++  optional double speed = 11;               // in m/s, can be negative
++  optional double speed_acceleration = 12;  // in m/s^2
++  optional double speed_jerk = 13;
++  optional double spin = 14;
++  optional double spin_acceleration = 15;
++  optional double spin_jerk = 16;
++  optional double speed_heading = 17;
++  optional double kappa = 18;
++  optional double dkappa = 35;
++
++  // Signal Info
++  // For objects with signals set and current signal such as Traffic Light,
++  // Stop Sign, and Vehicle Signal.
++  repeated string signal_set = 19;
++  optional string current_signal = 20;
++
++  // Time Info
++  optional double timestamp_sec = 21;
++
++  // Decision Info
++  repeated Decision decision = 22;
++  optional bool yielded_obstacle = 32 [default = false];
++
++  // Chassis Info
++  // For ADC
++  optional double throttle_percentage = 23;
++  optional double brake_percentage = 24;
++  optional double steering_percentage = 25;
++  optional double steering_angle = 26;
++  optional double steering_ratio = 27;
++  optional int32 battery_percentage = 38;
++  optional apollo.canbus.Chassis.GearPosition gear_location = 39;
++  enum DisengageType {
++    DISENGAGE_NONE = 0;
++    DISENGAGE_UNKNOWN = 1;
++    DISENGAGE_MANUAL = 2;
++    DISENGAGE_EMERGENCY = 3;
++    DISENGAGE_AUTO_STEER_ONLY = 4;
++    DISENGAGE_AUTO_SPEED_ONLY = 5;
++    DISENGAGE_CHASSIS_ERROR = 6;
++  };
++
++  optional DisengageType disengage_type = 28;
++
++  enum Type {
++    UNKNOWN = 0;
++    UNKNOWN_MOVABLE = 1;
++    UNKNOWN_UNMOVABLE = 2;
++    PEDESTRIAN = 3;  // pedestrian, usually determined by moving behavior.
++    BICYCLE = 4;     // bike, motor bike.
++    VEHICLE = 5;     // passenger car or truck.
++    VIRTUAL = 6;     // virtual object created by decision module.
++    CIPV = 7;        // closest in-path vehicle determined by perception module.
++  };
++
++  optional Type type = 29;  // obstacle type
++  // obstacle sub-type
++  optional apollo.perception.PerceptionObstacle.SubType sub_type = 34;
++  repeated Prediction prediction = 30;
++
++  // perception confidence level. Range: [0,1]
++  optional double confidence = 31 [default = 1];
++  optional apollo.prediction.ObstaclePriority obstacle_priority = 33;
++  optional apollo.prediction.ObstacleInteractiveTag interactive_tag = 40;
++
++  // v2x for perception obstacle
++  optional apollo.perception.PerceptionObstacle.Source source = 36
++      [default = HOST_VEHICLE];  // source type
++  // v2x use case info
++  optional apollo.perception.V2XInformation v2x_info = 37;
++}
++
++message DelaysInMs {
++  optional double chassis = 1;
++  optional double localization = 3;
++  optional double perception_obstacle = 4;
++  optional double planning = 5;
++  optional double prediction = 7;
++  optional double traffic_light = 8;
++  optional double control = 9;
++}
++
++message RoutePath {
++  repeated PolygonPoint point = 1;
++}
++
++message Latency {
++  optional double timestamp_sec = 1;
++  optional double total_time_ms = 2;
++}
++
++message MapElementIds {
++  repeated string lane = 1;
++  repeated string crosswalk = 2;
++  repeated string junction = 3;
++  repeated string signal = 4;
++  repeated string stop_sign = 5;
++  repeated string yield = 6;
++  repeated string overlap = 7;
++  repeated string road = 8;
++  repeated string clear_area = 9;
++  repeated string parking_space = 10;
++  repeated string speed_bump = 11;
++  repeated string pnc_junction = 12;
++}
++
++message ControlData {
++  optional double timestamp_sec = 1;
++  optional double station_error = 2;
++  optional double lateral_error = 3;
++  optional double heading_error = 4;
++  optional apollo.common.TrajectoryPoint current_target_point = 5;
++}
++
++message Notification {
++  optional double timestamp_sec = 1;
++  optional apollo.common.monitor.MonitorMessageItem item = 2;
++}
++
++message SensorMeasurements {
++  repeated Object sensor_measurement = 1;
++}
++
++// Next-id: 31
++message SimulationWorld {
++  // Timestamp in milliseconds
++  optional double timestamp = 1;
++
++  // Sequence number
++  optional uint32 sequence_num = 2;
++
++  // Objects in the world and the associated predictions/decisions
++  repeated Object object = 3;
++
++  // Autonomous driving cars
++  optional Object auto_driving_car = 4;
++
++  // Planning signal
++  optional Object traffic_signal = 5;
++
++  // Routing paths
++  repeated RoutePath route_path = 6;
++  // Timestamp of latest routing
++  optional double routing_time = 7;
++
++  // Planned trajectory
++  repeated Object planning_trajectory = 8;
++
++  // Main decision
++  optional Object main_stop = 9 [deprecated = true];
++  optional Object main_decision = 10;
++
++  // Speed limit
++  optional double speed_limit = 11;
++
++  // Module delays
++  optional DelaysInMs delay = 12;
++
++  // Notification
++  optional apollo.common.monitor.MonitorMessage monitor = 13
++      [deprecated = true];
++  repeated Notification notification = 14;
++
++  // Engage advice from planning
++  optional string engage_advice = 15;
++
++  // Module latency
++  map<string, Latency> latency = 16;
++
++  optional MapElementIds map_element_ids = 17;
++  optional uint64 map_hash = 18;
++  optional double map_radius = 19;
++
++  // Planning data
++  optional apollo.planning_internal.PlanningData planning_data = 20;
++
++  // GPS
++  optional Object gps = 21;
++
++  // Lane Markers from perception
++  optional apollo.perception.LaneMarkers lane_marker = 22;
++
++  // Control data
++  optional ControlData control_data = 23;
++
++  // Relative Map
++  repeated apollo.common.Path navigation_path = 24;
++
++  // RSS info
++  optional bool is_rss_safe = 25 [default = true];
++
++  // Shadow localization
++  optional Object shadow_localization = 26;
++
++  // Perception detected signals
++  repeated Object perceived_signal = 27;
++
++  // A map from a story name to whether it is on
++  map<string, bool> stories = 28;
++
++  // A map from a sensor_id to a group of sensor_measurements
++  map<string, SensorMeasurements> sensor_measurements = 29;
++
++  optional bool is_siren_on = 30 [default = false];
++
++  // vehicle param
++  optional apollo.common.VehicleParam vehicle_param = 31;
++}
+diff --color -Naur common_msgs/drivers_msgs/BUILD /opt/apollo/modules/common_msgs/drivers_msgs/BUILD
+--- common_msgs/drivers_msgs/BUILD	2023-12-23 18:21:36.399614904 +0800
++++ /opt/apollo/modules/common_msgs/drivers_msgs/BUILD	2023-12-23 18:05:58.948028975 +0800
+@@ -1,25 +1,12 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "can_card_parameter_cc_proto",
+-    deps = [
+-        ":can_card_parameter_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "can_card_parameter_proto",
+     srcs = ["can_card_parameter.proto"],
+ )
+ 
+-py_proto_library(
+-    name = "can_card_parameter_py_pb2",
+-    deps = [
+-        ":can_card_parameter_proto",
+-    ],
+-)
++apollo_package()
+diff --color -Naur common_msgs/drivers_msgs/can_card_parameter.proto /opt/apollo/modules/common_msgs/drivers_msgs/can_card_parameter.proto
+--- common_msgs/drivers_msgs/can_card_parameter.proto	2023-12-23 18:21:36.399614904 +0800
++++ /opt/apollo/modules/common_msgs/drivers_msgs/can_card_parameter.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -40,10 +40,16 @@
+     BCAN_BAUDRATE_NUM = 4;
+   }
+ 
++  // CAN卡驱动类型配置 | 根据所用的CAN卡硬件型号或驱动类型配置
+   optional CANCardBrand brand = 1;
++  // CAN卡硬件接口类型配置 | 根据所用的CAN卡硬件接口类型或驱动类型配置
+   optional CANCardType type = 2;
++  // CAN卡端口号配置 | 根据所连接的CAN卡端口号配置
+   optional CANChannelId channel_id = 3;
++  // CAN卡软件接口配置 | 默认配置为NATIVE
+   optional CANInterface interface = 4;
++  // CAN卡端口数量配置 | 默认数量为4，最多支持8个，默认可不配置
+   optional uint32 num_ports = 5 [default = 4];
++  // HERMES CAN卡波特率配置 | 只针对选择HERMES CAN卡时设置波特率，默认不配置
+   optional HERMES_BAUDRATE hermes_baudrate = 6 [default = BCAN_BAUDRATE_500K];
+ }
+diff --color -Naur common_msgs/external_command_msgs/BUILD /opt/apollo/modules/common_msgs/external_command_msgs/BUILD
+--- common_msgs/external_command_msgs/BUILD	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/external_command_msgs/BUILD	2023-12-23 18:05:58.948028975 +0800
+@@ -0,0 +1,89 @@
++## Auto generated by `proto_build_generator.py`
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
++
++package(default_visibility = ["//visibility:public"])
++
++proto_library(
++    name = "valet_parking_command_proto",
++    srcs = ["valet_parking_command.proto"],
++    deps = [
++        ":external_geometry_proto",
++        ":lane_segment_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
++    ],
++)
++
++proto_library(
++    name = "lane_follow_command_proto",
++    srcs = ["lane_follow_command.proto"],
++    deps = [
++        ":external_geometry_proto",
++        ":lane_segment_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
++    ],
++)
++
++proto_library(
++    name = "path_follow_command_proto",
++    srcs = ["path_follow_command.proto"],
++    deps = [
++        ":external_geometry_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
++    ],
++)
++
++proto_library(
++    name = "command_status_proto",
++    srcs = ["command_status.proto"],
++    deps = [
++        "//modules/common_msgs/basic_msgs:header_proto",
++    ],
++)
++
++proto_library(
++    name = "chassis_command_proto",
++    srcs = ["chassis_command.proto"],
++    deps = [
++        "@com_google_protobuf//:any_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
++        "//modules/common_msgs/basic_msgs:vehicle_signal_proto",
++    ],
++)
++
++proto_library(
++    name = "free_space_command_proto",
++    srcs = ["free_space_command.proto"],
++    deps = [
++        ":external_geometry_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
++    ],
++)
++
++proto_library(
++    name = "speed_command_proto",
++    srcs = ["speed_command.proto"],
++    deps = [
++        "//modules/common_msgs/basic_msgs:header_proto",
++    ],
++)
++
++proto_library(
++    name = "action_command_proto",
++    srcs = ["action_command.proto"],
++    deps = [
++        "//modules/common_msgs/basic_msgs:header_proto",
++    ],
++)
++
++proto_library(
++    name = "lane_segment_proto",
++    srcs = ["lane_segment.proto"],
++)
++
++proto_library(
++    name = "external_geometry_proto",
++    srcs = ["geometry.proto"],
++)
++
++apollo_package()
+diff --color -Naur common_msgs/external_command_msgs/action_command.proto /opt/apollo/modules/common_msgs/external_command_msgs/action_command.proto
+--- common_msgs/external_command_msgs/action_command.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/external_command_msgs/action_command.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -0,0 +1,36 @@
++syntax = "proto2";
++
++package apollo.external_command;
++
++import "modules/common_msgs/basic_msgs/header.proto";
++
++enum ActionCommandType {
++  // Follow the current lane.
++  FOLLOW = 1;
++  // Change to the laft lane.
++  CHANGE_LEFT = 2;
++  // Change to the right lane.
++  CHANGE_RIGHT = 3;
++  // Pull over and stop driving.
++  PULL_OVER = 4;
++  // Stop driving smoothly in emergency case.
++  STOP = 5;
++  // Start driving after paused.
++  START = 6;
++  // Clear the input planning command to cancel planning.
++  CLEAR_PLANNING = 7;
++  // Switch to manual drive mode.
++  SWITCH_TO_MANUAL = 50;
++  // Switch to auto drive mode.
++  SWITCH_TO_AUTO = 51;
++  // Varify vin code of vehicle.
++  VIN_REQ = 52;
++}
++
++message ActionCommand {
++  optional apollo.common.Header header = 1;
++  // Unique identification for command.
++  optional int64 command_id = 2 [default = -1];
++  // The action command.
++  required ActionCommandType command = 3;
++}
+\ No newline at end of file
+diff --color -Naur common_msgs/external_command_msgs/chassis_command.proto /opt/apollo/modules/common_msgs/external_command_msgs/chassis_command.proto
+--- common_msgs/external_command_msgs/chassis_command.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/external_command_msgs/chassis_command.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -0,0 +1,17 @@
++syntax = "proto2";
++
++package apollo.external_command;
++
++import "google/protobuf/any.proto";
++import "modules/common_msgs/basic_msgs/header.proto";
++import "modules/common_msgs/basic_msgs/vehicle_signal.proto";
++
++message ChassisCommand {
++  optional apollo.common.Header header = 1;
++  // Unique identification for command.
++  optional int64 command_id = 2 [default = -1];
++  // The basic vehicle signals which can also be controlled by apollo system.
++  optional apollo.common.VehicleSignal basic_signal = 3;
++  // Custom chassis operation command defined by user for extensibility.
++  optional google.protobuf.Any custom_operation = 4;
++}
+\ No newline at end of file
+diff --color -Naur common_msgs/external_command_msgs/command_status.proto /opt/apollo/modules/common_msgs/external_command_msgs/command_status.proto
+--- common_msgs/external_command_msgs/command_status.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/external_command_msgs/command_status.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -0,0 +1,32 @@
++syntax = "proto2";
++
++package apollo.external_command;
++
++import "modules/common_msgs/basic_msgs/header.proto";
++
++enum CommandStatusType {
++  // Command is being executed without error.
++  RUNNING = 1;
++  // Command is finished.
++  FINISHED = 2;
++  // Command's execution has error.
++  ERROR = 3;
++  // Cannot get the status of command.
++  UNKNOWN = 4;
++}
++
++message CommandStatusRequest {
++  optional apollo.common.Header header = 1;
++  // Unique identification for command.
++  optional int64 command_id = 2 [default = -1];
++}
++
++message CommandStatus {
++  optional apollo.common.Header header = 1;
++  // Unique identification for command.
++  optional int64 command_id = 2 [default = -1];
++  // The status of command execution.
++  required CommandStatusType status = 3;
++  // The message for the status.
++  optional string message = 4;
++}
+\ No newline at end of file
+diff --color -Naur common_msgs/external_command_msgs/free_space_command.proto /opt/apollo/modules/common_msgs/external_command_msgs/free_space_command.proto
+--- common_msgs/external_command_msgs/free_space_command.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/external_command_msgs/free_space_command.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -0,0 +1,24 @@
++syntax = "proto2";
++
++package apollo.external_command;
++
++import "modules/common_msgs/basic_msgs/header.proto";
++import "modules/common_msgs/external_command_msgs/geometry.proto";
++
++message FreeSpaceCommand {
++  optional apollo.common.Header header = 1;
++  // Unique identification for command.
++  optional int64 command_id = 2 [default = -1];
++  // Pose of the parking spot.
++  required Pose parking_spot_pose = 3;
++  // Region where openspace trajectory will be searched. Junction containing
++  // "non_drivable_roi" should be contained by "drivable_roi"
++  // polygon points should be clockwise if outer polygon can drive. 
++  // otherwise polygon points should be counter-clockwise if inner polygon can drive
++  repeated RoiPolygon non_drivable_roi = 4;
++  required RoiPolygon drivable_roi = 5;
++  // Expected speed when executing this command. If "target_speed" > maximum
++  // speed of the vehicle, use maximum speed of the vehicle instead. If it is
++  // not given, the default target speed of system will be used.
++  optional double target_speed = 6;
++}
+diff --color -Naur common_msgs/external_command_msgs/geometry.proto /opt/apollo/modules/common_msgs/external_command_msgs/geometry.proto
+--- common_msgs/external_command_msgs/geometry.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/external_command_msgs/geometry.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -0,0 +1,26 @@
++syntax = "proto2";
++
++package apollo.external_command;
++
++message Point {
++  // x coordinate.
++  required double x = 1;
++  // y coordinate.
++  required double y = 2;
++}
++
++message Pose {
++  // x coordinate.
++  required double x = 1;
++  // y coordinate.
++  required double y = 2;
++  // Rotation around z axis in Cartesian coordinate system.
++  optional double heading = 3;
++}
++
++// Region of interest in form of polygon.
++// If the points of polygon is in anticlockwise, ROI is drivable area; otherwise if
++// they are in clockwise, ROI is prohibited driving area.
++message RoiPolygon {
++  repeated Point point = 1;
++}
+\ No newline at end of file
+diff --color -Naur common_msgs/external_command_msgs/lane_follow_command.proto /opt/apollo/modules/common_msgs/external_command_msgs/lane_follow_command.proto
+--- common_msgs/external_command_msgs/lane_follow_command.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/external_command_msgs/lane_follow_command.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -0,0 +1,27 @@
++syntax = "proto2";
++
++package apollo.external_command;
++
++import "modules/common_msgs/basic_msgs/header.proto";
++import "modules/common_msgs/external_command_msgs/geometry.proto";
++import "modules/common_msgs/external_command_msgs/lane_segment.proto";
++
++message LaneFollowCommand {
++  optional apollo.common.Header header = 1;
++  // Unique identification for command.
++  optional int64 command_id = 2 [default = -1];
++  // If the start pose is set as the first point of "way_point".
++  optional bool is_start_pose_set = 3 [default = false];
++  // The points between "start_pose" and "end_pose".
++  repeated Pose way_point = 4;
++  // End pose of the lane follow command, must be given.
++  required Pose end_pose = 5;
++  // The lane segments which should not be passed by.
++  repeated LaneSegment blacklisted_lane = 6;
++  // The road which should not be passed by.
++  repeated string blacklisted_road = 7;
++  // Expected speed when executing this command. If "target_speed" > maximum
++  // speed of the vehicle, use maximum speed of the vehicle instead. If it is
++  // not given, the default target speed of system will be used.
++  optional double target_speed = 8;
++}
+\ No newline at end of file
+diff --color -Naur common_msgs/external_command_msgs/lane_segment.proto /opt/apollo/modules/common_msgs/external_command_msgs/lane_segment.proto
+--- common_msgs/external_command_msgs/lane_segment.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/external_command_msgs/lane_segment.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -0,0 +1,13 @@
++
++syntax = "proto2";
++
++package apollo.external_command;
++
++message LaneSegment {
++  // lane id which this LaneSegment belongs to.
++  optional string id = 1;
++  // Start s of this LaneSegment on the lane.
++  optional double start_s = 2;
++  // End s of this LaneSegment on the lane.
++  optional double end_s = 3;
++}
+\ No newline at end of file
+diff --color -Naur common_msgs/external_command_msgs/path_follow_command.proto /opt/apollo/modules/common_msgs/external_command_msgs/path_follow_command.proto
+--- common_msgs/external_command_msgs/path_follow_command.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/external_command_msgs/path_follow_command.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -0,0 +1,43 @@
++syntax = "proto2";
++
++package apollo.external_command;
++
++import "modules/common_msgs/basic_msgs/header.proto";
++import "modules/common_msgs/external_command_msgs/geometry.proto";
++
++// PathBoundary with left and right boundary.
++message PathBoundary {
++  // Left boundary of the path, each boundary point mapped to the path point.
++  repeated Point left_boundary = 1;
++  // Right boundary of the path, each boundary point mapped to the path point.
++  repeated Point right_boundary = 2;
++}
++
++// Path boundary generated with the distance from center to left and right
++// boundary given.
++message BoundaryWithWidth {
++  // Distance from the path center to left boundary.
++  required double left_path_width = 1;
++  // Distance from the path center to right boundary.
++  required double right_path_width = 2;
++}
++
++message PathFollowCommand {
++  optional apollo.common.Header header = 1;
++  // Unique identification for command.
++  optional int64 command_id = 2 [default = -1];
++  // Path point to be followed, a valid path should contain >= 2 points. No lane
++  // on the map is followed for this command.
++  repeated Point way_point = 3;
++  oneof boundary {
++    // PathBoundary with left and right boundary.
++    PathBoundary path_boundary = 4;
++    // Path boundary generated with the distance from center to left and right
++    // boundary given.
++    BoundaryWithWidth boundary_with_width = 5;
++  }
++  // Expected speed when executing this command. If "target_speed" > maximum
++  // speed of the vehicle, use maximum speed of the vehicle instead. If it is
++  // not given, the default target speed of system will be used.
++  optional double target_speed = 6;
++}
+\ No newline at end of file
+diff --color -Naur common_msgs/external_command_msgs/speed_command.proto /opt/apollo/modules/common_msgs/external_command_msgs/speed_command.proto
+--- common_msgs/external_command_msgs/speed_command.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/external_command_msgs/speed_command.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -0,0 +1,22 @@
++syntax = "proto2";
++
++package apollo.external_command;
++
++import "modules/common_msgs/basic_msgs/header.proto";
++
++message SpeedCommand {
++  optional apollo.common.Header header = 1;
++  // Unique identification for command.
++  optional int64 command_id = 2 [default = -1];
++  oneof linear_speed {
++    // Replace the target speed of current motion command with this new target
++    // speed.
++    double target_speed = 3;
++    // Multiple the target speed in current motion command with the factor. The
++    // factor should be in range [0, 1.0].
++    double target_speed_factor = 4;
++    // Restore the target speed with the initial value(The default configured
++    // target speed or set in motion command).
++    bool is_restore_target_speed = 5;
++  }
++}
+\ No newline at end of file
+diff --color -Naur common_msgs/external_command_msgs/valet_parking_command.proto /opt/apollo/modules/common_msgs/external_command_msgs/valet_parking_command.proto
+--- common_msgs/external_command_msgs/valet_parking_command.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/external_command_msgs/valet_parking_command.proto	2023-12-23 18:05:58.948028975 +0800
+@@ -0,0 +1,27 @@
++syntax = "proto2";
++
++package apollo.external_command;
++
++import "modules/common_msgs/basic_msgs/header.proto";
++import "modules/common_msgs/external_command_msgs/geometry.proto";
++import "modules/common_msgs/external_command_msgs/lane_segment.proto";
++
++message ValetParkingCommand {
++  optional apollo.common.Header header = 1;
++  // Unique identification for command.
++  optional int64 command_id = 2 [default = -1];
++  // If the start pose is set as the first point of "way_point".
++  optional bool is_start_pose_set = 3 [default = false];
++  // The points between "start_pose" and "end_pose".
++  repeated Pose way_point = 4;
++  // The lane segments which should not be passed by.
++  repeated LaneSegment blacklisted_lane = 5;
++  // The road which should not be passed by.
++  repeated string blacklisted_road = 6;
++  // The id of the parking spot on the map.
++  required string parking_spot_id = 7;
++  // Expected speed when executing this command. If "target_speed" > maximum
++  // speed of the vehicle, use maximum speed of the vehicle instead. If it is
++  // not given, the default target speed of system will be used.
++  optional double target_speed = 8;
++}
+\ No newline at end of file
+diff --color -Naur common_msgs/guardian_msgs/BUILD /opt/apollo/modules/common_msgs/guardian_msgs/BUILD
+--- common_msgs/guardian_msgs/BUILD	2023-12-23 18:21:36.401614904 +0800
++++ /opt/apollo/modules/common_msgs/guardian_msgs/BUILD	2023-12-23 18:05:58.949028975 +0800
+@@ -1,17 +1,9 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "guardian_cc_proto",
+-    deps = [
+-        ":guardian_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "guardian_proto",
+     srcs = ["guardian.proto"],
+@@ -21,12 +13,4 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "guardian_py_pb2",
+-    deps = [
+-        ":guardian_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/control_msgs:control_cmd_py_pb2",
+-    ],
+-)
+-
++apollo_package()
+diff --color -Naur common_msgs/localization_msgs/BUILD /opt/apollo/modules/common_msgs/localization_msgs/BUILD
+--- common_msgs/localization_msgs/BUILD	2023-12-23 18:21:36.402614904 +0800
++++ /opt/apollo/modules/common_msgs/localization_msgs/BUILD	2023-12-23 18:05:58.949028975 +0800
+@@ -1,57 +1,23 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "localization_status_cc_proto",
+-    deps = [
+-        ":localization_status_proto",
+-    ],
+-)
+-
+ proto_library(
+-    name = "localization_status_proto",
+-    srcs = ["localization_status.proto"],
+-)
+-
+-py_proto_library(
+-    name = "localization_status_py_pb2",
+-    deps = [
+-        ":localization_status_proto",
+-    ],
+-)
+-cc_proto_library(
+-    name = "gps_cc_proto",
++    name = "pose_proto",
++    srcs = ["pose.proto"],
+     deps = [
+-        ":gps_proto",
++        "//modules/common_msgs/basic_msgs:geometry_proto",
+     ],
+ )
+ 
+ proto_library(
+-    name = "gps_proto",
+-    srcs = ["gps.proto"],
++    name = "imu_proto",
++    srcs = ["imu.proto"],
+     deps = [
+-        "//modules/common_msgs/basic_msgs:header_proto",
+         ":pose_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "gps_py_pb2",
+-    deps = [
+-        ":gps_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        ":pose_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "localization_cc_proto",
+-    deps = [
+-        ":localization_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
+     ],
+ )
+ 
+@@ -59,71 +25,26 @@
+     name = "localization_proto",
+     srcs = ["localization.proto"],
+     deps = [
+-        "//modules/common_msgs/basic_msgs:header_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_proto",
+-        "//modules/common_msgs/basic_msgs:pnc_point_proto",
+         ":localization_status_proto",
+         ":pose_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "localization_py_pb2",
+-    deps = [
+-        ":localization_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:pnc_point_py_pb2",
+-        ":localization_status_py_pb2",
+-        ":pose_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "imu_cc_proto",
+-    deps = [
+-        ":imu_proto",
+-    ],
+-)
+-
+-proto_library(
+-    name = "imu_proto",
+-    srcs = ["imu.proto"],
+-    deps = [
++        "//modules/common_msgs/basic_msgs:geometry_proto",
+         "//modules/common_msgs/basic_msgs:header_proto",
+-        ":pose_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "imu_py_pb2",
+-    deps = [
+-        ":imu_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        ":pose_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "pose_cc_proto",
+-    deps = [
+-        ":pose_proto",
++        "//modules/common_msgs/basic_msgs:pnc_point_proto",
+     ],
+ )
+ 
+ proto_library(
+-    name = "pose_proto",
+-    srcs = ["pose.proto"],
+-    deps = [
+-        "//modules/common_msgs/basic_msgs:geometry_proto",
+-    ],
++    name = "localization_status_proto",
++    srcs = ["localization_status.proto"],
+ )
+ 
+-py_proto_library(
+-    name = "pose_py_pb2",
++proto_library(
++    name = "gps_proto",
++    srcs = ["gps.proto"],
+     deps = [
+         ":pose_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
++        "//modules/common_msgs/basic_msgs:header_proto",
+     ],
+ )
+ 
++apollo_package()
+diff --color -Naur common_msgs/map_msgs/BUILD /opt/apollo/modules/common_msgs/map_msgs/BUILD
+--- common_msgs/map_msgs/BUILD	2023-12-23 18:21:36.403614904 +0800
++++ /opt/apollo/modules/common_msgs/map_msgs/BUILD	2023-12-23 18:05:58.949028975 +0800
+@@ -1,64 +1,64 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "map_signal_cc_proto",
++proto_library(
++    name = "map_road_proto",
++    srcs = ["map_road.proto"],
+     deps = [
+-        ":map_signal_proto",
++        ":map_geometry_proto",
++        ":map_id_proto",
+     ],
+ )
+ 
+ proto_library(
+-    name = "map_signal_proto",
+-    srcs = ["map_signal.proto"],
++    name = "map_overlap_proto",
++    srcs = ["map_overlap.proto"],
+     deps = [
+-        "//modules/common_msgs/basic_msgs:geometry_proto",
+         ":map_geometry_proto",
+         ":map_id_proto",
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "map_signal_py_pb2",
++proto_library(
++    name = "map_lane_proto",
++    srcs = ["map_lane.proto"],
+     deps = [
+-        ":map_signal_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        ":map_geometry_py_pb2",
+-        ":map_id_py_pb2",
++        ":map_geometry_proto",
++        ":map_id_proto",
+     ],
+ )
+ 
+-cc_proto_library(
+-    name = "map_speed_control_cc_proto",
++proto_library(
++    name = "map_stop_sign_proto",
++    srcs = ["map_stop_sign.proto"],
+     deps = [
+-        ":map_speed_control_proto",
++        ":map_geometry_proto",
++        ":map_id_proto",
+     ],
+ )
+ 
+ proto_library(
+-    name = "map_speed_control_proto",
+-    srcs = ["map_speed_control.proto"],
+-    deps = [
+-        ":map_geometry_proto",
+-    ],
++    name = "map_id_proto",
++    srcs = ["map_id.proto"],
+ )
+ 
+-py_proto_library(
+-    name = "map_speed_control_py_pb2",
++proto_library(
++    name = "map_junction_proto",
++    srcs = ["map_junction.proto"],
+     deps = [
+-        ":map_speed_control_proto",
+-        ":map_geometry_py_pb2",
++        ":map_geometry_proto",
++        ":map_id_proto",
+     ],
+ )
+ 
+-cc_proto_library(
+-    name = "map_geometry_cc_proto",
++proto_library(
++    name = "map_rsu_proto",
++    srcs = ["map_rsu.proto"],
+     deps = [
+-        ":map_geometry_proto",
++        ":map_id_proto",
+     ],
+ )
+ 
+@@ -70,46 +70,15 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "map_geometry_py_pb2",
+-    deps = [
+-        ":map_geometry_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "map_crosswalk_cc_proto",
+-    deps = [
+-        ":map_crosswalk_proto",
+-    ],
+-)
+-
+ proto_library(
+-    name = "map_crosswalk_proto",
+-    srcs = ["map_crosswalk.proto"],
++    name = "map_yield_sign_proto",
++    srcs = ["map_yield_sign.proto"],
+     deps = [
+         ":map_geometry_proto",
+         ":map_id_proto",
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "map_crosswalk_py_pb2",
+-    deps = [
+-        ":map_crosswalk_proto",
+-        ":map_geometry_py_pb2",
+-        ":map_id_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "map_cc_proto",
+-    deps = [
+-        ":map_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "map_proto",
+     srcs = ["map.proto"],
+@@ -130,58 +99,6 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "map_py_pb2",
+-    deps = [
+-        ":map_proto",
+-        ":map_clear_area_py_pb2",
+-        ":map_crosswalk_py_pb2",
+-        ":map_junction_py_pb2",
+-        ":map_lane_py_pb2",
+-        ":map_overlap_py_pb2",
+-        ":map_parking_space_py_pb2",
+-        ":map_pnc_junction_py_pb2",
+-        ":map_road_py_pb2",
+-        ":map_rsu_py_pb2",
+-        ":map_signal_py_pb2",
+-        ":map_speed_bump_py_pb2",
+-        ":map_stop_sign_py_pb2",
+-        ":map_yield_sign_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "map_overlap_cc_proto",
+-    deps = [
+-        ":map_overlap_proto",
+-    ],
+-)
+-
+-proto_library(
+-    name = "map_overlap_proto",
+-    srcs = ["map_overlap.proto"],
+-    deps = [
+-        ":map_geometry_proto",
+-        ":map_id_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "map_overlap_py_pb2",
+-    deps = [
+-        ":map_overlap_proto",
+-        ":map_geometry_py_pb2",
+-        ":map_id_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "map_clear_area_cc_proto",
+-    deps = [
+-        ":map_clear_area_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "map_clear_area_proto",
+     srcs = ["map_clear_area.proto"],
+@@ -191,70 +108,6 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "map_clear_area_py_pb2",
+-    deps = [
+-        ":map_clear_area_proto",
+-        ":map_geometry_py_pb2",
+-        ":map_id_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "map_rsu_cc_proto",
+-    deps = [
+-        ":map_rsu_proto",
+-    ],
+-)
+-
+-proto_library(
+-    name = "map_rsu_proto",
+-    srcs = ["map_rsu.proto"],
+-    deps = [
+-        ":map_id_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "map_rsu_py_pb2",
+-    deps = [
+-        ":map_rsu_proto",
+-        ":map_id_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "map_road_cc_proto",
+-    deps = [
+-        ":map_road_proto",
+-    ],
+-)
+-
+-proto_library(
+-    name = "map_road_proto",
+-    srcs = ["map_road.proto"],
+-    deps = [
+-        ":map_geometry_proto",
+-        ":map_id_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "map_road_py_pb2",
+-    deps = [
+-        ":map_road_proto",
+-        ":map_geometry_py_pb2",
+-        ":map_id_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "map_parking_space_cc_proto",
+-    deps = [
+-        ":map_parking_space_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "map_parking_space_proto",
+     srcs = ["map_parking_space.proto"],
+@@ -264,64 +117,23 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "map_parking_space_py_pb2",
+-    deps = [
+-        ":map_parking_space_proto",
+-        ":map_geometry_py_pb2",
+-        ":map_id_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "map_junction_cc_proto",
+-    deps = [
+-        ":map_junction_proto",
+-    ],
+-)
+-
+ proto_library(
+-    name = "map_junction_proto",
+-    srcs = ["map_junction.proto"],
++    name = "map_pnc_junction_proto",
++    srcs = ["map_pnc_junction.proto"],
+     deps = [
+         ":map_geometry_proto",
+         ":map_id_proto",
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "map_junction_py_pb2",
+-    deps = [
+-        ":map_junction_proto",
+-        ":map_geometry_py_pb2",
+-        ":map_id_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "map_id_cc_proto",
+-    deps = [
+-        ":map_id_proto",
+-    ],
+-)
+-
+ proto_library(
+-    name = "map_id_proto",
+-    srcs = ["map_id.proto"],
+-)
+-
+-py_proto_library(
+-    name = "map_id_py_pb2",
++    name = "map_crosswalk_proto",
++    srcs = ["map_crosswalk.proto"],
+     deps = [
++        ":map_geometry_proto",
+         ":map_id_proto",
+     ],
+ )
+-cc_proto_library(
+-    name = "map_speed_bump_cc_proto",
+-    deps = [
+-        ":map_speed_bump_proto",
+-    ],
+-)
+ 
+ proto_library(
+     name = "map_speed_bump_proto",
+@@ -332,112 +144,22 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "map_speed_bump_py_pb2",
+-    deps = [
+-        ":map_speed_bump_proto",
+-        ":map_geometry_py_pb2",
+-        ":map_id_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "map_yield_sign_cc_proto",
+-    deps = [
+-        ":map_yield_sign_proto",
+-    ],
+-)
+-
+-proto_library(
+-    name = "map_yield_sign_proto",
+-    srcs = ["map_yield_sign.proto"],
+-    deps = [
+-        ":map_geometry_proto",
+-        ":map_id_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "map_yield_sign_py_pb2",
+-    deps = [
+-        ":map_yield_sign_proto",
+-        ":map_geometry_py_pb2",
+-        ":map_id_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "map_stop_sign_cc_proto",
+-    deps = [
+-        ":map_stop_sign_proto",
+-    ],
+-)
+-
+ proto_library(
+-    name = "map_stop_sign_proto",
+-    srcs = ["map_stop_sign.proto"],
+-    deps = [
+-        ":map_geometry_proto",
+-        ":map_id_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "map_stop_sign_py_pb2",
+-    deps = [
+-        ":map_stop_sign_proto",
+-        ":map_geometry_py_pb2",
+-        ":map_id_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "map_lane_cc_proto",
+-    deps = [
+-        ":map_lane_proto",
+-    ],
+-)
+-
+-proto_library(
+-    name = "map_lane_proto",
+-    srcs = ["map_lane.proto"],
++    name = "map_speed_control_proto",
++    srcs = ["map_speed_control.proto"],
+     deps = [
+         ":map_geometry_proto",
+-        ":map_id_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "map_lane_py_pb2",
+-    deps = [
+-        ":map_lane_proto",
+-        ":map_geometry_py_pb2",
+-        ":map_id_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "map_pnc_junction_cc_proto",
+-    deps = [
+-        ":map_pnc_junction_proto",
+     ],
+ )
+ 
+ proto_library(
+-    name = "map_pnc_junction_proto",
+-    srcs = ["map_pnc_junction.proto"],
++    name = "map_signal_proto",
++    srcs = ["map_signal.proto"],
+     deps = [
+         ":map_geometry_proto",
+         ":map_id_proto",
++        "//modules/common_msgs/basic_msgs:geometry_proto",
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "map_pnc_junction_py_pb2",
+-    deps = [
+-        ":map_pnc_junction_proto",
+-        ":map_geometry_py_pb2",
+-        ":map_id_py_pb2",
+-    ],
+-)
+-
++apollo_package()
+diff --color -Naur common_msgs/monitor_msgs/BUILD /opt/apollo/modules/common_msgs/monitor_msgs/BUILD
+--- common_msgs/monitor_msgs/BUILD	2023-12-23 18:21:36.406614904 +0800
++++ /opt/apollo/modules/common_msgs/monitor_msgs/BUILD	2023-12-23 18:05:58.949028975 +0800
+@@ -1,17 +1,9 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "system_status_cc_proto",
+-    deps = [
+-        ":system_status_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "system_status_proto",
+     srcs = ["system_status.proto"],
+@@ -20,44 +12,6 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "system_status_py_pb2",
+-    deps = [
+-        ":system_status_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "smart_recorder_status_cc_proto",
+-    deps = [
+-        ":smart_recorder_status_proto",
+-    ],
+-)
+-
+-proto_library(
+-    name = "smart_recorder_status_proto",
+-    srcs = ["smart_recorder_status.proto"],
+-    deps = [
+-        "//modules/common_msgs/basic_msgs:header_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "smart_recorder_status_py_pb2",
+-    deps = [
+-        ":smart_recorder_status_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "monitor_log_cc_proto",
+-    deps = [
+-        ":monitor_log_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "monitor_log_proto",
+     srcs = ["monitor_log.proto"],
+@@ -66,11 +20,12 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "monitor_log_py_pb2",
++proto_library(
++    name = "smart_recorder_status_proto",
++    srcs = ["smart_recorder_status.proto"],
+     deps = [
+-        ":monitor_log_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
++        "//modules/common_msgs/basic_msgs:header_proto",
+     ],
+ )
+ 
++apollo_package()
+diff --color -Naur common_msgs/monitor_msgs/system_status.proto /opt/apollo/modules/common_msgs/monitor_msgs/system_status.proto
+--- common_msgs/monitor_msgs/system_status.proto	2023-12-23 18:21:36.407614904 +0800
++++ /opt/apollo/modules/common_msgs/monitor_msgs/system_status.proto	2023-12-23 18:05:58.950028975 +0800
+@@ -55,6 +55,11 @@
+   // In some modes, other processes besides modules and monitored components may
+   // need to be monitored
+   map<string, ComponentStatus> other_components = 10;
++  
++  // In all modes, needs to detect progress and resource space.
++  map<string, Component> global_components = 11;
++
++  optional bool detect_immediately = 12 [default = false];
+ 
+   reserved 2, 3;
+ }
+diff --color -Naur common_msgs/perception_msgs/BUILD /opt/apollo/modules/common_msgs/perception_msgs/BUILD
+--- common_msgs/perception_msgs/BUILD	2023-12-23 18:21:36.407614904 +0800
++++ /opt/apollo/modules/common_msgs/perception_msgs/BUILD	2023-12-23 18:05:58.950028975 +0800
+@@ -1,14 +1,16 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "traffic_light_detection_cc_proto",
++proto_library(
++    name = "perception_camera_proto",
++    srcs = ["perception_camera.proto"],
+     deps = [
+-        ":traffic_light_detection_proto",
++        ":perception_obstacle_proto",
++        "//modules/common_msgs/basic_msgs:geometry_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
+     ],
+ )
+ 
+@@ -20,18 +22,12 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "traffic_light_detection_py_pb2",
+-    deps = [
+-        ":traffic_light_detection_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "perception_obstacle_cc_proto",
++proto_library(
++    name = "perception_lane_proto",
++    srcs = ["perception_lane.proto"],
+     deps = [
+-        ":perception_obstacle_proto",
++        ":perception_camera_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
+     ],
+ )
+ 
+@@ -47,67 +43,14 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "perception_obstacle_py_pb2",
+-    deps = [
+-        ":perception_obstacle_proto",
+-        "//modules/common_msgs/basic_msgs:error_code_py_pb2",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/basic_msgs:pnc_point_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_lane_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "perception_lane_cc_proto",
+-    deps = [
+-        ":perception_lane_proto",
+-    ],
+-)
+-
+-proto_library(
+-    name = "perception_lane_proto",
+-    srcs = ["perception_lane.proto"],
+-    deps = [
+-        "//modules/common_msgs/basic_msgs:header_proto",
+-        ":perception_camera_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "perception_lane_py_pb2",
+-    deps = [
+-        ":perception_lane_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        ":perception_camera_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "perception_camera_cc_proto",
+-    deps = [
+-        ":perception_camera_proto",
+-    ],
+-)
+-
+ proto_library(
+-    name = "perception_camera_proto",
+-    srcs = ["perception_camera.proto"],
++    name = "perception_benchmark_proto",
++    srcs = ["perception_benchmark.proto"],
+     deps = [
+-        "//modules/common_msgs/basic_msgs:geometry_proto",
+-        "//modules/common_msgs/basic_msgs:header_proto",
+         ":perception_obstacle_proto",
++        "//modules/common_msgs/basic_msgs:error_code_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "perception_camera_py_pb2",
+-    deps = [
+-        ":perception_camera_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        ":perception_obstacle_py_pb2",
+-    ],
+-)
+-
++apollo_package()
+diff --color -Naur common_msgs/perception_msgs/perception_benchmark.proto /opt/apollo/modules/common_msgs/perception_msgs/perception_benchmark.proto
+--- common_msgs/perception_msgs/perception_benchmark.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/perception_msgs/perception_benchmark.proto	2023-12-23 18:05:58.950028975 +0800
+@@ -0,0 +1,21 @@
++syntax = "proto2";
++
++package apollo.perception;
++
++import "modules/common_msgs/basic_msgs/error_code.proto";
++import "modules/common_msgs/basic_msgs/header.proto";
++import "modules/common_msgs/perception_msgs/perception_obstacle.proto";
++
++message SensorFrameInfo {
++  optional string sensor_id = 1;
++  optional double timestamp = 2;
++  repeated double sensor2world_pose = 3;  // size should be 16
++}
++
++// For perception benchmark
++message PerceptionBenchmarkFrame {
++  repeated PerceptionObstacle perception_obstacle = 1;  // An array of obstacles
++  optional apollo.common.Header header = 2;             // Header
++  optional apollo.common.ErrorCode error_code = 3 [default = OK];
++  optional SensorFrameInfo sensor_frame_info = 4;
++}
+diff --color -Naur common_msgs/perception_msgs/perception_obstacle.proto /opt/apollo/modules/common_msgs/perception_msgs/perception_obstacle.proto
+--- common_msgs/perception_msgs/perception_obstacle.proto	2023-12-23 18:21:36.407614904 +0800
++++ /opt/apollo/modules/common_msgs/perception_msgs/perception_obstacle.proto	2023-12-23 18:05:58.950028975 +0800
+@@ -95,7 +95,7 @@
+   // Format: [x0, y0, z0, x1, y1, z1...]
+   repeated double point_cloud = 12 [packed = true];
+ 
+-  optional double confidence = 13 [deprecated = true];
++  optional double confidence = 13;
+   enum ConfidenceType {
+     CONFIDENCE_UNKNOWN = 0;
+     CONFIDENCE_CNN = 1;
+@@ -126,6 +126,9 @@
+     ST_TRICYCLIST = 9;
+     ST_PEDESTRIAN = 10;
+     ST_TRAFFICCONE = 11;
++    ST_SMALLMOT = 12;
++    ST_BIGMOT = 13;
++    ST_NONMOT = 14;
+   };
+   optional SubType sub_type = 19;  // obstacle sub_type
+ 
+diff --color -Naur common_msgs/planning_msgs/BUILD /opt/apollo/modules/common_msgs/planning_msgs/BUILD
+--- common_msgs/planning_msgs/BUILD	2023-12-23 18:21:36.409614904 +0800
++++ /opt/apollo/modules/common_msgs/planning_msgs/BUILD	2023-12-23 18:05:58.950028975 +0800
+@@ -1,119 +1,39 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "planning_cc_proto",
+-    deps = [
+-        ":planning_proto",
+-    ],
+-)
+-
+ proto_library(
+-    name = "planning_proto",
+-    srcs = ["planning.proto"],
++    name = "pad_msg_proto",
++    srcs = ["pad_msg.proto"],
+     deps = [
+-        "//modules/common_msgs/chassis_msgs:chassis_proto",
+-        "//modules/common_msgs/basic_msgs:drive_state_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_proto",
+         "//modules/common_msgs/basic_msgs:header_proto",
+-        "//modules/common_msgs/basic_msgs:pnc_point_proto",
+-        "//modules/common_msgs/map_msgs:map_id_proto",
+-        ":decision_proto",
+-        ":planning_internal_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "planning_py_pb2",
+-    deps = [
+-        ":planning_proto",
+-        "//modules/common_msgs/chassis_msgs:chassis_py_pb2",
+-        "//modules/common_msgs/basic_msgs:drive_state_py_pb2",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/basic_msgs:pnc_point_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_id_py_pb2",
+-        ":decision_py_pb2",
+-        ":planning_internal_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "sl_boundary_cc_proto",
+-    deps = [
+-        ":sl_boundary_proto",
+     ],
+ )
+ 
+ proto_library(
+-    name = "sl_boundary_proto",
+-    srcs = ["sl_boundary.proto"],
+-    deps = [
+-        "//modules/common_msgs/basic_msgs:pnc_point_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "sl_boundary_py_pb2",
+-    deps = [
+-        ":sl_boundary_proto",
+-        "//modules/common_msgs/basic_msgs:pnc_point_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "planning_internal_cc_proto",
++    name = "decision_proto",
++    srcs = ["decision.proto"],
+     deps = [
+-        ":planning_internal_proto",
++        "//modules/common_msgs/basic_msgs:geometry_proto",
++        "//modules/common_msgs/basic_msgs:vehicle_signal_proto",
++        "//modules/common_msgs/routing_msgs:routing_geometry_proto",
+     ],
+ )
+ 
+ proto_library(
+-    name = "planning_internal_proto",
+-    srcs = ["planning_internal.proto"],
++    name = "planning_proto",
++    srcs = ["planning.proto"],
+     deps = [
++        ":decision_proto",
++        ":planning_internal_proto",
++        "//modules/common_msgs/basic_msgs:drive_state_proto",
+         "//modules/common_msgs/basic_msgs:geometry_proto",
+         "//modules/common_msgs/basic_msgs:header_proto",
+         "//modules/common_msgs/basic_msgs:pnc_point_proto",
+         "//modules/common_msgs/chassis_msgs:chassis_proto",
+-        "//modules/common_msgs/dreamview_msgs:chart_proto",
+-        "//modules/common_msgs/localization_msgs:localization_proto",
+-        "//modules/common_msgs/perception_msgs:traffic_light_detection_proto",
+-        ":decision_proto",
+-        ":navigation_proto",
+-        ":scenario_type_proto",
+-        ":sl_boundary_proto",
+-        "//modules/common_msgs/routing_msgs:routing_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "planning_internal_py_pb2",
+-    deps = [
+-        ":planning_internal_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/basic_msgs:pnc_point_py_pb2",
+-        "//modules/common_msgs/chassis_msgs:chassis_py_pb2",
+-        "//modules/common_msgs/dreamview_msgs:chart_py_pb2",
+-        "//modules/common_msgs/localization_msgs:localization_py_pb2",
+-        "//modules/common_msgs/perception_msgs:traffic_light_detection_py_pb2",
+-        ":decision_py_pb2",
+-        ":navigation_py_pb2",
+-        ":scenario_type_py_pb2",
+-        ":sl_boundary_py_pb2",
+-        "//modules/common_msgs/routing_msgs:routing_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "navigation_cc_proto",
+-    deps = [
+-        ":navigation_proto",
++        "//modules/common_msgs/map_msgs:map_id_proto",
+     ],
+ )
+ 
+@@ -129,82 +49,41 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "navigation_py_pb2",
+-    deps = [
+-        ":navigation_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/basic_msgs:pnc_point_py_pb2",
+-        "//modules/common_msgs/localization_msgs:localization_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_py_pb2",
+-        "//modules/common_msgs/perception_msgs:perception_obstacle_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "scenario_type_cc_proto",
+-    deps = [
+-        ":scenario_type_proto",
+-    ],
+-)
+-
+-proto_library(
+-    name = "scenario_type_proto",
+-    srcs = ["scenario_type.proto"],
+-)
+-
+-py_proto_library(
+-    name = "scenario_type_py_pb2",
+-    deps = [
+-        ":scenario_type_proto",
+-    ],
+-)
+-cc_proto_library(
+-    name = "pad_msg_cc_proto",
+-    deps = [
+-        ":pad_msg_proto",
+-    ],
+-)
+-
+ proto_library(
+-    name = "pad_msg_proto",
+-    srcs = ["pad_msg.proto"],
++    name = "planning_command_proto",
++    srcs = ["planning_command.proto"],
+     deps = [
++        "@com_google_protobuf//:any_proto",
+         "//modules/common_msgs/basic_msgs:header_proto",
++        "//modules/common_msgs/routing_msgs:routing_proto",
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "pad_msg_py_pb2",
+-    deps = [
+-        ":pad_msg_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "decision_cc_proto",
++proto_library(
++    name = "sl_boundary_proto",
++    srcs = ["sl_boundary.proto"],
+     deps = [
+-        ":decision_proto",
++        "//modules/common_msgs/basic_msgs:pnc_point_proto",
+     ],
+ )
+ 
+ proto_library(
+-    name = "decision_proto",
+-    srcs = ["decision.proto"],
++    name = "planning_internal_proto",
++    srcs = ["planning_internal.proto"],
+     deps = [
++        ":decision_proto",
++        ":navigation_proto",
++        ":sl_boundary_proto",
+         "//modules/common_msgs/basic_msgs:geometry_proto",
+-        "//modules/common_msgs/basic_msgs:vehicle_signal_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
++        "//modules/common_msgs/basic_msgs:pnc_point_proto",
++        "//modules/common_msgs/chassis_msgs:chassis_proto",
++        "//modules/common_msgs/dreamview_msgs:chart_proto",
++        "//modules/common_msgs/localization_msgs:localization_proto",
++        "//modules/common_msgs/perception_msgs:traffic_light_detection_proto",
++        "//modules/common_msgs/routing_msgs:routing_geometry_proto",
+         "//modules/common_msgs/routing_msgs:routing_proto",
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "decision_py_pb2",
+-    deps = [
+-        ":decision_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:vehicle_signal_py_pb2",
+-        "//modules/common_msgs/routing_msgs:routing_py_pb2",
+-    ],
+-)
++apollo_package()
+diff --color -Naur common_msgs/planning_msgs/decision.proto /opt/apollo/modules/common_msgs/planning_msgs/decision.proto
+--- common_msgs/planning_msgs/decision.proto	2023-12-23 18:21:36.409614904 +0800
++++ /opt/apollo/modules/common_msgs/planning_msgs/decision.proto	2023-12-23 18:05:58.950028975 +0800
+@@ -4,7 +4,7 @@
+ 
+ import "modules/common_msgs/basic_msgs/geometry.proto";
+ import "modules/common_msgs/basic_msgs/vehicle_signal.proto";
+-import "modules/common_msgs/routing_msgs/routing.proto";
++import "modules/common_msgs/routing_msgs/geometry.proto";
+ 
+ message TargetLane {
+   // lane id
+diff --color -Naur common_msgs/planning_msgs/pad_msg.proto /opt/apollo/modules/common_msgs/planning_msgs/pad_msg.proto
+--- common_msgs/planning_msgs/pad_msg.proto	2023-12-23 18:21:36.409614904 +0800
++++ /opt/apollo/modules/common_msgs/planning_msgs/pad_msg.proto	2023-12-23 18:05:58.950028975 +0800
+@@ -15,6 +15,7 @@
+     PULL_OVER = 3;
+     STOP = 4;
+     RESUME_CRUISE = 5;
++    CLEAR_PLANNING = 6;
+   };
+ 
+   // driving action
+diff --color -Naur common_msgs/planning_msgs/planning.proto /opt/apollo/modules/common_msgs/planning_msgs/planning.proto
+--- common_msgs/planning_msgs/planning.proto	2023-12-23 18:21:36.409614904 +0800
++++ /opt/apollo/modules/common_msgs/planning_msgs/planning.proto	2023-12-23 18:05:58.950028975 +0800
+@@ -106,6 +106,7 @@
+     PATH_FALLBACK = 2;
+     SPEED_FALLBACK = 3;
+     PATH_REUSED = 4;
++    OPEN_SPACE = 5;
+   }
+   optional TrajectoryType trajectory_type = 21 [default = UNKNOWN];
+ 
+diff --color -Naur common_msgs/planning_msgs/planning_command.proto /opt/apollo/modules/common_msgs/planning_msgs/planning_command.proto
+--- common_msgs/planning_msgs/planning_command.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/planning_msgs/planning_command.proto	2023-12-23 18:05:58.950028975 +0800
+@@ -0,0 +1,35 @@
++syntax = "proto2";
++
++package apollo.planning;
++
++import "google/protobuf/any.proto";
++import "modules/common_msgs/basic_msgs/header.proto";
++import "modules/common_msgs/routing_msgs/routing.proto";
++
++message ParkingCommand {
++  optional apollo.common.Header header = 1;
++  // The id of the parking spot on the map.
++  required string parking_spot_id = 2;
++  // Expected speed when executing this command. If "target_speed" > maximum
++  // speed of the vehicle, use maximum speed of the vehicle instead. If it is
++  // not given, the default target speed of system will be used.
++  optional double target_speed = 3;
++}
++
++message PlanningCommand {
++  optional apollo.common.Header header = 1;
++  // Unique identification for command.
++  optional int64 command_id = 2 [default = -1];
++  // Move along the lanes on map.
++  optional apollo.routing.RoutingResponse lane_follow_command = 3;
++  // Target speed in command.
++  optional double target_speed = 4;
++  // Indicate if the command is a motion command.
++  optional bool is_motion_command = 5 [default = false];
++  oneof command {
++    // Move to the given pose with open space planning trajectory.
++    ParkingCommand parking_command = 6;
++    // Custom command defined by user for extensibility.
++    google.protobuf.Any custom_command = 7;
++  }
++}
+diff --color -Naur common_msgs/planning_msgs/planning_internal.proto /opt/apollo/modules/common_msgs/planning_msgs/planning_internal.proto
+--- common_msgs/planning_msgs/planning_internal.proto	2023-12-23 18:21:36.409614904 +0800
++++ /opt/apollo/modules/common_msgs/planning_msgs/planning_internal.proto	2023-12-23 18:05:58.950028975 +0800
+@@ -11,9 +11,9 @@
+ import "modules/common_msgs/perception_msgs/traffic_light_detection.proto";
+ import "modules/common_msgs/planning_msgs/decision.proto";
+ import "modules/common_msgs/planning_msgs/navigation.proto";
+-import "modules/common_msgs/planning_msgs/scenario_type.proto";
+ import "modules/common_msgs/planning_msgs/sl_boundary.proto";
+ import "modules/common_msgs/routing_msgs/routing.proto";
++import "modules/common_msgs/routing_msgs/geometry.proto";
+ 
+ message Debug {
+   optional PlanningData planning_data = 2;
+@@ -132,9 +132,15 @@
+ }
+ 
+ message ScenarioDebug {
+-  optional apollo.planning.ScenarioType scenario_type = 1;
+-  optional apollo.planning.StageType stage_type = 2;
++  // "scenario_type" is deprecated because scenario is designed as plugin and 
++  // "scenario_plugin_type" will be used instead.
++  optional int32 scenario_type = 1 [deprecated=true];
++  // "stage_type" is deprecated because scenario is designed as plugin and 
++  // "stage_plugin_type" will be used instead.
++  optional int32 stage_type = 2 [deprecated=true];
+   optional string msg = 3;
++  optional string scenario_plugin_type = 4;
++  optional string stage_plugin_type = 5;
+ }
+ 
+ message Trajectories {
+diff --color -Naur common_msgs/planning_msgs/scenario_type.proto /opt/apollo/modules/common_msgs/planning_msgs/scenario_type.proto
+--- common_msgs/planning_msgs/scenario_type.proto	2023-12-23 18:21:36.409614904 +0800
++++ /opt/apollo/modules/common_msgs/planning_msgs/scenario_type.proto	1970-01-01 08:00:00.000000000 +0800
+@@ -1,100 +0,0 @@
+-syntax = "proto2";
+-
+-package apollo.planning;
+-
+-
+-enum ScenarioType {
+-    LANE_FOLLOW = 0;  // default scenario
+-
+-    // intersection involved
+-    BARE_INTERSECTION_UNPROTECTED = 2;
+-    STOP_SIGN_PROTECTED = 3;
+-    STOP_SIGN_UNPROTECTED = 4;
+-    TRAFFIC_LIGHT_PROTECTED = 5;
+-    TRAFFIC_LIGHT_UNPROTECTED_LEFT_TURN = 6;
+-    TRAFFIC_LIGHT_UNPROTECTED_RIGHT_TURN = 7;
+-    YIELD_SIGN = 8;
+-
+-    // parking
+-    PULL_OVER = 9;
+-    VALET_PARKING = 10;
+-
+-    EMERGENCY_PULL_OVER = 11;
+-    EMERGENCY_STOP = 12;
+-
+-    // misc
+-    NARROW_STREET_U_TURN = 13;
+-    PARK_AND_GO = 14;
+-
+-    // learning model sample
+-    LEARNING_MODEL_SAMPLE = 15;
+-    // turn around
+-    DEADEND_TURNAROUND = 16;
+-}
+-
+-// StageType is a superset of stages from all scenarios.
+-// It is created to keep different scenarios have uniform config interface
+-enum StageType {
+-    NO_STAGE = 0;
+-
+-    LANE_FOLLOW_DEFAULT_STAGE = 1;
+-
+-    // bare_intersection_unprotected scenario
+-    BARE_INTERSECTION_UNPROTECTED_APPROACH = 200;
+-    BARE_INTERSECTION_UNPROTECTED_INTERSECTION_CRUISE = 201;
+-
+-    // stop_sign_unprotected scenario
+-    STOP_SIGN_UNPROTECTED_PRE_STOP = 300;
+-    STOP_SIGN_UNPROTECTED_STOP = 301;
+-    STOP_SIGN_UNPROTECTED_CREEP = 302;
+-    STOP_SIGN_UNPROTECTED_INTERSECTION_CRUISE = 303;
+-
+-    // traffic_light_protected scenario
+-    TRAFFIC_LIGHT_PROTECTED_APPROACH = 400;
+-    TRAFFIC_LIGHT_PROTECTED_INTERSECTION_CRUISE = 401;
+-
+-    // traffic_light_unprotected_left_turn scenario
+-    TRAFFIC_LIGHT_UNPROTECTED_LEFT_TURN_APPROACH = 410;
+-    TRAFFIC_LIGHT_UNPROTECTED_LEFT_TURN_CREEP = 411;
+-    TRAFFIC_LIGHT_UNPROTECTED_LEFT_TURN_INTERSECTION_CRUISE = 412;
+-
+-    // traffic_light_unprotected_right_turn scenario
+-    TRAFFIC_LIGHT_UNPROTECTED_RIGHT_TURN_STOP = 420;
+-    TRAFFIC_LIGHT_UNPROTECTED_RIGHT_TURN_CREEP = 421;
+-    TRAFFIC_LIGHT_UNPROTECTED_RIGHT_TURN_INTERSECTION_CRUISE = 422;
+-
+-    // pull_over scenario
+-    PULL_OVER_APPROACH = 500;
+-    PULL_OVER_RETRY_APPROACH_PARKING = 501;
+-    PULL_OVER_RETRY_PARKING = 502;
+-
+-    // emergency_pull_over scenario
+-    EMERGENCY_PULL_OVER_SLOW_DOWN = 600;
+-    EMERGENCY_PULL_OVER_APPROACH = 601;
+-    EMERGENCY_PULL_OVER_STANDBY = 602;
+-
+-    // emergency_pull_over scenario
+-    EMERGENCY_STOP_APPROACH = 610;
+-    EMERGENCY_STOP_STANDBY = 611;
+-
+-    // valet parking scenario
+-    VALET_PARKING_APPROACHING_PARKING_SPOT = 700;
+-    VALET_PARKING_PARKING = 701;
+-
+-    // turning around scenario
+-    DEADEND_TURNAROUND_APPROACHING_TURNING_POINT = 1100;
+-    DEADEND_TURNAROUND_TURNING = 1101;
+-
+-    // park_and_go scenario
+-    PARK_AND_GO_CHECK = 800;
+-    PARK_AND_GO_CRUISE = 801;
+-    PARK_AND_GO_ADJUST = 802;
+-    PARK_AND_GO_PRE_CRUISE = 803;
+-
+-    // yield_sign scenario
+-    YIELD_SIGN_APPROACH = 900;
+-    YIELD_SIGN_CREEP = 901;
+-
+-    // learning_model_sample scenario
+-    LEARNING_MODEL_RUN = 1000;
+-}
+diff --color -Naur common_msgs/prediction_msgs/BUILD /opt/apollo/modules/common_msgs/prediction_msgs/BUILD
+--- common_msgs/prediction_msgs/BUILD	2023-12-23 18:21:36.411614904 +0800
++++ /opt/apollo/modules/common_msgs/prediction_msgs/BUILD	2023-12-23 18:05:58.950028975 +0800
+@@ -1,50 +1,16 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "scenario_cc_proto",
+-    deps = [
+-        ":scenario_proto",
+-    ],
+-)
+-
+-proto_library(
+-    name = "scenario_proto",
+-    srcs = ["scenario.proto"],
+-)
+-
+-py_proto_library(
+-    name = "scenario_py_pb2",
+-    deps = [
+-        ":scenario_proto",
+-    ],
+-)
+-cc_proto_library(
+-    name = "prediction_point_cc_proto",
+-    deps = [
+-        ":prediction_point_proto",
+-    ],
+-)
+-
+ proto_library(
+-    name = "prediction_point_proto",
+-    srcs = ["prediction_point.proto"],
+-)
+-
+-py_proto_library(
+-    name = "prediction_point_py_pb2",
+-    deps = [
+-        ":prediction_point_proto",
+-    ],
+-)
+-cc_proto_library(
+-    name = "feature_cc_proto",
++    name = "lane_graph_proto",
++    srcs = ["lane_graph.proto"],
+     deps = [
+-        ":feature_proto",
++        "//modules/common_msgs/basic_msgs:geometry_proto",
++        "//modules/common_msgs/basic_msgs:pnc_point_proto",
++        "//modules/common_msgs/map_msgs:map_lane_proto",
+     ],
+ )
+ 
+@@ -52,32 +18,12 @@
+     name = "feature_proto",
+     srcs = ["feature.proto"],
+     deps = [
++        ":lane_graph_proto",
++        ":prediction_point_proto",
+         "//modules/common_msgs/basic_msgs:geometry_proto",
+         "//modules/common_msgs/basic_msgs:pnc_point_proto",
+         "//modules/common_msgs/map_msgs:map_lane_proto",
+         "//modules/common_msgs/perception_msgs:perception_obstacle_proto",
+-        ":lane_graph_proto",
+-        ":prediction_point_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "feature_py_pb2",
+-    deps = [
+-        ":feature_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:pnc_point_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_lane_py_pb2",
+-        "//modules/common_msgs/perception_msgs:perception_obstacle_py_pb2",
+-        ":lane_graph_py_pb2",
+-        ":prediction_point_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "prediction_obstacle_cc_proto",
+-    deps = [
+-        ":prediction_obstacle_proto",
+     ],
+ )
+ 
+@@ -85,50 +31,22 @@
+     name = "prediction_obstacle_proto",
+     srcs = ["prediction_obstacle.proto"],
+     deps = [
++        ":feature_proto",
++        ":scenario_proto",
+         "//modules/common_msgs/basic_msgs:error_code_proto",
+         "//modules/common_msgs/basic_msgs:header_proto",
+         "//modules/common_msgs/perception_msgs:perception_obstacle_proto",
+-        ":scenario_proto",
+-        ":feature_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "prediction_obstacle_py_pb2",
+-    deps = [
+-        ":prediction_obstacle_proto",
+-        "//modules/common_msgs/basic_msgs:error_code_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/perception_msgs:perception_obstacle_py_pb2",
+-        ":scenario_py_pb2",
+-        ":feature_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "lane_graph_cc_proto",
+-    deps = [
+-        ":lane_graph_proto",
+     ],
+ )
+ 
+ proto_library(
+-    name = "lane_graph_proto",
+-    srcs = ["lane_graph.proto"],
+-    deps = [
+-        "//modules/common_msgs/basic_msgs:geometry_proto",
+-        "//modules/common_msgs/basic_msgs:pnc_point_proto",
+-        "//modules/common_msgs/map_msgs:map_lane_proto",
+-    ],
++    name = "prediction_point_proto",
++    srcs = ["prediction_point.proto"],
+ )
+ 
+-py_proto_library(
+-    name = "lane_graph_py_pb2",
+-    deps = [
+-        ":lane_graph_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:pnc_point_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_lane_py_pb2",
+-    ],
++proto_library(
++    name = "scenario_proto",
++    srcs = ["scenario.proto"],
+ )
+ 
++apollo_package()
+diff --color -Naur common_msgs/routing_msgs/BUILD /opt/apollo/modules/common_msgs/routing_msgs/BUILD
+--- common_msgs/routing_msgs/BUILD	2023-12-23 18:21:36.413614904 +0800
++++ /opt/apollo/modules/common_msgs/routing_msgs/BUILD	2023-12-23 18:05:58.950028975 +0800
+@@ -1,14 +1,16 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "routing_cc_proto",
++proto_library(
++    name = "poi_proto",
++    srcs = ["poi.proto"],
+     deps = [
+-        ":routing_proto",
++        ":routing_geometry_proto",
++        "//modules/common_msgs/basic_msgs:geometry_proto",
++        "//modules/common_msgs/map_msgs:map_geometry_proto",
+     ],
+ )
+ 
+@@ -16,46 +18,19 @@
+     name = "routing_proto",
+     srcs = ["routing.proto"],
+     deps = [
++        ":routing_geometry_proto",
++        ":poi_proto",
+         "//modules/common_msgs/basic_msgs:error_code_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_proto",
+         "//modules/common_msgs/basic_msgs:header_proto",
+-        "//modules/common_msgs/map_msgs:map_geometry_proto",
+-        "//modules/common_msgs/map_msgs:map_parking_space_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "routing_py_pb2",
+-    deps = [
+-        ":routing_proto",
+-        "//modules/common_msgs/basic_msgs:error_code_py_pb2",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_geometry_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_parking_space_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "poi_cc_proto",
+-    deps = [
+-        ":poi_proto",
+     ],
+ )
+ 
+ proto_library(
+-    name = "poi_proto",
+-    srcs = ["poi.proto"],
++    name = "routing_geometry_proto",
++    srcs = ["geometry.proto"],
+     deps = [
+-        ":routing_proto",
+-    ],
+-)
+-
+-py_proto_library(
+-    name = "poi_py_pb2",
+-    deps = [
+-        ":poi_proto",
+-        ":routing_py_pb2",
++        "//modules/common_msgs/basic_msgs:geometry_proto",
+     ],
+ )
+ 
++apollo_package()
+diff --color -Naur common_msgs/routing_msgs/geometry.proto /opt/apollo/modules/common_msgs/routing_msgs/geometry.proto
+--- common_msgs/routing_msgs/geometry.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/routing_msgs/geometry.proto	2023-12-23 18:05:58.950028975 +0800
+@@ -0,0 +1,48 @@
++syntax = "proto2";
++
++package apollo.routing;
++
++import "modules/common_msgs/basic_msgs/geometry.proto";
++
++message LaneWaypoint {
++  optional string id = 1;
++  optional double s = 2;
++  optional apollo.common.PointENU pose = 3;
++  // When the developer selects a point on the dreamview route editing
++  // the direction can be specified by dragging the mouse
++  // dreamview calculates the heading based on this to support construct lane way point with heading
++  optional double heading = 4;
++}
++
++message LaneSegment {
++  optional string id = 1;
++  optional double start_s = 2;
++  optional double end_s = 3;
++}
++
++enum DeadEndRoutingType {
++  ROUTING_OTHER = 0;
++  ROUTING_IN = 1;
++  ROUTING_OUT = 2;
++}
++
++message Measurement {
++  optional double distance = 1;
++}
++
++enum ChangeLaneType {
++  FORWARD = 0;
++  LEFT = 1;
++  RIGHT = 2;
++};
++
++message Passage {
++  repeated LaneSegment segment = 1;
++  optional bool can_exit = 2;
++  optional ChangeLaneType change_lane_type = 3 [default = FORWARD];
++}
++
++message RoadSegment {
++  optional string id = 1;
++  repeated Passage passage = 2;
++}
+\ No newline at end of file
+diff --color -Naur common_msgs/routing_msgs/poi.proto /opt/apollo/modules/common_msgs/routing_msgs/poi.proto
+--- common_msgs/routing_msgs/poi.proto	2023-12-23 18:21:36.413614904 +0800
++++ /opt/apollo/modules/common_msgs/routing_msgs/poi.proto	2023-12-23 18:05:58.950028975 +0800
+@@ -2,13 +2,29 @@
+ 
+ package apollo.routing;
+ 
+-import "modules/common_msgs/routing_msgs/routing.proto";
++import "modules/common_msgs/map_msgs/map_geometry.proto";
++import "modules/common_msgs/basic_msgs/geometry.proto";
++import "modules/common_msgs/routing_msgs/geometry.proto";
++
++enum ParkingSpaceType {
++  VERTICAL_PLOT = 0;
++  PARALLEL_PARKING = 1;
++}
++
++message ParkingInfo {
++  optional string parking_space_id = 1;
++  optional apollo.common.PointENU parking_point = 2;
++  optional ParkingSpaceType parking_space_type = 3;
++  // The four corner points are in order.
++  optional apollo.hdmap.Polygon corner_point = 4;
++}
+ 
+ message Landmark {
+   optional string name = 1;
+   repeated LaneWaypoint waypoint = 2;
+   optional string parking_space_id = 3 [deprecated = true];
+   optional apollo.routing.ParkingInfo parking_info = 4;
++  optional int32 cycle_number = 5;
+ }
+ 
+ message POI {
+diff --color -Naur common_msgs/routing_msgs/routing.proto /opt/apollo/modules/common_msgs/routing_msgs/routing.proto
+--- common_msgs/routing_msgs/routing.proto	2023-12-23 18:21:36.413614904 +0800
++++ /opt/apollo/modules/common_msgs/routing_msgs/routing.proto	2023-12-23 18:05:58.950028975 +0800
+@@ -2,92 +2,28 @@
+ 
+ package apollo.routing;
+ 
+-import "modules/common_msgs/basic_msgs/error_code.proto";
+-import "modules/common_msgs/basic_msgs/geometry.proto";
++import "modules/common_msgs/routing_msgs/geometry.proto";
+ import "modules/common_msgs/basic_msgs/header.proto";
+-import "modules/common_msgs/map_msgs/map_geometry.proto";
+-import "modules/common_msgs/map_msgs/map_parking_space.proto";
+-
+-message LaneWaypoint {
+-  optional string id = 1;
+-  optional double s = 2;
+-  optional apollo.common.PointENU pose = 3;
+-  // When the developer selects a point on the dreamview route editing
+-  // the direction can be specified by dragging the mouse
+-  // dreamview calculates the heading based on this to support construct lane way point with heading
+-  optional double heading = 4;
+-}
+-
+-message LaneSegment {
+-  optional string id = 1;
+-  optional double start_s = 2;
+-  optional double end_s = 3;
+-}
+-
+-enum ParkingSpaceType {
+-  VERTICAL_PLOT = 0;
+-  PARALLEL_PARKING = 1;
+-}
+-
+-enum DeadEndRoutingType {
+-  ROUTING_OTHER = 0;
+-  ROUTING_IN = 1;
+-  ROUTING_OUT = 2;
+-}
+-
+-message ParkingInfo {
+-  optional string parking_space_id = 1;
+-  optional apollo.common.PointENU parking_point = 2;
+-  optional ParkingSpaceType parking_space_type = 3;
+-  // The four corner points are in order.
+-  optional apollo.hdmap.Polygon corner_point = 4;
+-}
+-
+-message DeadEndInfo {
+-  // dead end in/out routing
+-  optional DeadEndRoutingType dead_end_routing_type = 1;
+-  // traget point from the out routing's start point
+-  optional apollo.common.PointENU target_point = 2;
+-}
++import "modules/common_msgs/basic_msgs/error_code.proto";
++import "modules/common_msgs/routing_msgs/poi.proto";
+ 
+ message RoutingRequest {
+   optional apollo.common.Header header = 1;
+   // at least two points. The first is start point, the end is final point.
+   // The routing must go through each point in waypoint.
+-  repeated LaneWaypoint waypoint = 2;
+-  repeated LaneSegment blacklisted_lane = 3;
++  repeated apollo.routing.LaneWaypoint waypoint = 2;
++  repeated apollo.routing.LaneSegment blacklisted_lane = 3;
+   repeated string blacklisted_road = 4;
+   optional bool broadcast = 5 [default = true];
+-  optional apollo.hdmap.ParkingSpace parking_space = 6 [deprecated = true];
+-  optional ParkingInfo parking_info = 7;
+-  optional DeadEndInfo dead_end_info = 8;
+-}
+-
+-message Measurement {
+-  optional double distance = 1;
+-}
+-
+-enum ChangeLaneType {
+-  FORWARD = 0;
+-  LEFT = 1;
+-  RIGHT = 2;
+-};
+-
+-message Passage {
+-  repeated LaneSegment segment = 1;
+-  optional bool can_exit = 2;
+-  optional ChangeLaneType change_lane_type = 3 [default = FORWARD];
+-}
+-
+-message RoadSegment {
+-  optional string id = 1;
+-  repeated Passage passage = 2;
++  optional apollo.routing.ParkingInfo parking_info = 6 [deprecated = true];
++  // If the start pose is set as the first point of "way_point".
++  optional bool is_start_pose_set = 7 [default = false];
+ }
+ 
+ message RoutingResponse {
+   optional apollo.common.Header header = 1;
+-  repeated RoadSegment road = 2;
+-  optional Measurement measurement = 3;
++  repeated apollo.routing.RoadSegment road = 2;
++  optional apollo.routing.Measurement measurement = 3;
+   optional RoutingRequest routing_request = 4;
+ 
+   // the map version which is used to build road graph
+diff --color -Naur common_msgs/sensor_msgs/BUILD /opt/apollo/modules/common_msgs/sensor_msgs/BUILD
+--- common_msgs/sensor_msgs/BUILD	2023-12-23 18:21:36.414614904 +0800
++++ /opt/apollo/modules/common_msgs/sensor_msgs/BUILD	2023-12-23 18:05:58.951028975 +0800
+@@ -1,16 +1,8 @@
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "delphi_esr_cc_proto",
+-    deps = [
+-        ":delphi_esr_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "delphi_esr_proto",
+     srcs = ["delphi_esr.proto"],
+@@ -19,18 +11,12 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "delphi_esr_py_pb2",
+-    deps = [
+-        ":delphi_esr_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "sensor_image_cc_proto",
++proto_library(
++    name = "oculii_radar_proto",
++    srcs = ["oculii_radar.proto"],
+     deps = [
+-        ":sensor_image_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
++        "//modules/common_msgs/basic_msgs:error_code_proto",
+     ],
+ )
+ 
+@@ -42,21 +28,6 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "sensor_image_py_pb2",
+-    deps = [
+-        ":sensor_image_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "mobileye_cc_proto",
+-    deps = [
+-        ":mobileye_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "mobileye_proto",
+     srcs = ["mobileye.proto"],
+@@ -65,21 +36,6 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "mobileye_py_pb2",
+-    deps = [
+-        ":mobileye_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "ultrasonic_radar_cc_proto",
+-    deps = [
+-        ":ultrasonic_radar_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "ultrasonic_radar_proto",
+     srcs = ["ultrasonic_radar.proto"],
+@@ -88,21 +44,6 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "ultrasonic_radar_py_pb2",
+-    deps = [
+-        ":ultrasonic_radar_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "racobit_radar_cc_proto",
+-    deps = [
+-        ":racobit_radar_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "racobit_radar_proto",
+     srcs = ["racobit_radar.proto"],
+@@ -111,21 +52,6 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "racobit_radar_py_pb2",
+-    deps = [
+-        ":racobit_radar_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "conti_radar_cc_proto",
+-    deps = [
+-        ":conti_radar_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "conti_radar_proto",
+     srcs = ["conti_radar.proto"],
+@@ -134,21 +60,6 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "conti_radar_py_pb2",
+-    deps = [
+-        ":conti_radar_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "smartereye_cc_proto",
+-    deps = [
+-        ":smartereye_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "smartereye_proto",
+     srcs = ["smartereye.proto"],
+@@ -157,21 +68,6 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "smartereye_py_pb2",
+-    deps = [
+-        ":smartereye_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "pointcloud_cc_proto",
+-    deps = [
+-        ":pointcloud_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "pointcloud_proto",
+     srcs = ["pointcloud.proto"],
+@@ -180,18 +76,11 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "pointcloud_py_pb2",
+-    deps = [
+-        ":pointcloud_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "radar_cc_proto",
++proto_library(
++    name = "radarpointcloud_proto",
++    srcs = ["radarpointcloud.proto"],
+     deps = [
+-        ":radar_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
+     ],
+ )
+ 
+@@ -205,23 +94,6 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "radar_py_pb2",
+-    deps = [
+-        ":radar_proto",
+-        "//modules/common_msgs/basic_msgs:error_code_py_pb2",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "gnss_best_pose_cc_proto",
+-    deps = [
+-        ":gnss_best_pose_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "gnss_best_pose_proto",
+     srcs = ["gnss_best_pose.proto"],
+@@ -230,21 +102,6 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "gnss_best_pose_py_pb2",
+-    deps = [
+-        ":gnss_best_pose_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "imu_cc_proto",
+-    deps = [
+-        ":imu_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "imu_proto",
+     srcs = ["imu.proto"],
+@@ -254,22 +111,6 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "imu_py_pb2",
+-    deps = [
+-        ":imu_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "heading_cc_proto",
+-    deps = [
+-        ":heading_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "heading_proto",
+     srcs = ["heading.proto"],
+@@ -278,40 +119,11 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "heading_py_pb2",
+-    deps = [
+-        ":heading_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "gnss_raw_observation_cc_proto",
+-    deps = [
+-        ":gnss_raw_observation_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "gnss_raw_observation_proto",
+     srcs = ["gnss_raw_observation.proto"],
+ )
+ 
+-py_proto_library(
+-    name = "gnss_raw_observation_py_pb2",
+-    deps = [
+-        ":gnss_raw_observation_proto",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "gnss_cc_proto",
+-    deps = [
+-        ":gnss_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "gnss_proto",
+     srcs = ["gnss.proto"],
+@@ -321,22 +133,6 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "gnss_py_pb2",
+-    deps = [
+-        ":gnss_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "ins_cc_proto",
+-    deps = [
+-        ":ins_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "ins_proto",
+     srcs = ["ins.proto"],
+@@ -346,11 +142,4 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "ins_py_pb2",
+-    deps = [
+-        ":ins_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
++apollo_package()
+diff --color -Naur common_msgs/sensor_msgs/oculii_radar.proto /opt/apollo/modules/common_msgs/sensor_msgs/oculii_radar.proto
+--- common_msgs/sensor_msgs/oculii_radar.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/sensor_msgs/oculii_radar.proto	2023-12-23 18:05:58.951028975 +0800
+@@ -0,0 +1,60 @@
++syntax = "proto2";
++
++package apollo.drivers;
++
++import "modules/common_msgs/basic_msgs/error_code.proto";
++import "modules/common_msgs/basic_msgs/header.proto";
++
++message OculiiRawPointcloud {
++    optional float range = 1;
++    optional float doppler = 2;
++    optional float azimuth = 3;
++    optional float elevation = 4;
++    optional float power = 5;
++}
++
++message OculiiPointXYZIV {
++  optional float x = 1 [default = nan];
++  optional float y = 2 [default = nan];
++  optional float z = 3 [default = nan];
++  optional float intensity = 4 [default = 0];
++  optional float velocity = 5 [default = 0];
++}
++
++message OculiiTrackTarget {
++    enum ObstacleClass {
++        UNKNOWN = 0;
++        PEDESTRIAN = 1;
++        BICYCLE = 2;
++        VEHICLE = 3;
++        TRUCK = 4;
++        BACKGROUND = 5;
++    }
++    optional int64 id = 1;
++    optional float x_pos = 2;
++    optional float y_pos = 3;
++    optional float z_pos = 4;
++    optional float x_dot = 5;
++    optional float y_dot = 6;
++    optional float z_dot = 7;
++    optional int32 confidence = 8;
++    optional ObstacleClass track_class = 9;
++}
++
++message OculiiPointCloud {
++    optional apollo.common.Header header = 1;
++    optional string frame_id = 2;
++    optional bool is_dense = 3;
++    repeated OculiiPointXYZIV point = 4;
++    optional double measurement_time = 5;
++    optional int32 width = 6;
++    optional int32 height = 7;
++    optional int64 packet_id = 8;
++    optional float ego_speed = 9;
++    optional float ego_angle = 10;
++    optional int32 detection_size = 11;
++    optional int32 track_size = 12;
++    repeated OculiiRawPointcloud raw_pointclouds = 13;
++    repeated OculiiTrackTarget tracks = 14;
++}
++
+diff --color -Naur common_msgs/sensor_msgs/radarpointcloud.proto /opt/apollo/modules/common_msgs/sensor_msgs/radarpointcloud.proto
+--- common_msgs/sensor_msgs/radarpointcloud.proto	1970-01-01 08:00:00.000000000 +0800
++++ /opt/apollo/modules/common_msgs/sensor_msgs/radarpointcloud.proto	2023-12-23 18:05:58.951028975 +0800
+@@ -0,0 +1,22 @@
++syntax = "proto2";
++package apollo.drivers;
++
++import "modules/common_msgs/basic_msgs/header.proto";
++
++message RadarPointXYZVR {
++  optional float x = 1 [default = nan];
++  optional float y = 2 [default = nan];
++  optional float z = 3 [default = nan];
++  optional float velocity = 4 [default = 0];
++  optional float rcs = 5 [default = 0];
++}
++
++message RadarPointCloud {
++  optional apollo.common.Header header = 1;
++  optional string frame_id = 2;
++  optional bool is_dense = 3;
++  repeated RadarPointXYZVR point = 4;
++  optional double measurement_time = 5;
++  optional uint32 width = 6;
++  optional uint32 height = 7;
++}
+diff --color -Naur common_msgs/sensor_msgs/sensor_image.proto /opt/apollo/modules/common_msgs/sensor_msgs/sensor_image.proto
+--- common_msgs/sensor_msgs/sensor_image.proto	2023-12-23 18:21:36.414614904 +0800
++++ /opt/apollo/modules/common_msgs/sensor_msgs/sensor_image.proto	2023-12-23 18:05:58.951028975 +0800
+@@ -86,4 +86,6 @@
+   optional bytes data = 4;  // Compressed image buffer
+   optional double measurement_time = 5;
+   optional uint32 frame_type = 6;
++  optional uint32 width = 7;
++  optional uint32 height = 8;
+ }
+diff --color -Naur common_msgs/simulation_msgs/BUILD /opt/apollo/modules/common_msgs/simulation_msgs/BUILD
+--- common_msgs/simulation_msgs/BUILD	2023-12-23 18:21:36.419614904 +0800
++++ /opt/apollo/modules/common_msgs/simulation_msgs/BUILD	2023-12-23 18:05:58.951028975 +0800
+@@ -1,35 +1,14 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "agent_cc_proto",
+-    deps = [
+-        ":agent_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "agent_proto",
+     srcs = ["agent.proto"],
+ )
+ 
+-py_proto_library(
+-    name = "agent_py_pb2",
+-    deps = [
+-        ":agent_proto",
+-    ],
+-)
+-cc_proto_library(
+-    name = "scenario_cc_proto",
+-    deps = [
+-        ":scenario_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "scenario_proto",
+     srcs = ["scenario.proto"],
+@@ -42,25 +21,6 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "scenario_py_pb2",
+-    deps = [
+-        ":scenario_proto",
+-        ":agent_py_pb2",
+-        ":grading_metric_py_pb2",
+-        "//modules/common_msgs/perception_msgs:traffic_light_detection_py_pb2",
+-        "//modules/common_msgs/planning_msgs:pad_msg_py_pb2",
+-        "//modules/common_msgs/routing_msgs:routing_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "grading_metric_cc_proto",
+-    deps = [
+-        ":grading_metric_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "grading_metric_proto",
+     srcs = ["grading_metric.proto"],
+@@ -69,21 +29,6 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "grading_metric_py_pb2",
+-    deps = [
+-        ":grading_metric_proto",
+-        ":grading_condition_py_pb2",
+-    ],
+-)
+-
+-cc_proto_library(
+-    name = "grading_condition_cc_proto",
+-    deps = [
+-        ":grading_condition_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "grading_condition_proto",
+     srcs = ["grading_condition.proto"],
+@@ -92,11 +37,4 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "grading_condition_py_pb2",
+-    deps = [
+-        ":grading_condition_proto",
+-        "//modules/common_msgs/map_msgs:map_geometry_py_pb2",
+-    ],
+-)
+-
++apollo_package()
+diff --color -Naur common_msgs/simulation_msgs/agent.proto /opt/apollo/modules/common_msgs/simulation_msgs/agent.proto
+--- common_msgs/simulation_msgs/agent.proto	2023-12-23 18:21:36.419614904 +0800
++++ /opt/apollo/modules/common_msgs/simulation_msgs/agent.proto	2023-12-23 18:05:58.951028975 +0800
+@@ -14,6 +14,7 @@
+     PEDESTRIAN = 2;
+     UNKNOWN_UNMOVABLE = 3;
+     UNKNOWN_MOVABLE = 4;
++    BIG_TRUCK = 5;
+   }
+   optional Type type = 6;
+ 
+diff --color -Naur common_msgs/storytelling_msgs/BUILD /opt/apollo/modules/common_msgs/storytelling_msgs/BUILD
+--- common_msgs/storytelling_msgs/BUILD	2023-12-23 18:21:36.421614904 +0800
++++ /opt/apollo/modules/common_msgs/storytelling_msgs/BUILD	2023-12-23 18:05:58.951028975 +0800
+@@ -1,17 +1,9 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "story_cc_proto",
+-    deps = [
+-        ":story_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "story_proto",
+     srcs = ["story.proto"],
+@@ -20,11 +12,4 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "story_py_pb2",
+-    deps = [
+-        ":story_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
++apollo_package()
+diff --color -Naur common_msgs/task_manager_msgs/BUILD /opt/apollo/modules/common_msgs/task_manager_msgs/BUILD
+--- common_msgs/task_manager_msgs/BUILD	2023-12-23 18:21:36.422614904 +0800
++++ /opt/apollo/modules/common_msgs/task_manager_msgs/BUILD	2023-12-23 18:05:58.951028975 +0800
+@@ -1,34 +1,17 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "task_manager_cc_proto",
+-    deps = [
+-        ":task_manager_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "task_manager_proto",
+     srcs = ["task_manager.proto"],
+     deps = [
+         "//modules/common_msgs/basic_msgs:header_proto",
+-        "//modules/common_msgs/map_msgs:map_parking_space_proto",
+         "//modules/common_msgs/routing_msgs:routing_proto",
++        "//modules/common_msgs/external_command_msgs:lane_follow_command_proto",
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "task_manager_py_pb2",
+-    deps = [
+-        ":task_manager_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/map_msgs:map_parking_space_py_pb2",
+-        "//modules/common_msgs/routing_msgs:routing_py_pb2",
+-    ],
+-)
+-
++apollo_package()
+diff --color -Naur common_msgs/task_manager_msgs/task_manager.proto /opt/apollo/modules/common_msgs/task_manager_msgs/task_manager.proto
+--- common_msgs/task_manager_msgs/task_manager.proto	2023-12-23 18:21:36.422614904 +0800
++++ /opt/apollo/modules/common_msgs/task_manager_msgs/task_manager.proto	2023-12-23 18:05:58.951028975 +0800
+@@ -3,8 +3,8 @@
+ package apollo.task_manager;
+ 
+ import "modules/common_msgs/basic_msgs/header.proto";
+-import "modules/common_msgs/map_msgs/map_parking_space.proto";
+ import "modules/common_msgs/routing_msgs/routing.proto";
++import "modules/common_msgs/external_command_msgs/lane_follow_command.proto";
+ 
+ enum TaskType {
+   CYCLE_ROUTING = 0;
+@@ -22,7 +22,7 @@
+ 
+ message CycleRoutingTask {
+   optional int32 cycle_num = 1;
+-  optional apollo.routing.RoutingRequest routing_request = 2;
++  optional apollo.external_command.LaneFollowCommand lane_follow_command = 2;
+ }
+ 
+ message ParkingRoutingTask {
+diff --color -Naur common_msgs/transform_msgs/BUILD /opt/apollo/modules/common_msgs/transform_msgs/BUILD
+--- common_msgs/transform_msgs/BUILD	2023-12-23 18:21:36.422614904 +0800
++++ /opt/apollo/modules/common_msgs/transform_msgs/BUILD	2023-12-23 18:05:58.951028975 +0800
+@@ -1,17 +1,9 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "transform_cc_proto",
+-    deps = [
+-        ":transform_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "transform_proto",
+     srcs = ["transform.proto"],
+@@ -21,12 +13,4 @@
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "transform_py_pb2",
+-    deps = [
+-        ":transform_proto",
+-        "//modules/common_msgs/basic_msgs:geometry_py_pb2",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-    ],
+-)
+-
++apollo_package()
+diff --color -Naur common_msgs/v2x_msgs/BUILD /opt/apollo/modules/common_msgs/v2x_msgs/BUILD
+--- common_msgs/v2x_msgs/BUILD	2023-12-23 18:21:36.422614904 +0800
++++ /opt/apollo/modules/common_msgs/v2x_msgs/BUILD	2023-12-23 18:05:58.952028975 +0800
+@@ -1,32 +1,16 @@
+ ## Auto generated by `proto_build_generator.py`
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+-load("//tools:python_rules.bzl", "py_proto_library")
++load("//tools/proto:proto.bzl", "proto_library")
++load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-cc_proto_library(
+-    name = "v2x_traffic_light_cc_proto",
+-    deps = [
+-        ":v2x_traffic_light_proto",
+-    ],
+-)
+-
+ proto_library(
+     name = "v2x_traffic_light_proto",
+     srcs = ["v2x_traffic_light.proto"],
+     deps = [
+-        "//modules/common_msgs/basic_msgs:header_proto",
+         "//modules/common_msgs/basic_msgs:direction_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
+     ],
+ )
+ 
+-py_proto_library(
+-    name = "v2x_traffic_light_py_pb2",
+-    deps = [
+-        ":v2x_traffic_light_proto",
+-        "//modules/common_msgs/basic_msgs:header_py_pb2",
+-        "//modules/common_msgs/basic_msgs:direction_py_pb2",
+-    ],
+-)
+-
++apollo_package()
