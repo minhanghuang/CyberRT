@@ -5,7 +5,7 @@ _SETUP_PATH=$(cd `dirname $BASH_SOURCE[0]`; pwd)
 CYBERRT_PATH=$(dirname "$_SETUP_PATH")
 BUILD_PATH=$_SETUP_PATH
 PATH=$_SETUP_PATH/bin/cyber/tools:$_SETUP_PATH/bin/cyber/mainboard:$PATH
-PYTHONPATH=$_SETUP_PATH/lib/python@Python_VERSION@/site-packages:$PYTHONPATH
+PYTHONPATH=$_SETUP_PATH/lib/python@Python_VERSION@/site-packages:$_SETUP_PATH/lib/python@Python_VERSION@/site-packages/cyber/python/internal:$PYTHONPATH
 LD_LIBRARY_PATH=$_SETUP_PATH/lib:$LD_LIBRARY_PATH
 LIBRARY_PATH=$_SETUP_PATH/lib:$LIBRARY_PATH
 CMAKE_PREFIX_PATH=$_SETUP_PATH:$CMAKE_PREFIX_PATH
@@ -29,6 +29,7 @@ for entry in "${mainboard_path}" \
     "${channel_path}" "${node_path}" \
     "${service_path}" \
     "${launch_path}" \
+    "${bazel_bin_path}" \
     "${visualizer_path}" ; do
     export PATH="${entry}":$PATH
 done
@@ -39,3 +40,5 @@ export GLOG_minloglevel=0
 export sysmo_start=0
 export CYBER_DOMAIN_ID=80
 export CYBER_IP=127.0.0.1
+
+source ${BUILD_PATH}/cyber_tools_auto_complete.bash
