@@ -72,7 +72,7 @@ function build_fastdds() {
   # git submodule update --init
   # patch -p1 < "$CURRENT_PATH/../scripts/FastRTPS_1.5.0.patch"
   # mkdir -p build && cd build
-  # cmake -DEPROSIMA_BUILD=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/home/trunk/work/code/github/CyberRT/third_party/Fast-RTPS/build/external/install ..
+  # cmake -DEPROSIMA_BUILD=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=external/install ..
   # make -j$(nproc)
   # make install
   # cmake -DEPROSIMA_BUILD=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX ..
