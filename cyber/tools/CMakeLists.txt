@@ -71,8 +71,8 @@ install(FILES
   ${CMAKE_BINARY_DIR}/bin/cyber/tools/cyber_launch/cyber_launch
   ${CMAKE_BINARY_DIR}/bin/cyber/tools/cyber_node/cyber_node
   ${CMAKE_BINARY_DIR}/bin/cyber/tools/cyber_service/cyber_service
-  ${CMAKE_BINARY_DIR}/bin/cyber/tools/cyber_service/cyber_monitor
-  ${CMAKE_BINARY_DIR}/bin/cyber/tools/cyber_service/cyber_recorder
+  ${CMAKE_BINARY_DIR}/bin/cyber/tools/cyber_monitor/cyber_monitor
+  ${CMAKE_BINARY_DIR}/bin/cyber/tools/cyber_recorder/cyber_recorder
   PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
   DESTINATION bin
 )
