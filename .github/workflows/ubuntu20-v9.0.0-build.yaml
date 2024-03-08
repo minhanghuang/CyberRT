@@ -3,6 +3,10 @@ run-name: CyberRT v9.0.0 build runner on ubuntu20 x86-64🚀
 
 on:
   push:
+    paths:
+      - '.github/workflows/ubuntu20-v9.0.0-build.yaml'
+
+  pull_request:
     branches:
       - v9.0.0
 
@@ -22,7 +26,7 @@ jobs:
         run: |
           apt update
           apt install -y lsb-release git wget pkg-config g++ cmake libpoco-dev uuid-dev libncurses5-dev python3-dev
-          cd /workspace/${{ github.repository }} && ./scripts/install.sh
+          cd /workspace/${{ github.repository }} && python3 install.py
 
       - name: Build
         run: |

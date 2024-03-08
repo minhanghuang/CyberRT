@@ -11,6 +11,11 @@ on:
       - 'scripts/**'
       - '.github/workflows/ubuntu18-v9.0.0-build.yaml'
 
+  pull_request:
+    branches:
+      - v9.0.0
+
+
 jobs:
   build-amd-ubuntu18:
     runs-on: ubuntu-latest
@@ -27,7 +32,7 @@ jobs:
         run: |
           apt update
           apt install -y lsb-release git wget pkg-config g++ cmake libpoco-dev uuid-dev libncurses5-dev python3-dev
-          cd /workspace/${{ github.repository }} && ./scripts/install.sh
+          cd /workspace/${{ github.repository }} && python3 install.py
 
       - name: Build
         run: |

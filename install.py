@@ -48,7 +48,7 @@ class Install:
             "--depth=1"
         )
         os.chdir(os.path.join(self._dowload_path, "setup"))
-        self._cmd("mkdir -p build && cd build")
+        self._cmd("mkdir -p build")
         os.chdir("build")
         self._cmd(
             "cmake -DCMAKE_INSTALL_PREFIX={} ..".format(self._install_prefix))
@@ -62,7 +62,7 @@ class Install:
             "--depth=1"
         )
         os.chdir(os.path.join(self._dowload_path, "nlohmann_json"))
-        self._cmd("mkdir -p build && cd build")
+        self._cmd("mkdir -p build")
         os.chdir("build")
         self._cmd(
             "cmake -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(self._install_prefix))
@@ -78,7 +78,7 @@ class Install:
             "--depth=1"
         )
         os.chdir(os.path.join(self._dowload_path, "tinyxml2"))
-        self._cmd("mkdir -p build && cd build")
+        self._cmd("mkdir -p build")
         os.chdir("build")
         self._cmd(
             "cmake -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(self._install_prefix))
@@ -116,16 +116,16 @@ class Install:
         )
 
         os.chdir(os.path.join(self._dowload_path, "gflags"))
-        self._cmd("mkdir -p build && cd build")
+        self._cmd("mkdir -p build")
         os.chdir("build")
         self._cmd(
             "cmake -DCMAKE_CXX_FLAGS='-fPIC' -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(
                 self._install_prefix))
-        self._cmd("sudo make install -j$(nproc)")
+        self._cmd("make install -j$(nproc)")
         os.chdir(self._current_path)
 
         os.chdir(os.path.join(self._dowload_path, "glog"))
-        self._cmd("mkdir -p build && cd build")
+        self._cmd("mkdir -p build")
         os.chdir("build")
         self._cmd(
             "cmake -DCMAKE_CXX_FLAGS='-fPIC' -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(
@@ -134,7 +134,7 @@ class Install:
         os.chdir(self._current_path)
 
         os.chdir(os.path.join(self._dowload_path, "googletest"))
-        self._cmd("mkdir -p build && cd build")
+        self._cmd("mkdir -p build")
         os.chdir("build")
         self._cmd(
             "cmake -DCMAKE_CXX_FLAGS='-fPIC -w' -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(
@@ -143,7 +143,17 @@ class Install:
         os.chdir(self._current_path)
 
         os.chdir(os.path.join(self._dowload_path, "glog"))
-        self._cmd("mkdir -p build && cd build")
+        self._cmd("mkdir -p build")
+        os.chdir("build")
+        self._cmd(
+            "cmake -Dprotobuf_BUILD_SHARED_LIBS=ON -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX={} ..".format(
+                self._install_prefix))
+        self._cmd("make install -j$(nproc)")
+        os.chdir(self._current_path)
+
+        os.chdir(os.path.join(self._dowload_path, "protobuf"))
+        os.chdir("cmake")
+        self._cmd("mkdir -p build")
         os.chdir("build")
         self._cmd(
             "cmake -Dprotobuf_BUILD_SHARED_LIBS=ON -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX={} ..".format(
@@ -163,7 +173,7 @@ class Install:
         # self._cmd("git submodule update --init")
         # self._cmd("patch -p1 < {}".format(os.path.join(self._current_path,
         #           "scripts/FastRTPS_1.5.0.patch")))
-        # self._cmd("mkdir -p build && cd build")
+        # self._cmd("mkdir -p build")
         # self._cmd(
         #     "cmake -DEPROSIMA_BUILD=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX={} ..".format(
         #         self._install_prefix))

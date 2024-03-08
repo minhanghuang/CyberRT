@@ -33,4 +33,4 @@ jobs:
             uname -a
             lsb_release -a
             echo "-----------------------"
-            bash -c "./scripts/install.sh && source install/setup.bash && mkdir -p build && cd build && cmake .. && make -j$(nproc)"
+            bash -c "python3 install.py && source install/setup.bash && mkdir -p build && cd build && cmake .. && make -j$(nproc)"

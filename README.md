@@ -36,7 +36,7 @@ cd CyberRT
 > install
 
 ```shell
-sudo python install.py
+sudo python3 install.py
 ```
 
 > export path
