@@ -27,7 +27,7 @@ jobs:
         run: |
           apt update
           apt install -y lsb-release git wget pkg-config g++ cmake libpoco-dev uuid-dev libncurses5-dev python3-dev
-          cd /workspace/${{ github.repository }} && ./scripts/install.sh
+          cd /workspace/${{ github.repository }} && python3 install.py
 
       - name: Build
         run: |
