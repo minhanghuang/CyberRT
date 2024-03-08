@@ -142,15 +142,6 @@ class Install:
         self._cmd("make install -j$(nproc)")
         os.chdir(self._current_path)
 
-        os.chdir(os.path.join(self._dowload_path, "glog"))
-        self._cmd("mkdir -p build")
-        os.chdir("build")
-        self._cmd(
-            "cmake -Dprotobuf_BUILD_SHARED_LIBS=ON -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX={} ..".format(
-                self._install_prefix))
-        self._cmd("make install -j$(nproc)")
-        os.chdir(self._current_path)
-
         os.chdir(os.path.join(self._dowload_path, "protobuf"))
         os.chdir("cmake")
         self._cmd("mkdir -p build")
