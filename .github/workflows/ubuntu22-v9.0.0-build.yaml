@@ -3,6 +3,10 @@ run-name: CyberRT v9.0.0 build runner on ubuntu22 x86-64🚀
 
 on:
   push:
+    paths:
+      - '.github/workflows/ubuntu22-v9.0.0-build.yaml'
+
+  pull_request:
     branches:
       - v9.0.0
 

@@ -11,6 +11,11 @@ on:
       - 'scripts/**'
       - '.github/workflows/ubuntu18-v9.0.0-build.yaml'
 
+  pull_request:
+    branches:
+      - v9.0.0
+
+
 jobs:
   build-amd-ubuntu18:
     runs-on: ubuntu-latest
