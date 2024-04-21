@@ -27,6 +27,9 @@ set_target_properties(common_component_example PROPERTIES
   LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/cyber/examples/common_component_example/"
 )
 
+set_target_properties(common_component_example PROPERTIES
+  LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/cyber/examples/common_component_example/"
+)
 
 file(COPY common.dag common.launch
   DESTINATION ${CMAKE_BINARY_DIR}/share/examples/common_component_example
