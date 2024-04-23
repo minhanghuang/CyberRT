@@ -1,20 +1,38 @@
 #!/usr/bin/env python3
 import subprocess
-import platform
 import os
-
+import argparse
+import time
 
 class Install:
 
-    def __init__(self) -> None:
-        self._machine = platform.machine()
+    def __init__(self, platform, install_prefix) -> None:
+        self._machine = platform
         self._home_path = os.path.expanduser("~")
         self._current_path = os.path.abspath(os.path.dirname(__file__))
         self._dowload_path = os.path.join(self._current_path, "third_party")
         self._install_prefix = os.path.join(self._current_path, "install")
+        if (install_prefix != "install"):
+            self._install_prefix = install_prefix
 
         if not os.path.exists(self._install_prefix):
             os.makedirs(self._install_prefix)
+
+        self.environment = self._load_environment()
+
+    def _load_environment(self):
+        '''
+            In case of cross-compilation, we need to load the environment setup file
+        :return: env
+        '''
+        env = os.environ.copy()
+        return env
+
+
+    def _cmd(self, command):
+        """执行系统命令，使用指定的环境变量"""
+        print("[command] {}".format(command))
+        subprocess.run(command, shell=True, env=self.environment)
 
     def start(self):
         self._clone_setup()
@@ -176,21 +194,29 @@ class Install:
         else:
             dds_name = "fast-rtps-1.5.0-1.prebuilt.aarch64.tar.gz"
 
-        if os.path.exists(os.path.join(self._dowload_path, dds_name)):
-            return None
+        if not os.path.exists(os.path.join(self._dowload_path, dds_name)):
+            self._cmd(
+                "wget -t 10 {} -P {}".format(
+                    "https://apollo-system.cdn.bcebos.com/archive/6.0/{}".format(dds_name),
+                    self._dowload_path),
+            )
 
-        self._cmd(
-            "wget -t 10 {} -P {}".format(
-                "https://apollo-system.cdn.bcebos.com/archive/6.0/{}".format(dds_name),
-                self._dowload_path),
-        )
         os.chdir(self._dowload_path)
         self._cmd("tar -zxvf {}".format(dds_name))
         self._cmd("cp -r fast-rtps-1.5.0-1/* {}".format(self._install_prefix))
         self._cmd("rm -rf fast-rtps-1.5.0-1/")
         os.chdir(self._current_path)
 
+def parse_config():
+    parser = argparse.ArgumentParser(description="install")
+    parser.add_argument("--platform", type=str, default="x86_64", help="platform")
+    parser.add_argument("--install_prefix", type=str, default="install", help="install prefix")
+    args = parser.parse_args()
+    return args
 
 if __name__ == "__main__":
-    install = Install()
+    args = parse_config()
+    print(f"args.platform: {args.platform}, args.install_prefix: {args.install_prefix}")
+    time.sleep(3)
+    install = Install(args.platform, args.install_prefix)
     install.start()
