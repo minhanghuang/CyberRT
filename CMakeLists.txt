@@ -6,13 +6,26 @@ set(CMAKE_CXX_STANDARD 14)
 set(TARGET_NAME ${PROJECT_NAME})
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Debug) # Debug/Release
+  set(CMAKE_BUILD_TYPE Release) # Debug/Release
 endif()
 
 enable_language(ASM)
 
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
+# ccache
+find_program(CCACHE_FOUND ccache)
+if (CCACHE_FOUND)
+  message(STATUS "### use ccache")
+  set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
+  set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
+endif (CCACHE_FOUND)
+
+# fix for gcc 9
+#set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pie")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
 set(CROUTINE_FILE "cyber/croutine/detail/swap_x86_64.S")
 if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86_64")
