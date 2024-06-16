@@ -1,10 +1,10 @@
-name: ubuntu-latest v9.0.0 build x86-64
-run-name: CyberRT v9.0.0 build runner on ubuntu latest x86-64🚀
+name: ubuntu24.04 v9.0.0 build x86-64
+run-name: CyberRT v9.0.0 build runner on ubuntu24 x86-64🚀
 
 on:
   push:
     paths:
-      - '.github/workflows/ubuntu-latest-v9.0.0-build.yaml'
+      - '.github/workflows/ubuntu24-v9.0.0-build.yaml'
 
   pull_request:
     branches:
@@ -14,7 +14,7 @@ jobs:
   build-amd-ubuntu24:
     runs-on: ubuntu-latest
     container:
-      image: docker://ubuntu:latest
+      image: docker://ubuntu:24.04
       options: --volume ${{ github.workspace }}:/workspace/${{ github.repository }}
     steps:
       - name: Check out repository code
