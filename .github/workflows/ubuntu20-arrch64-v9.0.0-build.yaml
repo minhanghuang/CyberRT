@@ -9,9 +9,12 @@ on:
   pull_request:
     branches:
       - v9.0.0
+    types:
+      - closed
 
 jobs:
   build-arm-ubuntu20:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
