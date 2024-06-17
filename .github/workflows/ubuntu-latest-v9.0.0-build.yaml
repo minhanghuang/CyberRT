@@ -11,7 +11,7 @@ on:
       - v9.0.0
 
 jobs:
-  build-amd-ubuntu24:
+  build-amd-ubuntu-latest:
     runs-on: ubuntu-latest
     container:
       image: docker://ubuntu:latest
