@@ -38,6 +38,7 @@ cd CyberRT
 
 ```shell
 sudo python3 install.py
+# sudo python3 install.py --platform <your-platform-machine> --install_prefix <your-install-path>
 ```
 
 > export path
