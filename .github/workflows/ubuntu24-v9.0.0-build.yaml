@@ -7,11 +7,11 @@ on:
       - '.github/workflows/ubuntu24-v9.0.0-build.yaml'
 
   pull_request:
-    branches:
-      - v9.0.0
+    types: [opened, synchronize, reopened, closed]
 
 jobs:
   build-amd-ubuntu24:
+    if: github.event.action == 'closed'
     runs-on: ubuntu-latest
     container:
       image: docker://ubuntu:24.04

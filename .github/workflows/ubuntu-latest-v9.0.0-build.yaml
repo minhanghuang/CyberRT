@@ -7,11 +7,11 @@ on:
       - '.github/workflows/ubuntu-latest-v9.0.0-build.yaml'
 
   pull_request:
-    branches:
-      - v9.0.0
+    types: [opened, synchronize, reopened, closed]
 
 jobs:
   build-amd-ubuntu-latest:
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     container:
       image: docker://ubuntu:latest

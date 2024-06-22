@@ -7,14 +7,11 @@ on:
       - '.github/workflows/ubuntu22-v9.0.0-build.yaml'
 
   pull_request:
-    branches:
-      - v9.0.0
-    types:
-      - closed
+    types: [opened, synchronize, reopened, closed]
 
 jobs:
   build-amd-ubuntu22:
-    if: github.event.pull_request.merged == true
+    if: github.event.action == 'closed'
     runs-on: ubuntu-latest
     container:
       image: docker://ubuntu:22.04
