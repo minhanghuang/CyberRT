@@ -3,6 +3,7 @@ import subprocess
 import os
 import argparse
 import time
+import platform
 
 class Install:
 
@@ -53,10 +54,6 @@ class Install:
         for arg in args:
             command += " " + arg
         print("clone: {}".format(command))
-        subprocess.run(command, shell=True)
-
-    def _cmd(self, command):
-        print("[command] {}".format(command))
         subprocess.run(command, shell=True)
 
     def _clone_setup(self):
@@ -209,7 +206,7 @@ class Install:
 
 def parse_config():
     parser = argparse.ArgumentParser(description="install")
-    parser.add_argument("--platform", type=str, default="x86_64", help="platform")
+    parser.add_argument("--platform", type=str, default=platform.machine(), help="platform")
     parser.add_argument("--install_prefix", type=str, default="install", help="install prefix")
     args = parser.parse_args()
     return args
