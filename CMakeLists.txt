@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5.1)
 
-project(cyber VERSION 8.0.0) # Apollo Version
+project(cyber VERSION 9.0.0) # Apollo Version
 
 set(CMAKE_CXX_STANDARD 14)
 set(TARGET_NAME ${PROJECT_NAME})
