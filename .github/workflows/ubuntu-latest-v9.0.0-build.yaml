@@ -1,17 +1,13 @@
 name: ubuntu-latest v9.0.0 build x86-64
-run-name: CyberRT v9.0.0 build runner on ubuntu latest x86-64🚀
+run-name: ubuntu latest x86-64
 
 on:
   push:
-    paths:
-      - '.github/workflows/ubuntu-latest-v9.0.0-build.yaml'
-
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
+    branches:
+      - v9.0.0
 
 jobs:
   build-amd-ubuntu-latest:
-    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     container:
       image: docker://ubuntu:latest

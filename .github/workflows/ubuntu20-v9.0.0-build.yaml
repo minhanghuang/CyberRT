@@ -1,17 +1,13 @@
 name: ubuntu20.04 v9.0.0 build x86-64
-run-name: CyberRT v9.0.0 build runner on ubuntu20 x86-64🚀
+run-name: ubuntu20 x86-64
 
 on:
   push:
-    paths:
-      - '.github/workflows/ubuntu20-v9.0.0-build.yaml'
-
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
+    branches:
+      - v9.0.0
 
 jobs:
   build-amd-ubuntu20:
-    if: github.event.action == 'closed'
     runs-on: ubuntu-latest
     container:
       image: docker://ubuntu:20.04
