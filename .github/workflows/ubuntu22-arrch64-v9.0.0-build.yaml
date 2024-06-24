@@ -1,17 +1,13 @@
 name: ubuntu22.04 v9.0.0 build arrch64
-run-name: CyberRT v9.0.0 build runner on ubuntu22 arrch64🚀
+run-name: ubuntu22 arrch64
 
 on:
   push:
-    paths:
-      - '.github/workflows/ubuntu22-arrch64-v9.0.0-build.yaml'
-
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
+    branches:
+      - v9.0.0
 
 jobs:
   build-arm-ubuntu22:
-    if: github.event.action == 'closed'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

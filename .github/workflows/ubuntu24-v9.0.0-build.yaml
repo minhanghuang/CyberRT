@@ -1,17 +1,13 @@
 name: ubuntu24.04 v9.0.0 build x86-64
-run-name: CyberRT v9.0.0 build runner on ubuntu24 x86-64🚀
+run-name: ubuntu24 x86-64
 
 on:
   push:
-    paths:
-      - '.github/workflows/ubuntu24-v9.0.0-build.yaml'
-
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
+    branches:
+      - v9.0.0
 
 jobs:
   build-amd-ubuntu24:
-    if: github.event.action == 'closed'
     runs-on: ubuntu-latest
     container:
       image: docker://ubuntu:24.04

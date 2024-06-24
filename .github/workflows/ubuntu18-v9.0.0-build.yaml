@@ -1,20 +1,14 @@
 name: ubuntu18.04 v9.0.0 build x86-64
-run-name: CyberRT v9.0.0 build runner on ubuntu18 x86-64🚀
+run-name: ubuntu18 x86-64
 
 on:
   push:
-    paths:
-      - 'cmake/**'
-      - 'cyber/**'
-      - 'modules/**'
-      - 'CMakeLists.txt'
-      - 'scripts/**'
-      - '.github/workflows/ubuntu18-v9.0.0-build.yaml'
+    branches:
+      - v9.0.0
 
   pull_request:
     branches:
       - v9.0.0
-
 
 jobs:
   build-amd-ubuntu18:
