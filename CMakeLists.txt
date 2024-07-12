@@ -40,7 +40,6 @@ find_package(Threads REQUIRED)
 find_package(PkgConfig REQUIRED)
 find_package(fastrtps REQUIRED)
 find_package(fastcdr REQUIRED)
-find_package(Poco REQUIRED COMPONENTS Foundation)
 find_package(glog REQUIRED)
 find_package(Protobuf REQUIRED)
 # find_package(Python REQUIRED COMPONENTS Interpreter Development)
@@ -179,10 +178,11 @@ target_link_libraries(${TARGET_NAME}
     ${NlohmannJson_LIBRARIES}
     ${Protobuf_LIBRARIES}
     ${Uuid_LIBRARIES}
-    ${Poco_LIBRARIES}
     fastrtps
     fastcdr
     atomic
+    dl
+    rt
 )
 
 add_subdirectory(cyber/mainboard)

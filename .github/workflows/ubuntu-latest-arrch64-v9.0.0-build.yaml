@@ -22,7 +22,7 @@ jobs:
 
           install: |
             apt update
-            apt install -y lsb-release git wget pkg-config g++ cmake libpoco-dev uuid-dev libncurses5-dev python3-dev
+            apt install -y lsb-release git wget pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev
 
           run: |
             echo "-----------------------"
