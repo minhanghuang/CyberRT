@@ -1,5 +1,7 @@
 project(tools VERSION 1.0.0)
 
+find_package(Curses REQUIRED)
+
 # cyber monitor
 add_executable(cyber_monitor
   cyber_monitor/cyber_topology_message.cc
