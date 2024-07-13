@@ -1,6 +1,9 @@
 name: ubuntu18.04 v9.0.0 build x86-64
 run-name: ubuntu18 x86-64
 
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+
 on:
   push:
     branches:
