@@ -15,11 +15,11 @@ include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 # ccache
 find_program(CCACHE_FOUND ccache)
-if (CCACHE_FOUND)
+if(CCACHE_FOUND)
   message(STATUS "### use ccache")
   set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
   set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
-endif (CCACHE_FOUND)
+endif()
 
 # fix for gcc 9
 #set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -34,7 +34,7 @@ if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86_64")
 else()
   set(CROUTINE_FILE "cyber/croutine/detail/swap_aarch64.S")
   message("### SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR} ${CROUTINE_FILE}")
-endif(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86_64")
+endif()
 
 find_package(Threads REQUIRED)
 find_package(PkgConfig REQUIRED)
@@ -55,7 +55,6 @@ set(CYBER_PYTHON_PATH "lib/python${Python_VERSION}/site-packages/cyber/python")
 set(CYBER_PYTHON_INTERNAL_PATH "${CYBER_PYTHON_PATH}/internal")
 set(CYBER_PYTHON_PROTOBUF_PATH "lib/python${Python_VERSION}/site-packages/cyber/proto")
 set(CYBER_MSGS_CACHE ON CACHE BOOL "generate cyber proto msgs flag.")
-# set(CYBER_PYTHON_LIB "/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/libpython3.6.so")
 
 if(NOT DEFINED glog_LIBRARIES)
   set(glog_LIBRARIES "glog")
@@ -107,12 +106,12 @@ file(GLOB CYBER_PROTO_FILES
 
 if(${CYBER_MSGS_CACHE})
   set(CYBER_MSGS_CACHE OFF CACHE BOOL "generate cyber proto msgs flag." FORCE)
-  FOREACH(FIL ${CYBER_PROTO_FILES})
+  foreach(FIL ${CYBER_PROTO_FILES})
     message("### generate proto file: ${FIL}")
-    GET_FILENAME_COMPONENT(FIL_WE ${FIL} NAME_WE)
+    get_filename_component(FIL_WE ${FIL} NAME_WE)
     string(REGEX REPLACE ".+/(.+)\\..*" "\\1" FILE_NAME ${FIL})
     string(REGEX REPLACE "(.+)\\${FILE_NAME}.*" "\\1" FILE_PATH ${FIL})
-    EXECUTE_PROCESS(
+    execute_process(
       COMMAND
       ${PROTOBUF_PROTOC_EXECUTABLE}
       -I${CMAKE_CURRENT_SOURCE_DIR}
@@ -120,8 +119,8 @@ if(${CYBER_MSGS_CACHE})
       --python_out=${CMAKE_CURRENT_SOURCE_DIR}
       ${FIL}
     )
-  ENDFOREACH()
-endif(${CYBER_MSGS_CACHE})
+  endforeach()
+endif()
 
 file(GLOB CYBER_PROTO_SRCS
     "cyber/proto/*.pb.cc"
@@ -194,45 +193,8 @@ add_subdirectory(cyber/tools)
 # --------------------------------------------------------------
 # 打包方式
 include(InstallRequiredSystemLibraries)
-if (APPLE)
-elseif (UNIX)
-  set (CPACK_GENERATOR        "DEB")
-  set (CPACK_SOURCE_GENERATOR "TGZ;ZIP")
-endif ()
-
-# system/architecture
-if (WINDOWS)
-  if (CMAKE_CL_64)
-    set (CPACK_SYSTEM_NAME "win64")
-  else ()
-    set (CPACK_SYSTEM_NAME "win32")
-  endif ()
-  set (CPACK_PACKAGE_ARCHITECTURE)
-elseif (APPLE)
-  set (CPACK_PACKAGE_ARCHITECTURE "darwin")
-else ()
-  string (TOLOWER "${CMAKE_SYSTEM_NAME}" CPACK_SYSTEM_NAME)
-  if (CMAKE_CXX_FLAGS MATCHES "-m32")
-    set (CPACK_PACKAGE_ARCHITECTURE i386)
-  else ()
-    execute_process (
-      COMMAND         dpkg --print-architecture
-      RESULT_VARIABLE RV
-      OUTPUT_VARIABLE CPACK_PACKAGE_ARCHITECTURE
-      )
-    if (RV EQUAL 0)
-          string (STRIP "${CPACK_PACKAGE_ARCHITECTURE}" CPACK_PACKAGE_ARCHITECTURE)
-    else ()
-      execute_process (COMMAND uname -m OUTPUT_VARIABLE CPACK_PACKAGE_ARCHITECTURE)
-      if (CPACK_PACKAGE_ARCHITECTURE MATCHES "x86_64")
-            set (CPACK_PACKAGE_ARCHITECTURE amd64)
-      else ()
-        set (CPACK_PACKAGE_ARCHITECTURE i386)
-      endif ()
-    endif ()
-  endif ()
-endif ()
-
+set(CPACK_GENERATOR DEB)
+set(CPACK_SOURCE_GENERATOR TGZ ZIP)
 set(CPACK_PACKAGE_NAME   "${TARGET_NAME}")
 set(CPACK_PACKAGE_CONTACT "job@minhang.me")
 set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
@@ -249,7 +211,7 @@ set(CPACK_RPM_PACKAGE_GROUP "Development/Libraries")
 set(CPACK_RPM_PACKAGE_LICENSE "MIT")
 set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/minhanghuang/CyberRT")
 set(CPACK_PACKAGE_FILE_NAME   "lib${CPACK_PACKAGE_NAME}")
-set(CPACK_PACKAGE_FILE_NAME   "${CPACK_PACKAGE_FILE_NAME}_${CPACK_PACKAGE_VERSION}_${CPACK_PACKAGE_ARCHITECTURE}")
+set(CPACK_PACKAGE_FILE_NAME   "${CPACK_PACKAGE_FILE_NAME}_${CPACK_PACKAGE_VERSION}_${CMAKE_SYSTEM_PROCESSOR}")
 
 include(CPack)
 # --------------------------------------------------------------
