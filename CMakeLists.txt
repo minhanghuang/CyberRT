@@ -167,6 +167,8 @@ file(GLOB CYBER_SRCS
 )
 
 list(FILTER CYBER_SRCS EXCLUDE REGEX .*test[.]cc)
+list(FILTER CYBER_SRCS EXCLUDE REGEX .*/cyber/class_loader/test/*)
+list(REMOVE_ITEM CYBER_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/cyber/class_loader/shared_library/sample.cc")
 
 add_library(${TARGET_NAME} SHARED
     ${CYBER_PROTO_SRCS}
@@ -339,4 +341,3 @@ install(TARGETS ${TARGET_NAME}
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
 )
-
