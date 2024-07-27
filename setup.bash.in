@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
 _SETUP_PATH=$(cd `dirname $BASH_SOURCE[0]`; pwd)
+USER_HOME_DIR=$(getent passwd $USER | cut -d: -f6)
 
 CYBERRT_PATH=$(dirname "$_SETUP_PATH")
 BUILD_PATH=$_SETUP_PATH
@@ -34,6 +35,13 @@ for entry in "${mainboard_path}" \
     export PATH="${entry}":$PATH
 done
 
+# create log dir
+CYBER_LOG_DIR_PREFIX="$USER_HOME_DIR/.cyber/log"
+if [ ! -d "$CYBER_LOG_DIR_PREFIX" ]; then
+    mkdir -p "$CYBER_LOG_DIR_PREFIX"
+fi
+
+export GLOG_log_dir="$CYBER_LOG_DIR_PREFIX"
 export GLOG_alsologtostderr=1
 export GLOG_colorlogtostderr=1
 export GLOG_minloglevel=0
