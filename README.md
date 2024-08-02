@@ -4,11 +4,11 @@
 
 | Target        |  CI Status  |
 | ------------- | :-----:|
-| Ubuntu18.04 x86-64   | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v9.0.0-build.yaml) |
-| Ubuntu20.04 x86-64  | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v9.0.0-build.yaml) |
-| Ubuntu22.04 x86-64  | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v9.0.0-build.yaml) |
-| Ubuntu24.04 x86-64  | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-v9.0.0-build.yaml) |
-| Ubuntu latest x86-64  | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v9.0.0-build.yaml) |
+| Ubuntu18.04 x86_64   | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v9.0.0-build.yaml) |
+| Ubuntu20.04 x86_64  | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v9.0.0-build.yaml) |
+| Ubuntu22.04 x86_64  | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v9.0.0-build.yaml) |
+| Ubuntu24.04 x86_64  | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-v9.0.0-build.yaml) |
+| Ubuntu latest x86_64  | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v9.0.0-build.yaml) |
 | Ubuntu18.04 arrch64 | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-arrch64-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-arrch64-v9.0.0-build.yaml) |
 | Ubuntu20.04  arrch64 | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-arrch64-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-arrch64-v9.0.0-build.yaml) |
 | Ubuntu22.04 arrch64 | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-arrch64-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-arrch64-v9.0.0-build.yaml) |
@@ -80,6 +80,16 @@ source setup.bash
 cyber_launch start share/examples/common_component_example/common.launch
 ./cyber/examples/common_component_example/channel_prediction_writer
 ./cyber/examples/common_component_example/channel_test_writer
+```
+
+3. log directory(optional)
+
+**The Cyber log storage path is similar to `ROS` and is saved in `~/.cyber/log`**
+
+If you want to modify the log storage path, you can change the `GLOG_log_dir` environment variable as follows:
+
+```shell
+# export GLOG_log_dir=/path/to/cyber/log
 ```
 
 ## #4 Tools
