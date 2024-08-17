@@ -1,6 +1,17 @@
 add_library(_cyber_wrapper SHARED 
   py_cyber.cc
 )
+
+# Extract major and minor versions
+string(REPLACE "." ";" VERSION_LIST "${Python_VERSION}")
+list(GET VERSION_LIST 0 PYTHON_VERSION_MAJOR)
+list(GET VERSION_LIST 1 PYTHON_VERSION_MINOR)
+
+# Define PY_SSIZE_T_CLEAN if Python version is 3.9 or greater
+if(PYTHON_VERSION_MAJOR GREATER_EQUAL 3 AND PYTHON_VERSION_MINOR GREATER_EQUAL 9)
+  target_compile_definitions(_cyber_wrapper PRIVATE PY_SSIZE_T_CLEAN)
+endif()
+
 target_link_libraries(_cyber_wrapper
   ${TARGET_NAME}
   # ${CYBER_PYTHON_LIB}
