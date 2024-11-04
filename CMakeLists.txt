@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(TARGET_NAME ${PROJECT_NAME})
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release) # Debug/Release
+  set(CMAKE_BUILD_TYPE Debug)
 endif()
 
 enable_language(ASM)
