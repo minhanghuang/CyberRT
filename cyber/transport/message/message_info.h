@@ -60,11 +60,15 @@ class MessageInfo {
 
   static const std::size_t kSize;
 
+  uint64_t send_time() const { return send_time_; }
+  void set_send_time(uint64_t send_time) { send_time_ = send_time; }
+
  private:
   Identity sender_id_;
   uint64_t channel_id_ = 0;
   uint64_t seq_num_ = 0;
   Identity spare_id_;
+  uint64_t send_time_;
 };
 
 }  // namespace transport

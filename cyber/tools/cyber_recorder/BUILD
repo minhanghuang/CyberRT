@@ -8,7 +8,11 @@ apollo_cc_binary(
     srcs = [
         "main.cc",
     ],
-    linkopts = ["-pthread"],
+    linkopts = [
+        "-pthread",
+        "-lprofiler",
+        "-ltcmalloc",
+    ],
     deps = [
         ":recorder",
         "//cyber",
@@ -34,7 +38,7 @@ apollo_cc_library(
         "//cyber",
         "//cyber/common:cyber_common",
         "//cyber/proto:record_cc_proto",
-        "@fastrtps",
+        "@fastdds",
     ],
 )
 
