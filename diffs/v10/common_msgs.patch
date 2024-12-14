@@ -1,0 +1,934 @@
+diff --git a/modules/common_msgs/basic_msgs/pnc_point.proto b/modules/common_msgs/basic_msgs/pnc_point.proto
+index cf948f5..f8cff2c 100644
+--- a/modules/common_msgs/basic_msgs/pnc_point.proto
++++ b/modules/common_msgs/basic_msgs/pnc_point.proto
+@@ -74,6 +74,7 @@ message TrajectoryPoint {
+ 
+   // Gaussian probability information
+   optional GaussianInfo gaussian_info = 7;
++
+ }
+ 
+ message Trajectory {
+diff --git a/modules/common_msgs/chassis_msgs/chassis.proto b/modules/common_msgs/chassis_msgs/chassis.proto
+index 77e9fb7..d4ab806 100644
+--- a/modules/common_msgs/chassis_msgs/chassis.proto
++++ b/modules/common_msgs/chassis_msgs/chassis.proto
+@@ -35,6 +35,7 @@ message Chassis {
+     CHASSIS_ERROR_ON_BRAKE = 7;
+     CHASSIS_ERROR_ON_THROTTLE = 8;
+     CHASSIS_ERROR_ON_GEAR = 9;
++    CHASSIS_CAN_LOST = 10;
+ 
+     MANUAL_INTERVENTION = 3;  // human manual intervention
+ 
+diff --git a/modules/common_msgs/control_msgs/BUILD b/modules/common_msgs/control_msgs/BUILD
+index 2f12fee..e17a1b2 100644
+--- a/modules/common_msgs/control_msgs/BUILD
++++ b/modules/common_msgs/control_msgs/BUILD
+@@ -19,6 +19,14 @@ proto_library(
+     ],
+ )
+ 
++proto_library(
++    name = "control_interactive_msg_proto",
++    srcs = ["control_interactive_msg.proto"],
++    deps = [
++        "//modules/common_msgs/basic_msgs:header_proto",
++    ],
++)
++
+ proto_library(
+     name = "control_pad_msg_proto",
+     srcs = ["pad_msg.proto"],
+diff --git a/modules/common_msgs/control_msgs/control_cmd.proto b/modules/common_msgs/control_msgs/control_cmd.proto
+index 7559675..87c3ce8 100644
+--- a/modules/common_msgs/control_msgs/control_cmd.proto
++++ b/modules/common_msgs/control_msgs/control_cmd.proto
+@@ -38,7 +38,7 @@ message ControlCommand {
+   // target steering angle, in percentage of full scale [-100, 100]
+   optional double steering_target = 7;
+ 
+-  // parking brake engage. true: engaged
++  // parking brake engage. true: engaged epd brake
+   optional bool parking_brake = 8;
+ 
+   // target speed, in m/s
+@@ -171,6 +171,9 @@ message SimpleLateralDebug {
+   // Mrac control status and feedback states for steer control
+   optional MracDebug steer_mrac_debug = 32;
+   optional bool steer_mrac_enable_status = 33;
++
++  // lat acc in ENU, in m/s^2
++  optional double lateral_centripetal_acceleration = 34;
+ }
+ 
+ message SimpleMPCDebug {
+diff --git a/modules/common_msgs/control_msgs/control_interactive_msg.proto b/modules/common_msgs/control_msgs/control_interactive_msg.proto
+new file mode 100644
+index 0000000..159a458
+--- /dev/null
++++ b/modules/common_msgs/control_msgs/control_interactive_msg.proto
+@@ -0,0 +1,17 @@
++syntax = "proto2";
++package apollo.control;
++
++import "modules/common_msgs/basic_msgs/header.proto";
++
++message ControlInteractiveMsg {
++  optional apollo.common.Header header = 1;   // common header
++  optional bool replan_request = 2;   // request replan. true: need replan, false: don't need replan
++  optional ReplanRequestReasonCode replan_req_reason_code = 3; // request replan reason code
++  optional string replan_request_reason = 4; // request replan reason
++}
++
++enum ReplanRequestReasonCode {
++  REPLAN_REQ_ALL_REPLAN = 1;
++  REPLAN_REQ_STATION_REPLAN = 2;
++  REPLAN_REQ_SPEED_REPLAN = 3;
++}
+diff --git a/modules/common_msgs/dreamview_msgs/hmi_config.proto b/modules/common_msgs/dreamview_msgs/hmi_config.proto
+index 9e373d4..44c4b9b 100644
+--- a/modules/common_msgs/dreamview_msgs/hmi_config.proto
++++ b/modules/common_msgs/dreamview_msgs/hmi_config.proto
+@@ -34,6 +34,7 @@ enum HMIAction {
+   LOAD_RTK_RECORDS = 25; // Load all rtk records
+   CHANGE_RTK_RECORD = 26; // change rtk records
+   LOAD_RECORD = 27;     // Load record
++  LOAD_MAPS  = 28;     // Load maps
+ }
+ 
+ message HMIConfig {
+diff --git a/modules/common_msgs/dreamview_msgs/hmi_mode.proto b/modules/common_msgs/dreamview_msgs/hmi_mode.proto
+index aef7cde..09354ba 100644
+--- a/modules/common_msgs/dreamview_msgs/hmi_mode.proto
++++ b/modules/common_msgs/dreamview_msgs/hmi_mode.proto
+@@ -118,6 +118,14 @@ message CyberModule {
+   optional string process_group = 3;
+ }
+ 
++message Layout {
++    optional string type = 1;
++    optional Layout first = 2;
++    optional Layout second = 3;
++    optional string direction = 4;
++    optional double splitPercentage = 5 [default = 50.0];
++}
++
+ message HMIMode {
+   map<string, CyberModule> cyber_modules = 1;
+   map<string, Module> modules = 2;
+@@ -125,6 +133,6 @@ message HMIMode {
+   map<string, ProcessMonitorConfig> other_components = 4;
+   repeated HMIModeOperation operations = 5;
+   optional HMIModeOperation default_operation = 6;
+-  optional string layout = 7;
++  optional Layout layout = 7;
+   map<string, MonitoredComponent> global_components = 8;
+ }
+diff --git a/modules/common_msgs/dreamview_msgs/simulation_world.proto b/modules/common_msgs/dreamview_msgs/simulation_world.proto
+index 089ae9b..a1c8218 100644
+--- a/modules/common_msgs/dreamview_msgs/simulation_world.proto
++++ b/modules/common_msgs/dreamview_msgs/simulation_world.proto
+@@ -197,6 +197,8 @@ message MapElementIds {
+   repeated string parking_space = 10;
+   repeated string speed_bump = 11;
+   repeated string pnc_junction = 12;
++  repeated string ad_area = 13;
++  repeated string barrier_gate = 14;
+ }
+ 
+ message ControlData {
+diff --git a/modules/common_msgs/external_command_msgs/BUILD b/modules/common_msgs/external_command_msgs/BUILD
+index 830d0e8..fab1d33 100644
+--- a/modules/common_msgs/external_command_msgs/BUILD
++++ b/modules/common_msgs/external_command_msgs/BUILD
+@@ -4,6 +4,15 @@ load("//tools:apollo_package.bzl", "apollo_package")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
++proto_library(
++    name = "precise_parking_command_proto",
++    srcs = ["precise_parking_command.proto"],
++    deps = [
++        ":external_geometry_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
++    ],
++)
++
+ proto_library(
+     name = "valet_parking_command_proto",
+     srcs = ["valet_parking_command.proto"],
+@@ -60,6 +69,15 @@ proto_library(
+     ],
+ )
+ 
++proto_library(
++    name = "zone_cover_command_proto",
++    srcs = ["zone_cover_command.proto"],
++    deps = [
++        ":external_geometry_proto",
++        "//modules/common_msgs/basic_msgs:header_proto",
++    ],
++)
++
+ proto_library(
+     name = "speed_command_proto",
+     srcs = ["speed_command.proto"],
+diff --git a/modules/common_msgs/external_command_msgs/action_command.proto b/modules/common_msgs/external_command_msgs/action_command.proto
+index 6e52ed8..89bc1f7 100644
+--- a/modules/common_msgs/external_command_msgs/action_command.proto
++++ b/modules/common_msgs/external_command_msgs/action_command.proto
+@@ -25,6 +25,10 @@ enum ActionCommandType {
+   SWITCH_TO_AUTO = 51;
+   // Varify vin code of vehicle.
+   VIN_REQ = 52;
++  // Enter mission model
++  ENTER_MISSION = 53;
++  // Exit mission model
++  EXIT_MISSION = 54;
+ }
+ 
+ message ActionCommand {
+diff --git a/modules/common_msgs/external_command_msgs/precise_parking_command.proto b/modules/common_msgs/external_command_msgs/precise_parking_command.proto
+new file mode 100644
+index 0000000..212dd29
+--- /dev/null
++++ b/modules/common_msgs/external_command_msgs/precise_parking_command.proto
+@@ -0,0 +1,26 @@
++syntax = "proto2";
++
++package apollo.external_command;
++
++import "modules/common_msgs/basic_msgs/header.proto";
++import "modules/common_msgs/external_command_msgs/geometry.proto";
++
++enum PreciseMissionType {
++  CHARGE = 0;
++  DUMP = 1;
++}
++
++message PreciseParkingCommand {
++  optional apollo.common.Header header = 1;
++  // Unique identification for command.
++  optional int64 command_id = 2 [default = -1];
++  // If the start pose is set as the first point of "way_point".
++  optional bool is_start_pose_set = 3 [default = false];
++  // Pose of the parking spot.
++  required Pose parking_spot_pose = 4;
++  // true: parking inwards, false: parking outwards
++  required bool parking_inwards = 5;
++  required PreciseMissionType mission_type = 6;
++  // not given, the default target speed of system will be used.
++  optional double target_speed = 7;
++}
+\ No newline at end of file
+diff --git a/modules/common_msgs/external_command_msgs/zone_cover_command.proto b/modules/common_msgs/external_command_msgs/zone_cover_command.proto
+new file mode 100644
+index 0000000..f206305
+--- /dev/null
++++ b/modules/common_msgs/external_command_msgs/zone_cover_command.proto
+@@ -0,0 +1,16 @@
++syntax = "proto2";
++
++package apollo.external_command;
++
++import "modules/common_msgs/basic_msgs/header.proto";
++import "modules/common_msgs/external_command_msgs/geometry.proto";
++
++message ZoneCoverCommand {
++  optional apollo.common.Header header = 1;
++  // Unique identification for command.
++  optional int64 command_id = 2 [default = -1];
++  required string overlap_id = 3;
++  optional double target_speed = 4;
++  repeated RoiPolygon non_drivable_roi = 5;
++  optional RoiPolygon drivable_roi = 6;
++}
+diff --git a/modules/common_msgs/localization_msgs/localization_status.proto b/modules/common_msgs/localization_msgs/localization_status.proto
+index d852c31..11d3db7 100644
+--- a/modules/common_msgs/localization_msgs/localization_status.proto
++++ b/modules/common_msgs/localization_msgs/localization_status.proto
+@@ -155,6 +155,7 @@ enum MsfRunningStatus {
+   MSF_NOSOL_X_XX = 22;
+   MSF_NOSOL_X_XXX = 23;
+   MSF_RUNNING_INIT = 24;
++  MSF_REINIT_ABNORMALLY = 25;
+ }
+ 
+ // The status of sensor msg
+@@ -164,12 +165,76 @@ message MsfSensorMsgStatus {
+   optional ImuMsgDataStatus imu_data_status = 3;
+ }
+ 
++// The init pose source 
++enum MsfInitPoseSource {
++    UNKNOWN_SOURCE = 0;
++    GNSS_HEADING = 1;
++    LOCAL_SEARCH_FROM_INTEGPVA = 2;
++    LOCAL_SEARCH_FROM_FILE = 3;
++    LOCAL_UPDATE_FROM_FILE = 4;
++    USER_INTERACTION = 5;
++    INSPVA_RECORD = 6;
++    GNSS_VELOCITY = 7;
++    GLOBAL_LIDAR = 8;
++}
++
++// The status of gnss map offset
++enum MsfGnssMapOffsetStatus {
++    MSF_LOCAL_GNSS_MAP_OFFSET_NORMAL = 0;
++    MSF_LOCAL_GNSS_MAP_OFFSET_ABNORMAL = 1;
++}
++
++// The gnss map offset
++message MsfGnssMapOffset {
++    optional MsfGnssMapOffsetStatus status = 1;
++    optional double offsetx = 2;
++    optional double offsety = 3;
++}
++
++// The init pose status
++enum MsfInitPoseStatus { 
++    INIT_WAITING = 0;
++    INIT_DOING = 1;
++    INIT_SUCCESSFUL = 2;
++    INIT_FAILED = 3;
++    INIT_TERMINATED = 4;
++}
++
++// The init details
++message MsfInitDetails { 
++    optional MsfInitPoseSource init_pose_source = 1;
++    optional MsfInitPoseStatus local_search_from_integpva_status = 2;
++    optional MsfInitPoseStatus local_search_from_file_status = 3;
++    optional MsfInitPoseStatus local_update_from_file_status = 4;
++    optional MsfInitPoseStatus user_interaction_status = 5;
++    optional int32 gnss_position_type = 6;
++    optional MsfInitPoseStatus local_from_global_lidar_status = 7;
++}
++
++// The initializaiton status of localization module
++enum MSFInitStatus {
++    MSF_INIT = 0;
++    MSF_ALIGNING = 1;
++    MSF_ALIGNED_INIT = 2;
++    MSF_ALIGNED_CONVERGED = 3;
++    MSF_ALIGNED_CONVERGING = 4;
++    MSF_ALIGNED_GOOD = 5;
++    MSF_ALIGNED_VALID = 6;
++}
++
+ // The status of msf localization module
+ message MsfStatus {
+   optional LocalLidarConsistency local_lidar_consistency = 1;
+   optional GnssConsistency gnss_consistency = 2;
+   optional LocalLidarStatus local_lidar_status = 3;
+-  optional LocalLidarQuality local_lidar_quality = 4;
+-  optional GnssPositionType gnsspos_position_type = 5;
+-  optional MsfRunningStatus msf_running_status = 6;
++  optional GnssPositionType gnsspos_position_type = 4;
++  optional uint32 heading_position_type = 5;
++  optional MSFInitStatus msf_init_status = 6;
++  optional MsfRunningStatus msf_running_status = 7;
++  optional MsfInitDetails msf_init_details = 8;
++  optional LocalLidarQuality local_lidar_quality = 9;
++  optional MsfGnssMapOffset gnss_map_offset = 10;
++  optional bool lidar_alt_from_map = 11;
++  optional double local_lidar_score = 12;
++  optional bool local_reliability_status = 13 [default = false];
+ }
+diff --git a/modules/common_msgs/map_msgs/BUILD b/modules/common_msgs/map_msgs/BUILD
+index 3dc0bb6..f61b8fe 100644
+--- a/modules/common_msgs/map_msgs/BUILD
++++ b/modules/common_msgs/map_msgs/BUILD
+@@ -96,6 +96,8 @@ proto_library(
+         ":map_speed_bump_proto",
+         ":map_stop_sign_proto",
+         ":map_yield_sign_proto",
++        ":map_area_proto",
++        ":map_barrier_gate_proto",
+     ],
+ )
+ 
+@@ -162,4 +164,24 @@ proto_library(
+     ],
+ )
+ 
++proto_library(
++    name = "map_area_proto",
++    srcs = ["map_area.proto"],
++    deps = [
++        ":map_geometry_proto",
++        ":map_id_proto",
++        "//modules/common_msgs/basic_msgs:geometry_proto",
++    ],
++)
++
++proto_library(
++    name = "map_barrier_gate_proto",
++    srcs = ["map_barrier_gate.proto"],
++    deps = [
++        ":map_geometry_proto",
++        ":map_id_proto",
++        "//modules/common_msgs/basic_msgs:geometry_proto",
++    ],
++)
++
+ apollo_package()
+diff --git a/modules/common_msgs/map_msgs/map.proto b/modules/common_msgs/map_msgs/map.proto
+index 77e6c0d..f303962 100644
+--- a/modules/common_msgs/map_msgs/map.proto
++++ b/modules/common_msgs/map_msgs/map.proto
+@@ -15,6 +15,8 @@ import "modules/common_msgs/map_msgs/map_signal.proto";
+ import "modules/common_msgs/map_msgs/map_speed_bump.proto";
+ import "modules/common_msgs/map_msgs/map_stop_sign.proto";
+ import "modules/common_msgs/map_msgs/map_yield_sign.proto";
++import "modules/common_msgs/map_msgs/map_area.proto";
++import "modules/common_msgs/map_msgs/map_barrier_gate.proto";
+ 
+ // This message defines how we project the ellipsoidal Earth surface to a plane.
+ message Projection {
+@@ -55,4 +57,6 @@ message Map {
+   repeated ParkingSpace parking_space = 12;
+   repeated PNCJunction pnc_junction = 13;
+   repeated RSU rsu = 14;
++  repeated Area ad_area = 15;
++  repeated BarrierGate barrier_gate = 16;
+ }
+diff --git a/modules/common_msgs/map_msgs/map_area.proto b/modules/common_msgs/map_msgs/map_area.proto
+new file mode 100644
+index 0000000..0087595
+--- /dev/null
++++ b/modules/common_msgs/map_msgs/map_area.proto
+@@ -0,0 +1,22 @@
++syntax = "proto2";
++
++package apollo.hdmap;
++
++import "modules/common_msgs/map_msgs/map_geometry.proto";
++import "modules/common_msgs/map_msgs/map_id.proto";
++
++message Area {
++  enum Type {
++    Driveable = 1;
++    UnDriveable = 2;
++    Custom1 = 3;
++    Custom2 = 4;
++    Custom3 = 5;
++  };
++
++  required Id id = 1;
++  optional Type type = 2;
++  required Polygon polygon = 3;
++  repeated Id overlap_id = 4;
++  optional string name = 5;
++}
+diff --git a/modules/common_msgs/map_msgs/map_barrier_gate.proto b/modules/common_msgs/map_msgs/map_barrier_gate.proto
+new file mode 100644
+index 0000000..f7a5a0e
+--- /dev/null
++++ b/modules/common_msgs/map_msgs/map_barrier_gate.proto
+@@ -0,0 +1,22 @@
++syntax = "proto2";
++
++package apollo.hdmap;
++
++import "modules/common_msgs/map_msgs/map_geometry.proto";
++import "modules/common_msgs/map_msgs/map_id.proto";
++
++message BarrierGate {
++  enum BarrierGateType {
++    ROD = 1;
++    FENCE = 2;
++    ADVERTISING = 3;
++    TELESCOPIC = 4;
++    OTHER = 5;
++  };
++  
++  required Id id = 1;
++  optional BarrierGateType type = 2;
++  optional Polygon polygon = 3;
++  repeated Curve stop_line = 4;
++  repeated Id overlap_id = 5;
++}
+\ No newline at end of file
+diff --git a/modules/common_msgs/map_msgs/map_lane.proto b/modules/common_msgs/map_msgs/map_lane.proto
+index a78cd73..01483b1 100644
+--- a/modules/common_msgs/map_msgs/map_lane.proto
++++ b/modules/common_msgs/map_msgs/map_lane.proto
+@@ -74,6 +74,7 @@ message Lane {
+     SIDEWALK = 4;
+     PARKING = 5;
+     SHOULDER = 6;
++    SHARED = 7;
+   };
+   optional LaneType type = 12;
+ 
+diff --git a/modules/common_msgs/map_msgs/map_overlap.proto b/modules/common_msgs/map_msgs/map_overlap.proto
+index 25509ff..003bb3b 100644
+--- a/modules/common_msgs/map_msgs/map_overlap.proto
++++ b/modules/common_msgs/map_msgs/map_overlap.proto
+@@ -35,6 +35,10 @@ message PNCJunctionOverlapInfo {}
+ 
+ message RSUOverlapInfo {}
+ 
++message AreaOverlapInfo {}
++
++message BarrierGateOverlapInfo {}
++
+ message RegionOverlapInfo {
+   optional Id id = 1;
+   repeated Polygon polygon = 2;
+@@ -56,6 +60,8 @@ message ObjectOverlapInfo {
+     ParkingSpaceOverlapInfo parking_space_overlap_info = 11;
+     PNCJunctionOverlapInfo pnc_junction_overlap_info = 12;
+     RSUOverlapInfo rsu_overlap_info = 13;
++    AreaOverlapInfo area_overlap_info = 14;
++    BarrierGateOverlapInfo barrier_gate_overlap_info = 15;
+   }
+ }
+ 
+diff --git a/modules/common_msgs/monitor_msgs/monitor_log.proto b/modules/common_msgs/monitor_msgs/monitor_log.proto
+index 6bdf459..8d8a360 100644
+--- a/modules/common_msgs/monitor_msgs/monitor_log.proto
++++ b/modules/common_msgs/monitor_msgs/monitor_log.proto
+@@ -27,6 +27,7 @@ message MonitorMessageItem {
+     DELPHI_ESR = 19;
+     STORYTELLING = 20;
+     TASK_MANAGER = 21;
++    NANO_RADAR = 22;
+   }
+ 
+   optional MessageSource source = 1 [default = UNKNOWN];
+diff --git a/modules/common_msgs/perception_msgs/BUILD b/modules/common_msgs/perception_msgs/BUILD
+index a5f9d7c..e29f330 100644
+--- a/modules/common_msgs/perception_msgs/BUILD
++++ b/modules/common_msgs/perception_msgs/BUILD
+@@ -53,4 +53,12 @@ proto_library(
+     ],
+ )
+ 
++proto_library(
++    name = "perception_barrier_gate_proto",
++    srcs = ["perception_barrier_gate.proto"],
++    deps = [
++        "//modules/common_msgs/basic_msgs:header_proto",
++    ],
++)
++
+ apollo_package()
+diff --git a/modules/common_msgs/perception_msgs/perception_barrier_gate.proto b/modules/common_msgs/perception_msgs/perception_barrier_gate.proto
+new file mode 100644
+index 0000000..7fe0be6
+--- /dev/null
++++ b/modules/common_msgs/perception_msgs/perception_barrier_gate.proto
+@@ -0,0 +1,33 @@
++syntax = "proto2";
++
++package apollo.perception;
++
++import "modules/common_msgs/basic_msgs/header.proto";
++
++message BarrierGate {
++  enum Status {
++    UNKNOWN = 0;
++    CLOSED = 1;
++    CLOSING = 2;
++    OPENED = 3;
++    OPENING = 4;
++  };
++  optional Status status = 1;
++
++  // Barrier gate string-ID in the map data.
++  optional string id = 2;
++
++  // Barrier gate type in the map data.
++  optional string type = 3;
++
++  // Wheter the barrier recognition is activated.
++  optional bool is_useable = 4 [default = false];
++
++  // Open percentage.
++  optional double open_percent = 5;
++}
++
++message PerceptionBarrierGate {
++  optional apollo.common.Header header = 1;
++  repeated BarrierGate barrier_gates = 2;
++}
+diff --git a/modules/common_msgs/perception_msgs/perception_obstacle.proto b/modules/common_msgs/perception_msgs/perception_obstacle.proto
+index 3798794..be3067c 100644
+--- a/modules/common_msgs/perception_msgs/perception_obstacle.proto
++++ b/modules/common_msgs/perception_msgs/perception_obstacle.proto
+@@ -157,6 +157,20 @@ message PerceptionObstacle {
+ 
+   optional Source source = 27 [default = HOST_VEHICLE];
+   optional V2XInformation v2x_info = 28;
++
++  enum SemanticType {
++    SM_UNKNOWN = 0;
++    SM_IGNORE = 1;
++    SM_GROUND = 2;
++    SM_OBJECT = 3;
++    SM_CURB = 4;
++    SM_VEGETATION = 5;
++    SM_FENCE = 6;
++    SM_NOISE = 7;
++    SM_WALL = 8;
++    SM_MAX_OBJECT_SEMANTIC_LABEL = 9;
++  };
++  optional SemanticType semantic_type = 29;
+ }
+ 
+ message LaneMarker {
+@@ -186,10 +200,65 @@ message CIPVInfo {
+   repeated int32 potential_cipv_id = 2;
+ }
+ 
++message PerceptionWaste {
++  optional int32 id = 1;
++
++  optional apollo.common.Point3D position = 2;
++  optional double theta = 3;
++  optional apollo.common.Point3D velocity = 4;
++  optional double length = 5;
++  optional double width = 6;
++  optional double height = 7;
++  repeated apollo.common.Point3D polygon_point = 8;
++  optional double tracking_time = 9;
++
++  enum Type {
++    UNKNOWN = 0;
++    CAN = 1;
++    CIGARETTE = 2;
++    CIGARETTE_CASE = 3;  
++    PEEL = 4;
++    PACKAGE = 5;
++    PLASTIC_BAG = 6;
++    BOTTLES = 7;
++    SHELL = 8;
++    LEAF = 9;
++    PAPER_CUP = 10;
++    CUBE = 11;
++    WIRE = 12;
++  };
++  optional Type type = 10;
++
++  optional double timestamp = 11;  
++  optional double confidence = 12;
++  optional BBox2D bbox2d = 13;
++  optional DebugMessage msg = 14;
++}
++
+ message PerceptionObstacles {
+   repeated PerceptionObstacle perception_obstacle = 1;  // An array of obstacles
+   optional apollo.common.Header header = 2;             // Header
+   optional apollo.common.ErrorCode error_code = 3 [default = OK];
+   optional LaneMarkers lane_marker = 4;
+   optional CIPVInfo cipv_info = 5;  // Closest In Path Vehicle (CIPV)
++  repeated PerceptionWaste perception_waste = 6;  // An array of wastes
++}
++
++message PerceptionEdgeInfo {
++  optional apollo.common.Header header = 1;
++  optional bool is_useable = 2 [default = false];
++  repeated apollo.common.Point3D edge_point = 3;
++  repeated apollo.common.Point3D edge_relative_point = 4;
++  optional double delta_s = 5 [default = 0.2];
++  optional double edge_length = 6;
++  optional bool is_smoother_succ = 7 [default = false];
++  optional bool is_cross_localization = 8 [default = false];
+ }
++
++message PerceptionAccurateDockInfo {
++  optional apollo.common.Header header = 1;
++  optional bool is_useable = 2 [default = false];
++  optional apollo.common.Point3D relative_position = 3;
++  repeated apollo.common.Point3D relative_path_position = 4;
++  optional double relative_heading = 5;
++}
+\ No newline at end of file
+diff --git a/modules/common_msgs/perception_msgs/traffic_light_detection.proto b/modules/common_msgs/perception_msgs/traffic_light_detection.proto
+index 58b4925..baa0df4 100644
+--- a/modules/common_msgs/perception_msgs/traffic_light_detection.proto
++++ b/modules/common_msgs/perception_msgs/traffic_light_detection.proto
+@@ -68,4 +68,5 @@ message TrafficLightDetection {
+     CAMERA_FRONT_WIDE = 3;
+   };
+   optional CameraID camera_id = 5;
++  optional string camera_name = 6;
+ }
+diff --git a/modules/common_msgs/planning_msgs/pad_msg.proto b/modules/common_msgs/planning_msgs/pad_msg.proto
+index c5f2374..ac7bd46 100644
+--- a/modules/common_msgs/planning_msgs/pad_msg.proto
++++ b/modules/common_msgs/planning_msgs/pad_msg.proto
+@@ -16,6 +16,10 @@ message PadMessage {
+     STOP = 4;
+     RESUME_CRUISE = 5;
+     CLEAR_PLANNING = 6;
++    // Enter mission model
++    ENTER_MISSION = 7;
++    // Exit mission model
++    EXIT_MISSION = 8;
+   };
+ 
+   // driving action
+diff --git a/modules/common_msgs/planning_msgs/planning.proto b/modules/common_msgs/planning_msgs/planning.proto
+index 95308a6..c4864a6 100644
+--- a/modules/common_msgs/planning_msgs/planning.proto
++++ b/modules/common_msgs/planning_msgs/planning.proto
+@@ -11,6 +11,22 @@ import "modules/common_msgs/map_msgs/map_id.proto";
+ import "modules/common_msgs/planning_msgs/decision.proto";
+ import "modules/common_msgs/planning_msgs/planning_internal.proto";
+ 
++message Point {
++  optional double x = 1;
++  optional double y = 2; 
++}
++
++message LocationPose {
++  //vehice location pose
++  optional Point vehice_location = 1;
++
++  // left width point of vehice location
++  optional Point left_lane_boundary_point = 2;
++
++  // right width SL point of vehice location
++  optional Point right_lane_boundary_point = 3;
++}
++
+ message EStop {
+   // is_estop == true when emergency stop is required
+   optional bool is_estop = 1;
+@@ -107,6 +123,8 @@ message ADCTrajectory {
+     SPEED_FALLBACK = 3;
+     PATH_REUSED = 4;
+     OPEN_SPACE = 5;
++    EDGE_FOLLOW = 6;
++    RELATIVE_CONTROL = 7;
+   }
+   optional TrajectoryType trajectory_type = 21 [default = UNKNOWN];
+ 
+@@ -118,6 +136,13 @@ message ADCTrajectory {
+   // complete dead end flag
+   optional bool car_in_dead_end = 24;
+ 
++  // vehicle location pose
++  optional LocationPose location_pose = 25;
++
++  // in RELATIVE_CONTROL trajectory type, if trajectory is collisioned with obstable
++  optional bool is_collision = 26 [default = false];
++
+   // output related to RSS
+   optional RSSInfo rss_info = 100;
++
+ }
+diff --git a/modules/common_msgs/prediction_msgs/prediction_obstacle.proto b/modules/common_msgs/prediction_msgs/prediction_obstacle.proto
+index a41cce9..0cd3db0 100644
+--- a/modules/common_msgs/prediction_msgs/prediction_obstacle.proto
++++ b/modules/common_msgs/prediction_msgs/prediction_obstacle.proto
+@@ -77,4 +77,7 @@ message PredictionObstacles {
+ 
+   // Scenario
+   optional Scenario scenario = 7;
++
++  // waste
++  repeated apollo.perception.PerceptionWaste perception_waste = 8;
+ }
+diff --git a/modules/common_msgs/sensor_msgs/BUILD b/modules/common_msgs/sensor_msgs/BUILD
+index 3183f75..fd9be42 100644
+--- a/modules/common_msgs/sensor_msgs/BUILD
++++ b/modules/common_msgs/sensor_msgs/BUILD
+@@ -60,6 +60,14 @@ proto_library(
+     ],
+ )
+ 
++proto_library(
++    name = "nano_radar_proto",
++    srcs = ["nano_radar.proto"],
++    deps = [
++        "//modules/common_msgs/basic_msgs:header_proto",
++    ],
++)
++
+ proto_library(
+     name = "smartereye_proto",
+     srcs = ["smartereye.proto"],
+diff --git a/modules/common_msgs/sensor_msgs/nano_radar.proto b/modules/common_msgs/sensor_msgs/nano_radar.proto
+new file mode 100755
+index 0000000..03f0e8a
+--- /dev/null
++++ b/modules/common_msgs/sensor_msgs/nano_radar.proto
+@@ -0,0 +1,146 @@
++syntax = "proto2";
++
++package apollo.drivers;
++
++import "modules/common_msgs/basic_msgs/header.proto";
++
++message NanoObjectListStatus_60A {
++  optional int32 nof_objects = 1 [default = 0];
++  optional int32 meas_counter = 2 [default = -1];
++  optional int32 interface_version = 3;
++}
++
++
++
++message NanoRadarState_201 {
++  enum OutputType {
++    OUTPUT_TYPE_NONE = 0;
++    OUTPUT_TYPE_OBJECTS = 1;
++    OUTPUT_TYPE_CLUSTERS = 2;
++    OUTPUT_TYPE_ERROR = 3;
++  }
++  
++  enum RcsThreshold {
++    RCS_THRESHOLD_STANDARD = 0;
++    RCS_THRESHOLD_HIGH_SENSITIVITY = 1;
++    RCS_THRESHOLD_ERROR = 2;
++  }
++  
++  optional uint32 max_distance = 1;
++  optional uint32 radar_power = 2;
++  optional OutputType output_type = 3;
++  optional RcsThreshold rcs_threshold = 4;
++  optional bool send_quality = 5;
++  optional bool send_ext_info = 6;
++}
++
++message NanoSoftwareVersion_700 {
++  optional uint32 soft_major_release = 1;
++  optional uint32 soft_minor_release = 2;
++  optional uint32 soft_patch_level = 3;
++}
++
++message NanoCollisionDetectionRegionState_402 {
++  //                x axis  ^
++  //                        | longitude_dist
++  //     P2(Long2,Lat2)     |
++  //        ----------------------------------
++  //        |               |                |
++  //        |               |                |
++  //        |               |                |
++  //        ----------------------------------
++  //                        |             P1(Long1,Lat1)
++  //                        |
++  //                        |         lateral_dist
++  //                        --------------------->
++  //                                        y axis
++  //        ooooooooooooo   //radar front surface max:50m x 50m
++  optional uint32 region_id = 1;
++  optional uint32 region_max_output_number = 2;
++  optional double point1_longitude = 3;
++  optional double point1_lateral = 4;
++  optional double point2_longitude = 5;
++  optional double point2_lateral = 6;
++  optional bool coordinates_valid = 7;
++  optional bool activation_valid = 8;
++}
++
++message NanoRadarObs {
++  //                x axis  ^
++  //                        | longitude_dist
++  //                        |
++  //                        |
++  //                        |
++  //                        |     lateral_dist
++  //                        |           y axis
++  //                        ----------------->
++  //        ooooooooooooo   //radar front surface 77GHz
++
++  optional apollo.common.Header header = 1;
++  optional bool clusterortrack = 2;  // 0 = track, 1 = cluster
++  optional int32 obstacle_id = 3;    // obstacle Id
++  // longitude distance to the radar; (+) = target far away the radar unit = m
++  optional double longitude_dist = 4;
++  // lateral distance to the radar; (+) = right; unit = m
++  optional double lateral_dist = 5;
++  // longitude velocity to the radar; (+) = forward; unit = m/s
++  optional double longitude_vel = 6;
++  // lateral velocity to the radar; (+) = right; unit = m/s
++  optional double lateral_vel = 7;
++  // obstacle Radar Cross-Section; unit = dBsm
++  optional double rcs = 8;
++  // 0 = moving, 1 = stationary, 2 = oncoming, 3 = stationary candidate
++  // 4 = unknown, 5 = crossing stationary, 6 = crossing moving, 7 = stopped
++  optional int32 dynprop = 9;
++  // longitude distance standard deviation to the radar; (+) = forward; unit = m
++  optional double longitude_dist_rms = 10;
++  // lateral distance standard deviation to the radar; (+) = left; unit = m
++  optional double lateral_dist_rms = 11;
++  // longitude velocity standard deviation to the radar; (+) = forward; unit =
++  // m/s
++  optional double longitude_vel_rms = 12;
++  // lateral velocity standard deviation to the radar; (+) = left; unit = m/s
++  optional double lateral_vel_rms = 13;
++  // obstacle probability of existence
++  optional double probexist = 14;
++
++  // The following is only valid for the track object message
++  // 0 = deleted, 1 = new, 2 = measured, 3 = predicted, 4 = deleted for, 5 = new
++  // from merge
++  optional int32 meas_state = 15;
++  // longitude acceleration to the radar; (+) = forward; unit = m/s2
++  optional double longitude_accel = 16;
++  // lateral acceleration to the radar; (+) = left; unit = m/s2
++  optional double lateral_accel = 17;
++  // orientation angle to the radar; (+) = counterclockwise; unit = degree
++  optional double oritation_angle = 18;
++  // longitude acceleration standard deviation to the radar; (+) = forward; unit
++  // = m/s2
++  optional double longitude_accel_rms = 19;
++  // lateral acceleration standard deviation to the radar; (+) = left; unit =
++  // m/s2
++  optional double lateral_accel_rms = 20;
++  // orientation angle standard deviation to the radar; (+) = counterclockwise;
++  // unit = degree
++  optional double oritation_angle_rms = 21;
++  optional double length = 22;  // obstacle length; unit = m
++  optional double width = 23;   // obstacle width; unit = m
++  // 0: point; 1: car; 2: truck; 3: pedestrian; 4: motorcycle; 5: bicycle; 6:
++  // wide; 7: unknown
++  optional int32 obstacle_class = 24;
++  // Object Range
++  optional double obstacle_range = 25;
++  // Object Velocity
++  optional double obstacle_vel = 26;
++  // Object Angle
++  optional double obstacle_angle = 27;
++}
++
++message NanoRadar {
++  optional apollo.common.Header header = 1;
++  repeated NanoRadarObs contiobs = 2;  // conti radar obstacle array
++  optional NanoRadarState_201 radar_state = 3;
++  optional NanoCollisionDetectionRegionState_402 radar_region_state = 4;
++  optional NanoObjectListStatus_60A object_list_status = 6;
++  optional NanoSoftwareVersion_700 software_version = 7;
++}
+diff --git a/modules/common_msgs/simulation_msgs/agent.proto b/modules/common_msgs/simulation_msgs/agent.proto
+index e17421f..e461f91 100644
+--- a/modules/common_msgs/simulation_msgs/agent.proto
++++ b/modules/common_msgs/simulation_msgs/agent.proto
+@@ -57,4 +57,21 @@ message AgentConfig {
+   optional bool avoid_rear_end_collision = 17 [default = true];
+   optional double rear_end_collision_distance = 18
+       [default = 3.0, deprecated = true];
++
++  // When an obstacle approaches the adc at a certain distance,
++  // it needs to decelerate.
++  message NearCar {
++    optional double distance = 1 [default = 20];
++    optional double acceleration = 2 [default = -2];
++    optional bool is_same_lane = 3 [default = false];
++    optional bool only_include_behind = 4 [default = true];
++  }
++  optional NearCar near_car = 19;
++
++  // Need to decelerate when an obstacle meets the crosswalk
++  message NearCrosswalk {
++    optional double distance = 1 [default = 15];
++    optional double acceleration = 2 [default = -1];
++  }
++  optional NearCrosswalk near_crosswalk = 22;
+ }
