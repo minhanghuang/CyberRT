@@ -10,7 +10,11 @@ jobs:
   build-arm-ubuntu18:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Check out repository code
+        uses: actions/checkout@v1 # https://github.com/actions/checkout/issues/1590
+        with:
+          fetch-depth: 1
+
       - uses: uraimo/run-on-arch-action@v2
         name: Run commands
         env:
