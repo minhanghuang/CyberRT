@@ -20,9 +20,18 @@
 
 ```shell
 sudo apt update
-sudo apt install -y uuid-dev libncurses5-dev python3-dev python3-pip
+sudo apt install -y wget autoconf automake libtool g++ pkg-config uuid-dev libncurses5-dev python3-dev python3-pip
 python3 -m pip install protobuf==3.14.0
 ```
+
+| dependence   |  v9.0.0           |  v10.0.0  |
+| :---: |  :---: |:---:|
+| C++ STANDARD |   C++14           |   C+17    |
+| gcc/g++      |   system default  |   8.1+    |
+| FastDDS      |   v1.5.0           |   v2.14.3 |
+| protobuf      |   v3.14.0           |   v3.14.0 |
+| bvar      |              |   new |
+| gperftools      |              |   gperftools-2.8  |
 
 ## #2 Build
 
