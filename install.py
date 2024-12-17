@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import subprocess
+import re
 import os
 import argparse
 import time
@@ -32,15 +33,23 @@ class Install:
 
     def _cmd(self, command):
         """执行系统命令，使用指定的环境变量"""
+        if command is None:
+            return None
         print("[command] {}".format(command))
         subprocess.run(command, shell=True, env=self.environment)
 
     def start(self):
+        self._clone_gcc()
+        self._clone_cmake()
         self._clone_setup()
-        self._clone_nlohmann_json()
         self._clone_tinyxml2()
+        # # self._clone_dds()
+        self._clone_dds2()
+        self._clone_nlohmann_json()
+        self._clone_proj() # ros_bridge of apollo v10
         self._clone_gfamily()
-        self._clone_dds()
+        self._clone_gperftools() # apollo v10
+        self._unpack_bvar() # apollo v10
 
     def _clone_github_repo(self, repo_url, repo_name, *args):
         dowload_path = os.path.join(self._dowload_path, repo_name)
@@ -73,6 +82,58 @@ class Install:
         self._cmd("make install -j$(nproc)")
         os.chdir(self._current_path)
 
+    def _clone_gcc(self):
+        print("start to install gcc")
+        gcc_version = "0.0"
+        try:
+            result = subprocess.run(['gcc', '--version'], stdout=subprocess.PIPE, universal_newlines=True, check=True)
+            output = result.stdout.splitlines()[0]
+            match = re.search(r'(\d+\.\d+\.\d+)', output)
+            if match:
+                gcc_version = match.group(1)
+                print(f"GCC version: {gcc_version}")
+            if "8.1" < gcc_version:
+                print("GCC version is greater than or equal to 8.1.0, skip installation")
+                return None
+        except Exception as e:
+            print("gcc error: {}".format(e))
+
+        self._cmd("apt update")
+        self._cmd("apt install -y software-properties-common")
+        self._cmd("add-apt-repository -y ppa:ubuntu-toolchain-r/test")
+        self._cmd("apt update")
+        self._cmd("apt install -y gcc-9 g++-9")
+        self._cmd("update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 100")
+        self._cmd("update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 100")
+        return None
+
+    def _clone_cmake(self):
+        print("start to install cmake")
+        cmake_version = "0.0.0"
+        try:
+            result = subprocess.run(['cmake', '--version'], stdout=subprocess.PIPE, universal_newlines=True, check=True)
+            output = result.stdout.splitlines()[0]
+            match = re.search(r'(\d+\.\d+\.\d+)', output)
+            if match:
+                cmake_version = match.group(1)
+                print(f"CMake version: {cmake_version}")
+            if "3.20" < cmake_version:
+                print("CMake version is greater than 3.20, skip installation")
+                return None
+        except Exception as e:
+            print("cmake error: {}".format(e))
+
+        print("CMake version is less than 3.20, start installation")
+        self._cmd("wget -t 10 {} -P {}".format("https://cmake.org/files/v3.22/cmake-3.22.0-linux-x86_64.tar.gz",self._dowload_path))
+        os.chdir(self._dowload_path)
+        self._cmd("tar -zxvf cmake-3.22.0-linux-x86_64.tar.gz")
+        self._cmd("cp -r cmake-3.22.0-linux-x86_64/bin/* /usr/local/bin")
+        self._cmd("cp -r cmake-3.22.0-linux-x86_64/doc/* /usr/local/doc")
+        self._cmd("cp -r cmake-3.22.0-linux-x86_64/share/* /usr/local/share")
+        self._cmd("rm -rf cmake-3.22.0-linux-x86_64*")
+        os.chdir(self._current_path)
+        return None
+
     def _clone_nlohmann_json(self):
         self._clone_github_repo(
             "https://github.com/nlohmann/json.git",
@@ -102,6 +163,47 @@ class Install:
             "cmake -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(self._install_prefix))
         self._cmd("make install -j$(nproc)")
         os.chdir(self._current_path)
+
+    def _clone_gperftools(self):
+        self._clone_github_repo(
+            "https://github.com/gperftools/gperftools.git",
+            "gperftools",
+            "--single-branch",
+            "--branch=gperftools-2.8",
+            "--depth=1"
+        )
+        os.chdir(os.path.join(self._dowload_path, "gperftools"))
+        self._cmd("./autogen.sh || sleep 1 && ./autogen.sh")
+        self._cmd(
+            "./configure --prefix={} --libdir={}".format(
+                self._install_prefix, os.path.join(self._install_prefix, "lib")
+            )
+        )
+        self._cmd("make install -j$(nproc)")
+        os.chdir(self._current_path)
+
+        return None
+
+    def _clone_proj(self):
+        self._clone_github_repo(
+            "https://github.com/OSGeo/PROJ.git",
+            "PROJ",
+            "--single-branch",
+            "--branch=7.1.0",
+            "--depth=1"
+        )
+        os.chdir(os.path.join(self._dowload_path, "PROJ"))
+        self._cmd("mkdir -p build")
+        os.chdir("build")
+        self._cmd(
+            "cmake -DBUILD_TESTING=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(
+                self._install_prefix
+            )
+        )
+        self._cmd("make install -j$(nproc)")
+        os.chdir(self._current_path)
+
+        return None
 
     def _clone_gfamily(self):
         self._clone_github_repo(
@@ -209,6 +311,80 @@ class Install:
         self._cmd("rm -rf fast-rtps-1.5.0-1/")
         os.chdir(self._current_path)
 
+    def _clone_dds2(self):
+        self._clone_github_repo(
+            "https://github.com/chriskohlhoff/asio.git",
+            "asio",
+            "--single-branch",
+            "--branch=asio-1-18-1",
+            "--depth=1"
+        )
+        self._clone_github_repo(
+            "https://github.com/eProsima/foonathan_memory_vendor.git",
+            "foonathan_memory_vendor",
+            "--single-branch",
+            "--branch=v1.3.1",
+            "--depth=1"
+        )
+        self._clone_github_repo(
+            "https://github.com/eProsima/Fast-CDR.git",
+            "Fast-CDR",
+            "--single-branch",
+            "--branch=v2.2.2",
+            "--depth=1"
+        )
+        self._clone_github_repo(
+            "https://github.com/eProsima/Fast-DDS.git",
+            "Fast-DDS",
+            "--single-branch",
+            "--branch=v2.14.3",
+            "--depth=1"
+        )
+        os.chdir(os.path.join(self._dowload_path, "asio/asio"))
+        self._cmd("./autogen.sh")
+        self._cmd("./configure --prefix={}".format(self._install_prefix))
+        self._cmd("make install -j$(nproc)")
+        os.chdir(self._current_path)
+
+        os.chdir(os.path.join(self._dowload_path, "foonathan_memory_vendor"))
+        self._cmd("mkdir -p build")
+        os.chdir("build")
+        self._cmd("cmake -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(
+                self._install_prefix))
+        self._cmd("make install -j$(nproc)")
+        os.chdir(self._current_path)
+
+        os.chdir(os.path.join(self._dowload_path, "Fast-CDR"))
+        self._cmd("mkdir -p build")
+        os.chdir("build")
+        self._cmd("cmake -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(
+                self._install_prefix))
+        self._cmd("make install -j$(nproc)")
+        os.chdir(self._current_path)
+
+        os.chdir(os.path.join(self._dowload_path, "Fast-DDS"))
+        self._cmd("mkdir -p build")
+        os.chdir("build")
+        self._cmd("cmake -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(
+                self._install_prefix))
+        self._cmd("make install -j$(nproc)")
+        os.chdir(self._current_path)
+
+        return None
+
+    def _unpack_bvar(self):
+        download_url = "https://raw.githubusercontent.com/wiki/minhanghuang/CyberRT/libs"
+        bvar_name = "bvar_9.0.0-rc-r2_amd64.deb"
+        if "x86_64" == self._machine:
+            pass
+        else:
+            bvar_name = "bvar_9.0.0-rc-r3_arm64.deb"
+        download_url = download_url + "/" + bvar_name
+        self._cmd("wget -t 10 {} -O {}".format(download_url, os.path.join(self._dowload_path, "bvar.deb")))
+        self._cmd("dpkg -x {} {}".format(os.path.join(self._dowload_path, "bvar.deb"), os.path.join(self._dowload_path, "bvar")))
+        self._cmd("cp -r {}* {}".format(os.path.join(self._dowload_path, "bvar/usr/local/"), self._install_prefix))
+        return None
+
 def parse_config():
     parser = argparse.ArgumentParser(description="install")
     parser.add_argument("--platform", type=str, default=platform.machine(), help="platform")
@@ -219,6 +395,6 @@ def parse_config():
 if __name__ == "__main__":
     args = parse_config()
     print(f"args.platform: {args.platform}, args.install_prefix: {args.install_prefix}")
-    time.sleep(3)
+    # time.sleep(3)
     install = Install(args.platform, args.install_prefix)
     install.start()
