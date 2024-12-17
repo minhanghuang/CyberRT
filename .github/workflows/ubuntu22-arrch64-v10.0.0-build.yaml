@@ -1,13 +1,13 @@
-name: ubuntu20.04 v9.0.0 build arrch64
-run-name: ubuntu20 arrch64
+name: ubuntu22.04 v10.0.0 build arrch64
+run-name: ubuntu22 arrch64
 
 on:
   push:
     branches:
-      - v9.0.0
+      - v10.0.0
 
 jobs:
-  build-arm-ubuntu20:
+  build-arm-ubuntu22:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -18,11 +18,11 @@ jobs:
         id: runcmd
         with:
           arch: aarch64
-          distro: ubuntu20.04
+          distro: ubuntu22.04
 
           install: |
             apt update
-            apt install -y lsb-release git wget pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev
+            apt install -y lsb-release git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
 
           run: |
             echo "-----------------------"

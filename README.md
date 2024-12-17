@@ -20,7 +20,7 @@
 
 ```shell
 sudo apt update
-sudo apt install -y wget autoconf automake libtool g++ pkg-config uuid-dev libncurses5-dev python3-dev python3-pip
+sudo apt install -y wget libcurl4-openssl-dev autoconf automake libtool g++ pkg-config uuid-dev libncurses5-dev python3-dev python3-pip libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
 python3 -m pip install protobuf==3.14.0
 ```
 

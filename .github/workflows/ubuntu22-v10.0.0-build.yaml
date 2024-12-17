@@ -1,10 +1,10 @@
-name: ubuntu22.04 v9.0.0 build x86-64
+name: ubuntu22.04 v10.0.0 build x86-64
 run-name: ubuntu22 x86-64
 
 on:
   push:
     branches:
-      - v9.0.0
+      - v10.0.0
 
 jobs:
   build-amd-ubuntu22:
@@ -21,7 +21,7 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           apt update
-          apt install -y lsb-release git wget pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev
+          apt install -y lsb-release git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
           cd /workspace/${{ github.repository }} && python3 install.py
 
       - name: Build
