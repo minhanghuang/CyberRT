@@ -1,20 +1,16 @@
-name: ubuntu18.04 v9.0.0 build arrch64
-run-name: ubuntu18 arrch64
+name: ubuntu-latest v10.0.0 build arrch64
+run-name: ubuntu latest arrch64
 
 on:
   push:
     branches:
-      - v9.0.0
+      - v10.0.0
 
 jobs:
-  build-arm-ubuntu18:
+  build-arm-ubuntu-latest:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v1 # https://github.com/actions/checkout/issues/1590
-        with:
-          fetch-depth: 1
-
+      - uses: actions/checkout@v3
       - uses: uraimo/run-on-arch-action@v2
         name: Run commands
         env:
@@ -22,11 +18,11 @@ jobs:
         id: runcmd
         with:
           arch: aarch64
-          distro: ubuntu18.04
+          distro: ubuntu_latest
 
           install: |
             apt update
-            apt install -y lsb-release git wget pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev
+            apt install -y lsb-release git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
 
           run: |
             echo "-----------------------"

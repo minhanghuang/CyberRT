@@ -1,27 +1,27 @@
-name: ubuntu20.04 v9.0.0 build x86-64
-run-name: ubuntu20 x86-64
+name: ubuntu-latest v10.0.0 build x86-64
+run-name: ubuntu latest x86-64
 
 on:
   push:
     branches:
-      - v9.0.0
+      - v10.0.0
 
 jobs:
-  build-amd-ubuntu20:
+  build-amd-ubuntu-latest:
     runs-on: ubuntu-latest
     container:
-      image: docker://ubuntu:20.04
+      image: docker://ubuntu:latest
       options: --volume ${{ github.workspace }}:/workspace/${{ github.repository }}
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
           apt update
-          apt install -y lsb-release git wget pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev
+          apt install -y lsb-release git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
           cd /workspace/${{ github.repository }} && python3 install.py
 
       - name: Build
