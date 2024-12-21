@@ -54,7 +54,10 @@ class Install:
         for arg in args:
             command += " " + arg
         print("clone: {}".format(command))
-        subprocess.run(command, shell=True)
+        result = subprocess.run(command, shell=True)
+        if result.returncode != 0:
+            print("clone failed: {}".format(repo_url))
+            raise Exception("clone failed: {}".format(repo_url))
 
     def _clone_setup(self):
         self._clone_github_repo(
@@ -134,8 +137,10 @@ class Install:
         self._cmd("mkdir -p build")
         os.chdir("build")
         self._cmd(
-            "cmake -DCMAKE_CXX_FLAGS='-fPIC' -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(
-                self._install_prefix))
+            "cmake -DCMAKE_CXX_FLAGS='-fPIC' -DREGISTER_INSTALL_PREFIX=OFF -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(
+                self._install_prefix
+            )
+        )
         self._cmd("make install -j$(nproc)")
         os.chdir(self._current_path)
 
