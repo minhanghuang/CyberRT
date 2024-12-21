@@ -20,7 +20,7 @@
 // replacement macro for eprosima namespace to eprosima_wrap
 // for adapting different version fastdds on a single process
 #ifndef eprosima
-#define eprosima eprosima_wrap
+// #define eprosima eprosima_wrap
 #endif
 
 #endif  // ROS_BRIDGE_MACROS_H_
