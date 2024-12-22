@@ -7,6 +7,11 @@
 *.log
 .DS_Store
 
+# protobuf source file
+*.pb.cc
+*.pb.h
+*_pb2.py
+
 build/
 cmake-build*
 third_party/
