@@ -42,6 +42,7 @@ find_package(fastrtps REQUIRED)
 find_package(fastcdr REQUIRED)
 find_package(glog REQUIRED)
 find_package(Protobuf REQUIRED)
+find_package(Eigen3 REQUIRED)
 # find_package(Python REQUIRED COMPONENTS Interpreter Development)
 pkg_check_modules(Python REQUIRED python3)
 pkg_check_modules(Uuid REQUIRED uuid)
@@ -68,6 +69,7 @@ set(DEPENCENCY_INCLUDE_DIRS
   ${fastcdr_INCLUDE_DIR}
   ${fastrtps_INCLUDE_DIR}
   ${Protobuf_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIRS}
   ${Python_INCLUDE_DIRS}
   ${Uuid_INCLUDE_DIRS}
   ${glog_INCLUDE_DIRS}
@@ -100,10 +102,9 @@ include_directories(
 
 link_directories(${DEPENCENCY_LIB_DIRS})
 
-file(GLOB CYBER_PROTO_FILES
-  "${CMAKE_CURRENT_SOURCE_DIR}/modules/common_msgs/**/*.proto"
-  "${CMAKE_CURRENT_SOURCE_DIR}/cyber/proto/*.proto"
-  "${CMAKE_CURRENT_SOURCE_DIR}/cyber/examples/proto/*.proto"
+file(GLOB_RECURSE CYBER_PROTO_FILES
+  "${CMAKE_CURRENT_SOURCE_DIR}/modules/*.proto"
+  "${CMAKE_CURRENT_SOURCE_DIR}/cyber/*.proto"
 )
 
 if(${CYBER_MSGS_CACHE})
@@ -194,6 +195,7 @@ target_link_libraries(${TARGET_NAME}
 )
 
 add_subdirectory(cyber/mainboard)
+add_subdirectory(cyber/ros_bridge)
 add_subdirectory(cyber/examples)
 add_subdirectory(cyber/python)
 add_subdirectory(cyber/tools)
