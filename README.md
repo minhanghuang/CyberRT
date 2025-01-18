@@ -1,18 +1,18 @@
-# Apollo(v9.0.0) CyberRT
+# Apollo(v10.0.0) CyberRT
 
 ![CyberRT](./docs/CyberRT.gif)
 
 | Target        |  CI Status  |
 | ------------- | :-----:|
-| Ubuntu18.04 x86_64   | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v9.0.0-build.yaml) |
-| Ubuntu20.04 x86_64  | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v9.0.0-build.yaml) |
-| Ubuntu22.04 x86_64  | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v9.0.0-build.yaml) |
-| Ubuntu24.04 x86_64  | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-v9.0.0-build.yaml) |
-| Ubuntu latest x86_64  | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v9.0.0-build.yaml) |
-| Ubuntu18.04 arrch64 | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-arrch64-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-arrch64-v9.0.0-build.yaml) |
-| Ubuntu20.04  arrch64 | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-arrch64-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-arrch64-v9.0.0-build.yaml) |
-| Ubuntu22.04 arrch64 | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-arrch64-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-arrch64-v9.0.0-build.yaml) |
-| Ubuntu latest arrch64 | [![build v9.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-arrch64-v9.0.0-build.yaml/badge.svg?branch=v9.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-arrch64-v9.0.0-build.yaml) |
+| Ubuntu18.04 x86_64   | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v10.0.0-build.yaml) |
+| Ubuntu20.04 x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v10.0.0-build.yaml) |
+| Ubuntu22.04 x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v10.0.0-build.yaml) |
+| Ubuntu24.04 x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-v10.0.0-build.yaml) |
+| Ubuntu latest x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v10.0.0-build.yaml) |
+| Ubuntu18.04 arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-arrch64-v10.0.0-build.yaml) |
+| Ubuntu20.04  arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-arrch64-v10.0.0-build.yaml) |
+| Ubuntu22.04 arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-arrch64-v10.0.0-build.yaml) |
+| Ubuntu latest arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-arrch64-v10.0.0-build.yaml) |
 
 ## #1 Env
 
@@ -20,16 +20,25 @@
 
 ```shell
 sudo apt update
-sudo apt install -y uuid-dev libncurses5-dev python3-dev python3-pip
+sudo apt install -y wget libcurl4-openssl-dev autoconf automake libtool g++ pkg-config uuid-dev libncurses5-dev python3-dev python3-pip libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
 python3 -m pip install protobuf==3.14.0
 ```
+
+| dependence   |  v9.0.0           |  v10.0.0  |
+| :---: |  :---: |:---:|
+| C++ STANDARD |   C++14           |   C+17    |
+| gcc/g++      |   system default  |   8.1+    |
+| FastDDS      |   v1.5.0           |   v2.14.3 |
+| protobuf      |   v3.14.0           |   v3.14.0 |
+| bvar      |              |   new |
+| gperftools      |              |   gperftools-2.8  |
 
 ## #2 Build
 
 1. clone
 
 ```shell
-git clone --single-branch --branch v9.0.0 https://github.com/minhanghuang/CyberRT.git
+git clone --single-branch --branch v10.0.0 https://github.com/minhanghuang/CyberRT.git
 cd CyberRT
 ```
 
@@ -38,8 +47,8 @@ cd CyberRT
 > install
 
 ```shell
-sudo python3 install.py
-# sudo python3 install.py --platform <your-platform-machine> --install_prefix <your-install-path>
+python3 install.py
+# python3 install.py --platform <your-platform-machine> --install_prefix <your-install-path>
 ```
 
 > export path

@@ -8,6 +8,7 @@ export CYBER_PATH="${APOLLO_ROOT_DIR}/cyber"
 bazel_bin_path="${APOLLO_ROOT_DIR}/bazel-bin"
 mainboard_path="${bazel_bin_path}/cyber/mainboard"
 cyber_tool_path="${bazel_bin_path}/cyber/tools"
+performance_path="${cyber_tool_path}/cyber_performance"
 recorder_path="${cyber_tool_path}/cyber_recorder"
 launch_path="${cyber_tool_path}/cyber_launch"
 channel_path="${cyber_tool_path}/cyber_channel"
@@ -20,7 +21,7 @@ visualizer_path="${bazel_bin_path}/modules/tools/visualizer"
 for entry in "${mainboard_path}" \
     "${recorder_path}" "${monitor_path}"  \
     "${channel_path}" "${node_path}" \
-    "${service_path}" \
+    "${service_path}" "${performance_path}" \
     "${launch_path}" \
     "${visualizer_path}" ; do
     pathprepend "${entry}"
@@ -38,9 +39,9 @@ export GLOG_alsologtostderr=0
 export GLOG_colorlogtostderr=1
 export GLOG_minloglevel=0
 
-export sysmo_start=0
-
 # for DEBUG log
 #export GLOG_v=4
 
-source ${CYBER_PATH}/tools/cyber_tools_auto_complete.bash
+[[ -e ${CYBER_PATH}/tools/cyber_tools_auto_complete.bash ]] && source ${CYBER_PATH}/tools/cyber_tools_auto_complete.bash
+
+export sysmo_start=0

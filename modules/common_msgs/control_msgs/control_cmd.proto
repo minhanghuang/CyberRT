@@ -38,7 +38,7 @@ message ControlCommand {
   // target steering angle, in percentage of full scale [-100, 100]
   optional double steering_target = 7;
 
-  // parking brake engage. true: engaged
+  // parking brake engage. true: engaged epd brake
   optional bool parking_brake = 8;
 
   // target speed, in m/s
@@ -171,6 +171,9 @@ message SimpleLateralDebug {
   // Mrac control status and feedback states for steer control
   optional MracDebug steer_mrac_debug = 32;
   optional bool steer_mrac_enable_status = 33;
+
+  // lat acc in ENU, in m/s^2
+  optional double lateral_centripetal_acceleration = 34;
 }
 
 message SimpleMPCDebug {

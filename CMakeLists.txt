@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.5.1)
 
-project(cyber VERSION 9.0.0) # Apollo Version
+project(cyber VERSION 10.0.0) # Apollo Version
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)   # Apollo v10
 set(TARGET_NAME ${PROJECT_NAME})
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 if(NOT CMAKE_BUILD_TYPE)
@@ -42,11 +42,13 @@ find_package(fastrtps REQUIRED)
 find_package(fastcdr REQUIRED)
 find_package(glog REQUIRED)
 find_package(Protobuf REQUIRED)
+find_package(Eigen3 REQUIRED)
 # find_package(Python REQUIRED COMPONENTS Interpreter Development)
 pkg_check_modules(Python REQUIRED python3)
 pkg_check_modules(Uuid REQUIRED uuid)
 pkg_check_modules(Gflags REQUIRED gflags)
 pkg_check_modules(NlohmannJson REQUIRED nlohmann_json)
+pkg_check_modules(GperfTools REQUIRED libtcmalloc)
 
 # set(Python_VERSION "${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}")
 set(Python_VERSION "${Python_VERSION}")
@@ -67,11 +69,13 @@ set(DEPENCENCY_INCLUDE_DIRS
   ${fastcdr_INCLUDE_DIR}
   ${fastrtps_INCLUDE_DIR}
   ${Protobuf_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIRS}
   ${Python_INCLUDE_DIRS}
   ${Uuid_INCLUDE_DIRS}
   ${glog_INCLUDE_DIRS}
   ${Gflags_INCLUDE_DIRS}
   ${NlohmannJson_INCLUDE_DIRS}
+  ${GperfTools_INCLUDE_DIRS}
 )
 
 set(DEPENCENCY_LIB_DIRS
@@ -83,6 +87,7 @@ set(DEPENCENCY_LIB_DIRS
   ${glog_LIBRARY_DIRS}
   ${Gflags_LIBRARY_DIRS}
   ${NlohmannJson_LIBRARY_DIRS}
+  ${GperfTools_LIBRARY_DIRS}
 )
 
 set(DEPENCENCY_LIBS
@@ -97,10 +102,9 @@ include_directories(
 
 link_directories(${DEPENCENCY_LIB_DIRS})
 
-file(GLOB CYBER_PROTO_FILES
-  "${CMAKE_CURRENT_SOURCE_DIR}/modules/common_msgs/**/*.proto"
-  "${CMAKE_CURRENT_SOURCE_DIR}/cyber/proto/*.proto"
-  "${CMAKE_CURRENT_SOURCE_DIR}/cyber/examples/proto/*.proto"
+file(GLOB_RECURSE CYBER_PROTO_FILES
+  "${CMAKE_CURRENT_SOURCE_DIR}/modules/*.proto"
+  "${CMAKE_CURRENT_SOURCE_DIR}/cyber/*.proto"
 )
 
 if(${CYBER_MSGS_CACHE})
@@ -161,6 +165,7 @@ file(GLOB CYBER_SRCS
     "cyber/transport/*/*.cc"
     "cyber/*.cc"
     "cyber/sysmo/*.cc"
+    "cyber/statistics/*.cc"
     ${CROUTINE_FILE}
 )
 
@@ -179,14 +184,18 @@ target_link_libraries(${TARGET_NAME}
     ${NlohmannJson_LIBRARIES}
     ${Protobuf_LIBRARIES}
     ${Uuid_LIBRARIES}
+    ${GperfTools_LIBRARIES} # gperftools
+    profiler                # gperftools
     fastrtps
     fastcdr
+    bvar
     atomic
     dl
     rt
 )
 
 add_subdirectory(cyber/mainboard)
+add_subdirectory(cyber/ros_bridge)
 add_subdirectory(cyber/examples)
 add_subdirectory(cyber/python)
 add_subdirectory(cyber/tools)

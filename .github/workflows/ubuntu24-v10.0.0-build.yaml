@@ -1,0 +1,33 @@
+name: ubuntu24.04 v10.0.0 build x86-64
+run-name: ubuntu24 x86-64
+
+on:
+  push:
+    branches:
+      - v10.0.0
+
+jobs:
+  build-amd-ubuntu24:
+    runs-on: ubuntu-latest
+    container:
+      image: docker://ubuntu:24.04
+      options: --volume ${{ github.workspace }}:/workspace/${{ github.repository }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Install
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          apt update
+          apt install -y lsb-release git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
+          cd /workspace/${{ github.repository }} && python3 install.py
+
+      - name: Build
+        run: |
+          echo "-----------------------"
+          uname -a
+          lsb_release -a
+          echo "-----------------------"
+          bash -c "cd /workspace/${{ github.repository }} && source install/setup.bash && mkdir -p build && cd build && cmake .. && make -j$(nproc)"
