@@ -355,6 +355,7 @@ class Install:
         os.chdir(self._current_path)
 
         os.chdir(os.path.join(self._dowload_path, "Fast-CDR"))
+        self._cmd("patch -p1 < {}".format(os.path.join(self._current_path,"scripts/Fast-CDR_v2.2.2.patch")))
         self._cmd("mkdir -p build")
         os.chdir("build")
         self._cmd("cmake -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(
