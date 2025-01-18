@@ -98,13 +98,16 @@ class Install:
         except Exception as e:
             print("gcc error: {}".format(e))
 
-        self._cmd("apt update")
-        self._cmd("apt install -y software-properties-common")
-        self._cmd("add-apt-repository -y ppa:ubuntu-toolchain-r/test")
-        self._cmd("apt update")
-        self._cmd("apt install -y gcc-9 g++-9")
-        self._cmd("update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 100")
-        self._cmd("update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 100")
+        self._cmd("sudo apt update")
+        self._cmd("sudo apt install -y software-properties-common")
+        self._cmd("sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test")
+        self._cmd("sudo apt update")
+        self._cmd("sudo apt install -y gcc-9 g++-9")
+        self._cmd("sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 100")
+        self._cmd("sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 100")
+        self._cmd("sudo ldconfig")
+        self._cmd("gcc --version")
+        self._cmd("g++ --version")
         return None
 
     def _clone_cmake(self):
@@ -131,6 +134,8 @@ class Install:
         self._cmd("cp -r cmake-3.22.0-linux-x86_64/doc/* /usr/local/doc")
         self._cmd("cp -r cmake-3.22.0-linux-x86_64/share/* /usr/local/share")
         self._cmd("rm -rf cmake-3.22.0-linux-x86_64*")
+        self._cmd("sudo ldconfig")
+        self._cmd("cmake --version")
         os.chdir(self._current_path)
         return None
 
