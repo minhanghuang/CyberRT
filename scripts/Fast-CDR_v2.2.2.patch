@@ -1,0 +1,75 @@
+diff --git a/include/fastcdr/Cdr.h b/include/fastcdr/Cdr.h
+index ba51fa2..d90dafb 100644
+--- a/include/fastcdr/Cdr.h
++++ b/include/fastcdr/Cdr.h
+@@ -689,6 +689,9 @@ public:
+     Cdr_DllAPI Cdr& serialize(
+             const char* string_t);
+ 
++    Cdr_DllAPI Cdr& serialize(
++            const char* string_t, size_t str_length);
++
+     /*!
+      * @brief This function serializes a wstring.
+      * @param string_t The pointer to the wstring that will be serialized in the buffer.
+@@ -708,7 +711,7 @@ public:
+     Cdr& serialize(
+             const std::string& string_t)
+     {
+-        return serialize(string_t.c_str());
++        return serialize(string_t.c_str(), string_t.size());
+     }
+ 
+     /*!
+diff --git a/src/cpp/Cdr.cpp b/src/cpp/Cdr.cpp
+index 189ee21..3d1a5a5 100644
+--- a/src/cpp/Cdr.cpp
++++ b/src/cpp/Cdr.cpp
+@@ -813,6 +813,47 @@ Cdr& Cdr::serialize(
+     return *this;
+ }
+ 
++Cdr& Cdr::serialize(
++        const char* string_t, size_t str_length)
++{
++    uint32_t length = 0;
++
++    if (string_t != nullptr)
++    {
++        // length = size_to_uint32(strlen(string_t)) + 1;
++        length = (uint32_t)str_length + 1;
++    }
++
++    if (length > 0)
++    {
++        Cdr::state state_before_error(*this);
++        serialize(length);
++
++        if (((end_ - offset_) >= length) || resize(length))
++        {
++            // Save last datasize.
++            last_data_size_ = sizeof(uint8_t);
++
++            offset_.memcopy(string_t, length);
++            offset_ += length;
++        }
++        else
++        {
++            set_state(state_before_error);
++            throw NotEnoughMemoryException(NotEnoughMemoryException::NOT_ENOUGH_MEMORY_MESSAGE_DEFAULT);
++        }
++    }
++    else
++    {
++        serialize(length);
++    }
++
++    serialized_member_size_ = SERIALIZED_MEMBER_SIZE;
++
++    return *this;
++}
++
++
+ Cdr& Cdr::serialize(
+         const wchar_t* string_t)
+ {
