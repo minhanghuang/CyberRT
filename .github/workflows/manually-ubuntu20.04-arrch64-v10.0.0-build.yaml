@@ -1,0 +1,40 @@
+name: manually ubuntu20.04 v10.0.0 build arrch64
+run-name: manually ubuntu20 arrch64
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'
+
+jobs:
+  build-arm-ubuntu20:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: uraimo/run-on-arch-action@v2
+        name: Run commands
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        id: runcmd
+        with:
+          arch: aarch64
+          distro: ubuntu20.04
+
+          install: |
+            apt update
+            apt install -y lsb-release git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
+
+          run: |
+            echo "-----------------------"
+            uname -a
+            lsb_release -a
+            echo "-----------------------"
+            echo "Log level: ${{ github.event.inputs.logLevel }}"
+            echo "Tags: ${{ github.event.inputs.tags }}"
+            echo "Inputs: ${{ toJson(github.event.inputs) }}"
+            bash -c "python3 install.py && source install/setup.bash && mkdir -p build && cd build && cmake .. && make -j$(nproc)"
