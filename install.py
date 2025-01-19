@@ -198,6 +198,7 @@ class Install:
             "--depth=1"
         )
         os.chdir(os.path.join(self._dowload_path, "PROJ"))
+        self._cmd("patch -p1 < {}".format(os.path.join(self._current_path,"scripts/PROJ-7.1.0.patch")))
         self._cmd("mkdir -p build")
         os.chdir("build")
         self._cmd(

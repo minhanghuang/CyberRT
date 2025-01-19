@@ -32,6 +32,7 @@ python3 -m pip install protobuf==3.14.0
 | protobuf      |   v3.14.0           |   v3.14.0 |
 | bvar      |              |   new |
 | gperftools      |              |   gperftools-2.8  |
+| PROJ            |                     |   7.1.0           |
 
 ## #2 Build
 
