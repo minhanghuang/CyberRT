@@ -126,14 +126,19 @@ class Install:
         except Exception as e:
             print("cmake error: {}".format(e))
 
-        print("CMake version is less than 3.20, start installation")
-        self._cmd("wget -t 10 {} -P {}".format("https://cmake.org/files/v3.22/cmake-3.22.0-linux-x86_64.tar.gz",self._dowload_path))
+        cmake_name = "cmake-3.22.0-linux-x86_64"
+        if "x86_64" == self._machine:
+            pass
+        else:
+            cmake_name = "cmake-3.22.0-linux-aarch64"
+        print("CMake version is less than 3.20, start installation ({})".format(cmake_name))
+        self._cmd("wget -t 10 {} -P {}".format("https://cmake.org/files/v3.22/{}.tar.gz".format(cmake_name), self._dowload_path))
         os.chdir(self._dowload_path)
-        self._cmd("tar -zxvf cmake-3.22.0-linux-x86_64.tar.gz")
-        self._cmd("cp -r cmake-3.22.0-linux-x86_64/bin/* /usr/local/bin")
-        self._cmd("cp -r cmake-3.22.0-linux-x86_64/doc/* /usr/local/doc")
-        self._cmd("cp -r cmake-3.22.0-linux-x86_64/share/* /usr/local/share")
-        self._cmd("rm -rf cmake-3.22.0-linux-x86_64*")
+        self._cmd("tar -zxvf {}.tar.gz".format(cmake_name))
+        self._cmd("cp -r {}/bin/* /usr/local/bin".format(cmake_name))
+        self._cmd("cp -r {}/doc/* /usr/local/doc".format(cmake_name))
+        self._cmd("cp -r {}/share/* /usr/local/share".format(cmake_name))
+        self._cmd("rm -rf {}*".format(cmake_name))
         self._cmd("sudo ldconfig")
         self._cmd("cmake --version")
         os.chdir(self._current_path)
@@ -198,6 +203,7 @@ class Install:
             "--depth=1"
         )
         os.chdir(os.path.join(self._dowload_path, "PROJ"))
+        self._cmd("patch -p1 < {}".format(os.path.join(self._current_path,"scripts/PROJ-7.1.0.patch")))
         self._cmd("mkdir -p build")
         os.chdir("build")
         self._cmd(
