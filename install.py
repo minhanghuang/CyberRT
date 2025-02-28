@@ -185,7 +185,7 @@ class Install:
         os.chdir(os.path.join(self._dowload_path, "gperftools"))
         self._cmd("./autogen.sh || sleep 1 && ./autogen.sh")
         self._cmd(
-            "./configure --prefix={} --libdir={}".format(
+            "./configure --disable-libunwind --prefix={} --libdir={}".format(
                 self._install_prefix, os.path.join(self._install_prefix, "lib")
             )
         )
