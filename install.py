@@ -36,25 +36,22 @@ class Install:
         if command is None:
             return None
         print("[command]: {}".format(command))
-        try:
-            subprocess.run(
-                command,
-                shell=True,
-                env=self.environment,
-                check=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-            )
-        except Exception as e:
-            print("[cmd error]: {}".format(e))
-            raise e
+        result = subprocess.run(
+            command,
+            shell=True,
+            env=self.environment,
+            stderr=subprocess.PIPE,
+        )
+        if 0 != result.returncode:
+            print("[error]: {}".format(result.stderr.decode("utf-8")))
+            raise Exception("command failed:[{}]".format(command))
 
     def start(self):
         self._clone_gcc()
         self._clone_cmake()
         self._clone_setup()
         self._clone_tinyxml2()
-        # # self._clone_dds()
+        # self._clone_dds()
         self._clone_dds2()
         self._clone_nlohmann_json()
         self._clone_proj()  # ros_bridge of apollo v10
@@ -243,7 +240,7 @@ class Install:
         print("start make PROJ")
         os.chdir(os.path.join(self._dowload_path, "PROJ"))
         self._cmd(
-            "patch -p1 < {}".format(
+            "patch -p1 -N < {}".format(
                 os.path.join(self._current_path, "scripts/PROJ-7.1.0.patch")
             )
         )
