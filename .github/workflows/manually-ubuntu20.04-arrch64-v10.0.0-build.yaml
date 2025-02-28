@@ -33,6 +33,7 @@ jobs:
             echo "-----------------------"
             uname -a
             lsb_release -a
+            g++ --version 
             echo "-----------------------"
             echo "Log level: ${{ github.event.inputs.logLevel }}"
             echo "Tags: ${{ github.event.inputs.tags }}"
