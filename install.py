@@ -35,8 +35,19 @@ class Install:
         """执行系统命令，使用指定的环境变量"""
         if command is None:
             return None
-        print("[command] {}".format(command))
-        subprocess.run(command, shell=True, env=self.environment)
+        print("[command]: {}".format(command))
+        try:
+            subprocess.run(
+                command,
+                shell=True,
+                env=self.environment,
+                check=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+        except Exception as e:
+            print("[cmd error]: {}".format(e))
+            raise e
 
     def start(self):
         self._clone_gcc()
@@ -59,11 +70,12 @@ class Install:
         command = "git clone {} {}".format(repo_url, dowload_path)
         for arg in args:
             command += " " + arg
-        print("clone: {}".format(command))
+        print("start clone: {}".format(command))
         result = subprocess.run(command, shell=True)
         if result.returncode != 0:
             print("clone failed: {}".format(repo_url))
             raise Exception("clone failed: {}".format(repo_url))
+        print("clone success: {}".format(repo_url))
 
     def _clone_setup(self):
         self._clone_github_repo(
@@ -167,6 +179,7 @@ class Install:
         self._clone_github_repo(
             "https://github.com/nlohmann/json.git", "nlohmann_json", "--depth=1"
         )
+        print("start make nlohmann_json")
         os.chdir(os.path.join(self._dowload_path, "nlohmann_json"))
         self._cmd("mkdir -p build")
         os.chdir("build")
@@ -186,6 +199,7 @@ class Install:
             "--branch=8.0.0",
             "--depth=1",
         )
+        print("start make tinyxml2")
         os.chdir(os.path.join(self._dowload_path, "tinyxml2"))
         self._cmd("mkdir -p build")
         os.chdir("build")
@@ -205,6 +219,7 @@ class Install:
             "--branch=gperftools-2.8",
             "--depth=1",
         )
+        print("start make gperttools")
         os.chdir(os.path.join(self._dowload_path, "gperftools"))
         self._cmd("./autogen.sh || sleep 1 && ./autogen.sh")
         self._cmd(
@@ -225,6 +240,7 @@ class Install:
             "--branch=7.1.0",
             "--depth=1",
         )
+        print("start make PROJ")
         os.chdir(os.path.join(self._dowload_path, "PROJ"))
         self._cmd(
             "patch -p1 < {}".format(
@@ -273,6 +289,7 @@ class Install:
             "--depth=1",
         )
 
+        print("start make gflags")
         os.chdir(os.path.join(self._dowload_path, "gflags"))
         self._cmd("mkdir -p build")
         os.chdir("build")
@@ -284,6 +301,7 @@ class Install:
         self._cmd("make install -j$(nproc)")
         os.chdir(self._current_path)
 
+        print("start make glog")
         os.chdir(os.path.join(self._dowload_path, "glog"))
         self._cmd("mkdir -p build")
         os.chdir("build")
@@ -295,6 +313,7 @@ class Install:
         self._cmd("make install -j$(nproc)")
         os.chdir(self._current_path)
 
+        print("start make googletest")
         os.chdir(os.path.join(self._dowload_path, "googletest"))
         self._cmd("mkdir -p build")
         os.chdir("build")
@@ -306,6 +325,7 @@ class Install:
         self._cmd("make install -j$(nproc)")
         os.chdir(self._current_path)
 
+        print("start make protobuf")
         os.chdir(os.path.join(self._dowload_path, "protobuf"))
         os.chdir("cmake")
         self._cmd("mkdir -p build")
@@ -387,23 +407,26 @@ class Install:
             "--branch=v2.14.3",
             "--depth=1",
         )
+        print("start make asio")
         os.chdir(os.path.join(self._dowload_path, "asio/asio"))
         self._cmd("./autogen.sh")
         self._cmd("./configure --prefix={}".format(self._install_prefix))
         self._cmd("make install -j$(nproc)")
         os.chdir(self._current_path)
 
+        print("start make foonathan_memory_vendor")
         os.chdir(os.path.join(self._dowload_path, "foonathan_memory_vendor"))
         self._cmd("mkdir -p build")
         os.chdir("build")
         self._cmd(
-            "cmake -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(
+            "cmake -DCMAKE_CXX_STANDARD=17 -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(
                 self._install_prefix
             )
         )
         self._cmd("make install -j$(nproc)")
         os.chdir(self._current_path)
 
+        print("start make Fast-CDR")
         os.chdir(os.path.join(self._dowload_path, "Fast-CDR"))
         self._cmd(
             "patch -p1 < {}".format(
@@ -420,6 +443,7 @@ class Install:
         self._cmd("make install -j$(nproc)")
         os.chdir(self._current_path)
 
+        print("start make Fast-DDS")
         os.chdir(os.path.join(self._dowload_path, "Fast-DDS"))
         self._cmd("mkdir -p build")
         os.chdir("build")
