@@ -1,5 +1,5 @@
-name: ubuntu20.04 v10.0.0 build arrch64
-run-name: ubuntu20 arrch64
+name: ubuntu24.04 v10.0.0 build arrch64
+run-name: ubuntu24 arrch64
 
 on:
   push:
@@ -7,12 +7,8 @@ on:
       - v10.0.0
 
 jobs:
-  build-arm-ubuntu20:
+  build-arm-ubuntu24:
     runs-on: ubuntu-24.04-arm
-    container:
-      # dockerhub镜像
-      image: docker://ubuntu:20.04
-
     steps:
       - name: Check out repository code
         uses: actions/checkout@v1 # https://github.com/actions/checkout/issues/1590
@@ -23,8 +19,8 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          apt update
-          apt install -y sudo lsb-release git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
+          sudo apt update
+          sudo apt install -y sudo lsb-release git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
 
       - name: Build
         env:

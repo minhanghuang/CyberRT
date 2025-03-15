@@ -13,23 +13,28 @@ on:
 
 jobs:
   build-arm-ubuntu20:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
+    container:
+      # dockerhub镜像
+      image: docker://ubuntu:20.04
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: uraimo/run-on-arch-action@v2
-        name: Run commands
+      - name: Check out repository code
+        uses: actions/checkout@v1 # https://github.com/actions/checkout/issues/1590
+        with:
+          fetch-depth: 1
+      
+      - name: Install
         env:
           DEBIAN_FRONTEND: noninteractive
-        id: runcmd
-        with:
-          arch: aarch64
-          distro: ubuntu20.04
+        run: |
+          apt update
+          apt install -y sudo lsb-release git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
 
-          install: |
-            apt update
-            apt install -y sudo lsb-release git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
-
-          run: |
+      - name: Build
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
             echo "-----------------------"
             uname -a
             lsb_release -a
