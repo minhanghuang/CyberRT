@@ -8,11 +8,10 @@
 | Ubuntu20.04 x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v10.0.0-build.yaml) |
 | Ubuntu22.04 x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v10.0.0-build.yaml) |
 | Ubuntu24.04 x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-v10.0.0-build.yaml) |
-| Ubuntu latest x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-v10.0.0-build.yaml) |
 | Ubuntu18.04 arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-arrch64-v10.0.0-build.yaml) |
 | Ubuntu20.04  arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-arrch64-v10.0.0-build.yaml) |
 | Ubuntu22.04 arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-arrch64-v10.0.0-build.yaml) |
-| Ubuntu latest arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-arrch64-v10.0.0-build.yaml) |
+| Ubuntu24.04 arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-arrch64-v10.0.0-build.yaml) |
 
 ## #1 Env
 
