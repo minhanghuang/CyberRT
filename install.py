@@ -6,22 +6,93 @@ import os
 import platform
 import re
 import subprocess
+import time
+
+
+class ThirdParty:
+    def __init__(self, proxy: str) -> None:
+        self._proxy: str = proxy
+        self._modules = {
+            "setup": {
+                "github": "https://github.com/minhanghuang/setup.git",
+                "gitee": "https://gitee.com/minhanghuang/setup.git",
+            },
+            "nlohmann_json": {
+                "github": "https://github.com/nlohmann/json.git",
+                "gitee": "https://gitee.com/minhanghuang/nlohmann_json.git",
+            },
+            "tinyxml2": {
+                "github": "https://github.com/leethomason/tinyxml2.git",
+                "gitee": "https://gitee.com/minhanghuang/tinyxml2.git",
+            },
+            "gperftools": {
+                "github": "https://github.com/gperftools/gperftools.git",
+                "gitee": "https://gitee.com/minhanghuang/gperftools.git",
+            },
+            "PROJ": {
+                "github": "https://github.com/OSGeo/PROJ.git",
+                "gitee": "https://gitee.com/minhanghuang/PROJ.git",
+            },
+            "gflags": {
+                "github": "https://github.com/gflags/gflags.git",
+                "gitee": "https://gitee.com/minhanghuang/gflags.git",
+            },
+            "glog": {
+                "github": "https://github.com/google/glog.git",
+                "gitee": "https://gitee.com/minhanghuang/glog.git",
+            },
+            "googletest": {
+                "github": "https://github.com/google/googletest.git",
+                "gitee": "https://gitee.com/minhanghuang/googletest.git",
+            },
+            "protobuf": {
+                "github": "https://github.com/protocolbuffers/protobuf.git",
+                "gitee": "https://gitee.com/minhanghuang/protobuf.git",
+            },
+            "asio": {
+                "github": "https://github.com/chriskohlhoff/asio.git",
+                "gitee": "https://gitee.com/minhanghuang/asio.git",
+            },
+            "foonathan_memory_vendor": {
+                "github": "https://github.com/eProsima/foonathan_memory_vendor.git",
+                "gitee": "https://gitee.com/minhanghuang/foonathan_memory_vendor.git",
+            },
+            "Fast-CDR": {
+                "github": "https://github.com/eProsima/Fast-CDR.git",
+                "gitee": "https://gitee.com/minhanghuang/Fast-CDR.git",
+            },
+            "Fast-DDS": {
+                "github": "https://github.com/eProsima/Fast-DDS.git",
+                "gitee": "https://gitee.com/minhanghuang/Fast-DDS.git",
+            },
+        }
+        return None
+
+    def get_repo_url(self, name) -> str:
+        if name not in self._modules.keys():
+            raise Exception("repo not found: {}".format(name))
+        return self._modules[name][self._proxy]
 
 
 class Install:
-    def __init__(self, platform, install_prefix) -> None:
+    def __init__(self, platform: str, install_prefix: str, proxy: str) -> None:
         self._machine = platform
         self._home_path = os.path.expanduser("~")
         self._current_path = os.path.abspath(os.path.dirname(__file__))
         self._dowload_path = os.path.join(self._current_path, "third_party")
         self._install_prefix = os.path.join(self._current_path, "install")
+        self._proxy: str = proxy
         if install_prefix != "install":
             self._install_prefix = install_prefix
-
+        if "gitee" == proxy:
+            self._proxy = proxy
+        else:
+            self._proxy = "github"
         if not os.path.exists(self._install_prefix):
             os.makedirs(self._install_prefix)
-
         self.environment = self._load_environment()
+        self._third_party: ThirdParty = ThirdParty(self._proxy)
+        return None
 
     def _load_environment(self):
         """
@@ -36,34 +107,38 @@ class Install:
         if command is None:
             return None
         print("[command]: {}".format(command))
-        result = subprocess.run(
-            command,
-            shell=True,
-            env=self.environment,
-            stderr=subprocess.PIPE,
-        )
-        if 0 != result.returncode:
-            print("[error]: {}".format(result.stderr.decode("utf-8")))
-            raise Exception("command failed:[{}]".format(command))
+        try:
+            subprocess.run(
+                command,
+                shell=True,
+                env=self.environment,
+                check=True,
+                # stdout=subprocess.PIPE,
+                # stderr=subprocess.PIPE,
+            )
+        except Exception as e:
+            print("[cmd error]: {}".format(e))
+            raise e
 
     def start(self):
-        self._clone_gcc()
-        self._clone_cmake()
-        self._clone_setup()
-        self._clone_tinyxml2()
-        # self._clone_dds()
-        self._clone_dds2()
-        self._clone_nlohmann_json()
-        self._clone_proj()  # ros_bridge of apollo v10
-        self._clone_gfamily()
-        self._clone_gperftools()  # apollo v10
+        self._install_gcc()
+        self._install_cmake()
+        self._install_setup()
+        self._install_tinyxml2()
+        # # self._clone_dds()
+        self._install_dds2()
+        self._install_nlohmann_json()
+        self._install_proj()  # ros_bridge of apollo v10
+        self._install_gfamily()
+        self._install_gperftools()  # apollo v10
         self._unpack_bvar()  # apollo v10
 
-    def _clone_github_repo(self, repo_url, repo_name, *args):
+    def _clone_repo(self, repo_name: str, *args):
         dowload_path = os.path.join(self._dowload_path, repo_name)
         if os.path.exists(dowload_path):
             print("repo exists: {}".format(dowload_path))
             return None
+        repo_url = self._third_party.get_repo_url(repo_name)
         command = "git clone {} {}".format(repo_url, dowload_path)
         for arg in args:
             command += " " + arg
@@ -74,10 +149,8 @@ class Install:
             raise Exception("clone failed: {}".format(repo_url))
         print("clone success: {}".format(repo_url))
 
-    def _clone_setup(self):
-        self._clone_github_repo(
-            "https://github.com/minhanghuang/setup.git", "setup", "--depth=1"
-        )
+    def _install_setup(self):
+        self._clone_repo("setup", "--depth=1")
         os.chdir(os.path.join(self._dowload_path, "setup"))
         self._cmd("mkdir -p build")
         os.chdir("build")
@@ -85,7 +158,7 @@ class Install:
         self._cmd("make install -j$(($(nproc) - 1))")
         os.chdir(self._current_path)
 
-    def _clone_gcc(self):
+    def _install_gcc(self):
         print("start to install gcc")
         gcc_version = "0.0"
         try:
@@ -124,7 +197,7 @@ class Install:
         self._cmd("g++ --version")
         return None
 
-    def _clone_cmake(self):
+    def _install_cmake(self):
         print("start to install cmake")
         cmake_version = "0.0.0"
         try:
@@ -172,10 +245,8 @@ class Install:
         os.chdir(self._current_path)
         return None
 
-    def _clone_nlohmann_json(self):
-        self._clone_github_repo(
-            "https://github.com/nlohmann/json.git", "nlohmann_json", "--depth=1"
-        )
+    def _install_nlohmann_json(self):
+        self._clone_repo("nlohmann_json", "--depth=1")
         print("start make nlohmann_json")
         os.chdir(os.path.join(self._dowload_path, "nlohmann_json"))
         self._cmd("mkdir -p build")
@@ -188,9 +259,8 @@ class Install:
         self._cmd("make install -j$(($(nproc) - 1))")
         os.chdir(self._current_path)
 
-    def _clone_tinyxml2(self):
-        self._clone_github_repo(
-            "https://github.com/leethomason/tinyxml2.git",
+    def _install_tinyxml2(self):
+        self._clone_repo(
             "tinyxml2",
             "--single-branch",
             "--branch=8.0.0",
@@ -208,9 +278,8 @@ class Install:
         self._cmd("make install -j$(($(nproc) - 1))")
         os.chdir(self._current_path)
 
-    def _clone_gperftools(self):
-        self._clone_github_repo(
-            "https://github.com/gperftools/gperftools.git",
+    def _install_gperftools(self):
+        self._clone_repo(
             "gperftools",
             "--single-branch",
             "--branch=gperftools-2.8",
@@ -229,9 +298,8 @@ class Install:
 
         return None
 
-    def _clone_proj(self):
-        self._clone_github_repo(
-            "https://github.com/OSGeo/PROJ.git",
+    def _install_proj(self):
+        self._clone_repo(
             "PROJ",
             "--single-branch",
             "--branch=7.1.0",
@@ -256,30 +324,26 @@ class Install:
 
         return None
 
-    def _clone_gfamily(self):
-        self._clone_github_repo(
-            "https://github.com/gflags/gflags.git",
+    def _install_gfamily(self):
+        self._clone_repo(
             "gflags",
             "--single-branch",
             "--branch=v2.2.0",
             "--depth=1",
         )
-        self._clone_github_repo(
-            "https://github.com/google/glog.git",
+        self._clone_repo(
             "glog",
             "--single-branch",
             "--branch=v0.4.0",
             "--depth=1",
         )
-        self._clone_github_repo(
-            "https://github.com/google/googletest.git",
+        self._clone_repo(
             "googletest",
             "--single-branch",
             "--branch=release-1.10.0",
             "--depth=1",
         )
-        self._clone_github_repo(
-            "https://github.com/protocolbuffers/protobuf.git",
+        self._clone_repo(
             "protobuf",
             "--single-branch",
             "--branch=v3.14.0",
@@ -337,7 +401,6 @@ class Install:
 
     def _clone_dds(self):
         # self._clone_github_repo(
-        #     "https://github.com/eProsima/Fast-RTPS.git",
         #     "Fast-RTPS",
         #     "--single-branch",
         #     "--branch=v1.5.0",
@@ -375,30 +438,26 @@ class Install:
         self._cmd("rm -rf fast-rtps-1.5.0-1/")
         os.chdir(self._current_path)
 
-    def _clone_dds2(self):
-        self._clone_github_repo(
-            "https://github.com/chriskohlhoff/asio.git",
+    def _install_dds2(self):
+        self._clone_repo(
             "asio",
             "--single-branch",
             "--branch=asio-1-18-1",
             "--depth=1",
         )
-        self._clone_github_repo(
-            "https://github.com/eProsima/foonathan_memory_vendor.git",
+        self._clone_repo(
             "foonathan_memory_vendor",
             "--single-branch",
             "--branch=v1.3.1",
             "--depth=1",
         )
-        self._clone_github_repo(
-            "https://github.com/eProsima/Fast-CDR.git",
+        self._clone_repo(
             "Fast-CDR",
             "--single-branch",
             "--branch=v2.2.2",
             "--depth=1",
         )
-        self._clone_github_repo(
-            "https://github.com/eProsima/Fast-DDS.git",
+        self._clone_repo(
             "Fast-DDS",
             "--single-branch",
             "--branch=v2.14.3",
@@ -456,6 +515,10 @@ class Install:
         download_url = (
             "https://raw.githubusercontent.com/wiki/minhanghuang/CyberRT/libs"
         )
+        if "gitee" == self._proxy:
+            download_url = "https://gitee.com/minhanghuang/CyberRT-Libs/raw/master/libs"
+        else:
+            pass
         bvar_name = "bvar_9.0.0-rc-r2_amd64.deb"
         if "x86_64" == self._machine:
             pass
@@ -490,13 +553,16 @@ def parse_config():
     parser.add_argument(
         "--install_prefix", type=str, default="install", help="install prefix"
     )
+    parser.add_argument("--proxy", type=str, default="github", help="proxy")
     args = parser.parse_args()
     return args
 
 
 if __name__ == "__main__":
     args = parse_config()
-    print(f"args.platform: {args.platform}, args.install_prefix: {args.install_prefix}")
-    # time.sleep(3)
-    install = Install(args.platform, args.install_prefix)
+    print(
+        f"args.platform: {args.platform}, args.install_prefix: {args.install_prefix} args.proxy: {args.proxy}"
+    )
+    time.sleep(2)
+    install = Install(args.platform, args.install_prefix, args.proxy)
     install.start()
