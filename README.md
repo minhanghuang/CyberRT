@@ -11,7 +11,7 @@
 | Ubuntu18.04 arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-arrch64-v10.0.0-build.yaml) |
 | Ubuntu20.04  arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-arrch64-v10.0.0-build.yaml) |
 | Ubuntu22.04 arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-arrch64-v10.0.0-build.yaml) |
-| Ubuntu24.04 arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu-latest-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-arrch64-v10.0.0-build.yaml) |
+| Ubuntu24.04 arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-arrch64-v10.0.0-build.yaml) |
 
 ## #1 Env
 
@@ -48,8 +48,14 @@ cd CyberRT
 
 ```shell
 python3 install.py
-# python3 install.py --platform <your-platform-machine> --install_prefix <your-install-path>
+# python3 install.py --platform <your-platform-machine> --install_prefix <your-install-path> --proxy <github or gitee>
 ```
+
+```
+# 国内用户可以使用gitee下载依赖库
+# Chinese users can use Gitee to download dependency libraries
+python3 install.py --proxy gitee
+``````
 
 > export path
 
