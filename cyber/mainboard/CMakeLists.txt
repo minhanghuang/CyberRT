@@ -14,3 +14,9 @@ target_link_libraries(mainboard
 set_target_properties(mainboard PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/cyber/mainboard
 )
+
+install(TARGETS mainboard
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+)
