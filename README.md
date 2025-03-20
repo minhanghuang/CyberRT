@@ -1,25 +1,38 @@
-# Apollo(v10.0.0) CyberRT
+# Apollo CyberRT v10.0.0
 
-![CyberRT](./docs/CyberRT.gif)
+![CyberRT](https://raw.githubusercontent.com/wiki/minhanghuang/CyberRT/docs/CyberRT.gif)
 
-| Target        |  CI Status  |
-| ------------- | :-----:|
-| Ubuntu18.04 x86_64   | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-v10.0.0-build.yaml) |
-| Ubuntu20.04 x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-v10.0.0-build.yaml) |
-| Ubuntu22.04 x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-v10.0.0-build.yaml) |
-| Ubuntu24.04 x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-v10.0.0-build.yaml) |
-| Ubuntu18.04 arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu18-arrch64-v10.0.0-build.yaml) |
-| Ubuntu20.04  arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu20-arrch64-v10.0.0-build.yaml) |
-| Ubuntu22.04 arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu22-arrch64-v10.0.0-build.yaml) |
-| Ubuntu24.04 arrch64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-arrch64-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/ubuntu24-arrch64-v10.0.0-build.yaml) |
+## Build Status
 
-## #1 Env
+| Target                |  Actions Status   |
+| -------------         | :-----:           |
+| Ubuntu 18.04 x86_64   | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu18-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu18-v10.0.0.yaml) |
+| Ubuntu 20.04 x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu20-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu20-v10.0.0.yaml) |
+| Ubuntu 22.04 x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu22-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu22-v10.0.0.yaml) |
+| Ubuntu 24.04 x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu24-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu24-v10.0.0.yaml) |
+| Ubuntu 18.04 arm64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu18-10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu18-10.0.0-build.yaml) |
+| Ubuntu 20.04 arm64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu20-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu20-v10.0.0-build.yaml) |
+| Ubuntu 22.04 arm64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu22-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu22-v10.0.0-build.yaml) |
+| Ubuntu 24.04 arm64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu24-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu24-v10.0.0-build.yaml) |
 
-> dependence
+## Table of Contents  
+1. [Environment Setup](#environment-setup)
+2. [Build Instructions](#build-instructions)
+3. [Examples](#examples)
+4. [Tools](#tools)
+5. [Package Installation](#package-installation)
 
+## Environment Setup
+
+Before building, ensure your system has the following dependencies installed:
 ```shell
 sudo apt update
-sudo apt install -y wget libcurl4-openssl-dev autoconf automake libtool g++ pkg-config uuid-dev libncurses5-dev python3-dev python3-pip libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
+sudo apt install -y wget g++ pkg-config autoconf automake \
+                    libcurl4-openssl-dev uuid-dev libncurses5-dev \
+                    libtool python3-dev python3-pip libtiff-dev \
+                    libeigen3-dev libsqlite3-dev sqlite3
+```
+```shell
 python3 -m pip install protobuf==3.14.0
 ```
 
@@ -29,67 +42,68 @@ python3 -m pip install protobuf==3.14.0
 | gcc/g++      |   system default  |   8.1+    |
 | FastDDS      |   v1.5.0           |   v2.14.3 |
 | protobuf      |   v3.14.0           |   v3.14.0 |
-| bvar      |              |   new |
-| gperftools      |              |   gperftools-2.8  |
-| PROJ            |                     |   7.1.0           |
+| bvar            |   -                  |   -               |
+| gperftools      |   -           |   gperftools-2.8  |
+| PROJ            |   -                  |   7.1.0           |
 
-## #2 Build
+## Build Instructions
 
-1. clone
-
+1. Clone the Repository
 ```shell
 git clone --single-branch --branch v10.0.0 https://github.com/minhanghuang/CyberRT.git
 cd CyberRT
 ```
 
-2. build third party
+2. Install Third-Party Dependencies
 
-> install
-
+Run the following command to install required third-party libraries:
 ```shell
 python3 install.py
-# python3 install.py --platform <your-platform-machine> --install_prefix <your-install-path> --proxy <github or gitee>
+# Alternatively, specify platform, installation path, or proxy:
+# python3 install.py --platform <your-platform-machine> --install_prefix <your-install-path> --proxy <github or gitee>  
 ```
 
-```
-# 国内用户可以使用gitee下载依赖库
-# Chinese users can use Gitee to download dependency libraries
+For users in China, use `Gitee` to download dependencies:
+```shell
+# 国内用户可以通过gitee下载依赖库
 python3 install.py --proxy gitee
-``````
+```
 
-> export path
-
+After installation, set up the environment:
 ```shell
 source install/setup.bash
 ```
 
-3. build cyber
+3. Build CyberRT
 
+Create a build directory and compile:
 ```shell
 mkdir build && cd build
 cmake ..
 make -j$(nproc)
 ```
 
-## #3 Examples
+## Examples
 
-1. pub/sub
+1. Publisher/Subscriber
 
-> talker
+- Publisher(talker)
 
 ```shell
 source setup.bash
 ./cyber/examples/cyber_example_talker
 ```
-> listener
+
+- Subscriber(listener)
 
 ```shell
 source setup.bash
 ./cyber/examples/cyber_example_listener
 ```
 
-2. component
+2. Component Example
 
+Launch the component example:
 ```shell
 source setup.bash
 cyber_launch start share/examples/common_component_example/common.launch
@@ -97,7 +111,7 @@ cyber_launch start share/examples/common_component_example/common.launch
 ./cyber/examples/common_component_example/channel_test_writer
 ```
 
-3. log directory(optional)
+3. Log Directory (Optional)
 
 **The Cyber log storage path is similar to `ROS` and is saved in `~/.cyber/log`**
 
@@ -107,28 +121,35 @@ If you want to modify the log storage path, you can change the `GLOG_log_dir` en
 # export GLOG_log_dir=/path/to/cyber/log
 ```
 
-## #4 Tools
+## Tools
 
-1. channel
+CyberRT provides various tools for debugging and development:
 
-> list
+1. Channel Tools
+
+- List active channels
 
 ```shell
 source setup.bash
 cyber_channel list
-
-# The number of channels is:  1
-# /apollo/test
 ```
 
-> echo
+Example output:
+
+```shell
+The number of channels is:  1
+/apollo/test
+```
+
+- Echo channel messages
 ```shell
 source setup.bash
 cyber_channel echo /apollo/test
 ```
-![example](docs/cyber_echo.png)
 
-> more ...
+![echo](https://raw.githubusercontent.com/wiki/minhanghuang/CyberRT/docs/cyber_echo.png)
+
+- More channel commands
 
 ```shell
 Commands:
@@ -140,7 +161,7 @@ Commands:
 	cyber_channel type	print channel type
 ```
 
-2. node
+2. Node Tools
 
 ```shell
 Commands:
@@ -148,7 +169,7 @@ Commands:
 	cyber_node info 	Print node info.
 ```
 
-3. service
+3. Service Tools
 
 ```shell
 Commands:
@@ -156,19 +177,19 @@ Commands:
 	cyber_service info	print information about active service
 ```
 
-4. launch
+4. Launch System
 
 ```shell
 cyber_launch start share/examples/common_component_example/common.launch
 ```
 
-5. monitor
+5. Monitor
 
 ```shell
 cyber_monitor
 ```
 
-6. recorder
+6. Recorder
 
 ```shell
 Commands:
@@ -179,7 +200,7 @@ Commands:
 	cyber_recorder recover	Recover an exist record.
 ```
 
-## #5 Packages
+## Package Installation
 
 ```shell
 cmake -DCMAKE_INSTALL_PREFIX=/you/install/path ..
@@ -187,6 +208,8 @@ make -j$(nproc)
 make package
 sudo dpkg -i package/*.deb
 ```
+
+Example CMakeLists.txt usage:
 
 ```
 # CMakeLists.txt
@@ -200,3 +223,5 @@ target_link_libraries(${TARGET_NAME}
   ${Cyber_LIBRARIES}
 )
 ```
+
+#### This README provides an overview of CyberRT's setup, build process, and tools. Feel free to contribute or raise issues for any improvements! 🚀
