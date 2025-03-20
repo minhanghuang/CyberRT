@@ -1,5 +1,5 @@
-name: ubuntu24.04 v10.0.0 build x86-64
-run-name: ubuntu24 x86-64
+name: ubuntu24.04 x86_64 v10.0.0 build
+run-name: ubuntu24 x86_64
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - v10.0.0
 
 jobs:
-  build-amd-ubuntu24:
+  build-x86_64-ubuntu24:
     runs-on: ubuntu-latest
     container:
       image: docker://ubuntu:24.04
