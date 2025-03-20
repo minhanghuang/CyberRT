@@ -1,5 +1,5 @@
-name: ubuntu22.04 v10.0.0 build x86-64
-run-name: ubuntu22 x86-64
+name: ubuntu20.04 x86_64 v10.0.0 build
+run-name: ubuntu20 x86_64
 
 on:
   push:
@@ -7,10 +7,10 @@ on:
       - v10.0.0
 
 jobs:
-  build-amd-ubuntu22:
+  build-x86_64-ubuntu20:
     runs-on: ubuntu-latest
     container:
-      image: docker://ubuntu:22.04
+      image: docker://ubuntu:20.04
       options: --volume ${{ github.workspace }}:/workspace/${{ github.repository }}
     steps:
       - name: Check out repository code
