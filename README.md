@@ -6,14 +6,14 @@
 
 | Target                |  Actions Status   |
 | -------------         | :-----:           |
-| Ubuntu 18.04 x86_64   | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu18-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu18-v10.0.0.yaml) |
-| Ubuntu 20.04 x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu20-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu20-v10.0.0.yaml) |
-| Ubuntu 22.04 x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu22-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu22-v10.0.0.yaml) |
-| Ubuntu 24.04 x86_64  | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu24-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu24-v10.0.0.yaml) |
-| Ubuntu 18.04 arm64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu18-10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu18-10.0.0-build.yaml) |
-| Ubuntu 20.04 arm64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu20-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu20-v10.0.0-build.yaml) |
-| Ubuntu 22.04 arm64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu22-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu22-v10.0.0-build.yaml) |
-| Ubuntu 24.04 arm64 | [![build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu24-v10.0.0-build.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu24-v10.0.0-build.yaml) |
+| Ubuntu 18.04 x86_64   | [![Ubuntu 18.04 x86_64 build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu18-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu18-v10.0.0.yaml) |
+| Ubuntu 20.04 x86_64  | [![Ubuntu 20.04 x86_64 build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu20-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu20-v10.0.0.yaml) |
+| Ubuntu 22.04 x86_64  | [![Ubuntu 22.04 x86_64 build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu22-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu22-v10.0.0.yaml) |
+| Ubuntu 24.04 x86_64  | [![Ubuntu 24.04 x86_64 build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu24-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/x86-build-ubuntu24-v10.0.0.yaml) |
+| Ubuntu 18.04 arm64 | [![Ubuntu 18.04 arm64 build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu18-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu18-v10.0.0.yaml) |
+| Ubuntu 20.04 arm64 | [![Ubuntu 20.04 arm64 build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu20-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu20-v10.0.0.yaml) |
+| Ubuntu 22.04 arm64 | [![Ubuntu 22.04 arm64 build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu22-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu22-v10.0.0.yaml) |
+| Ubuntu 24.04 arm64 | [![Ubuntu 24.04 arm64 build v10.0.0](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu24-v10.0.0.yaml/badge.svg?branch=v10.0.0)](https://github.com/minhanghuang/CyberRT/actions/workflows/arm64-build-ubuntu24-v10.0.0.yaml) |
 
 ## Table of Contents  
 1. [Environment Setup](#environment-setup)
