@@ -68,7 +68,6 @@ endif()
 set(DEPENCENCY_INCLUDE_DIRS
   ${fastcdr_INCLUDE_DIR}
   ${fastrtps_INCLUDE_DIR}
-  ${Protobuf_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
   ${Python_INCLUDE_DIRS}
   ${Uuid_INCLUDE_DIRS}
@@ -81,7 +80,6 @@ set(DEPENCENCY_INCLUDE_DIRS
 set(DEPENCENCY_LIB_DIRS
   ${fastcdr_LIB_DIR}
   ${fastrtps_LIB_DIR}
-  ${Protobuf_LIBRARIES_DIRS}
   ${Python_LIBRARIES_DIRS}
   ${Uuid_LIBRARIES_DIRS}
   ${glog_LIBRARY_DIRS}
@@ -177,12 +175,11 @@ add_library(${TARGET_NAME} SHARED
     ${CYBER_PROTO_SRCS}
     ${CYBER_SRCS}
 )
-
 target_link_libraries(${TARGET_NAME}
     ${glog_LIBRARIES}
     ${Gflags_LIBRARIES}
     ${NlohmannJson_LIBRARIES}
-    ${Protobuf_LIBRARIES}
+    protobuf::libprotobuf
     ${Uuid_LIBRARIES}
     ${GperfTools_LIBRARIES} # gperftools
     profiler                # gperftools
