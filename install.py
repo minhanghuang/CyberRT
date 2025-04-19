@@ -448,7 +448,7 @@ class Install:
         self._clone_repo(
             "foonathan_memory_vendor",
             "--single-branch",
-            "--branch=v1.3.1",
+            "--branch=v1.3.1-rc1",
             "--depth=1",
         )
         self._clone_repo(
