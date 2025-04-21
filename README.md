@@ -42,7 +42,7 @@ python3 -m pip install protobuf==3.14.0
 | gcc/g++      |   system default  |   8.1+    |
 | FastDDS      |   v1.5.0           |   v2.14.3 |
 | protobuf      |   v3.14.0           |   v3.14.0 |
-| bvar            |   -                  |   -               |
+| bvar            |   -                  |   UNKNOWN               |
 | gperftools      |   -           |   gperftools-2.8  |
 | PROJ            |   -                  |   7.1.0           |
 
