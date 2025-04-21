@@ -10,6 +10,7 @@ jobs:
   build-x86_64-ubuntu20:
     runs-on: ubuntu-latest
     container:
+      # dockerhub images
       image: docker://ubuntu:20.04
       options: --volume ${{ github.workspace }}:/workspace/${{ github.repository }}
     steps:

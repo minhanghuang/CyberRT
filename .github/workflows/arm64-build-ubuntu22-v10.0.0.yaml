@@ -10,7 +10,7 @@ jobs:
   build-arm64-ubuntu22:
     runs-on: ubuntu-24.04-arm
     container:
-      # dockerhub镜像
+      # dockerhub images
       image: docker://ubuntu:22.04
 
     steps:
@@ -23,8 +23,8 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          sudo apt update
-          sudo apt install -y sudo lsb-release git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
+          apt update
+          apt install -y sudo lsb-release git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
 
       - name: Build
         env:

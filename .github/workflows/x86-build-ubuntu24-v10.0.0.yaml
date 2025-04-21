@@ -10,6 +10,7 @@ jobs:
   build-x86_64-ubuntu24:
     runs-on: ubuntu-latest
     container:
+      # dockerhub images
       image: docker://ubuntu:24.04
       options: --volume ${{ github.workspace }}:/workspace/${{ github.repository }}
     steps:
