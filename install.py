@@ -252,7 +252,7 @@ class Install:
         self._cmd("mkdir -p build")
         os.chdir("build")
         self._cmd(
-            "cmake -DCMAKE_INSTALL_PREFIX={} -DBUILD_SHARED_LIBS=ON ..".format(
+            "cmake -DCMAKE_INSTALL_PREFIX={} -DJSON_BuildTests=OFF ..".format(
                 self._install_prefix
             )
         )
