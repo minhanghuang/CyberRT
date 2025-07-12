@@ -296,6 +296,19 @@ class Install:
         self._cmd("make install -j$(($(nproc) - 1))")
         os.chdir(self._current_path)
 
+        # 追加环境变量(issue: https://github.com/minhanghuang/CyberRT/issues/110)
+        setup_path = os.path.join(self._install_prefix, "setup.zsh")
+        tcmalloc_minimal_path = os.path.join(
+            self._install_prefix, "lib/libtcmalloc_minimal.so"
+        )
+        if os.path.exists(setup_path) and os.path.exists(tcmalloc_minimal_path):
+            with open(setup_path, "a", encoding="utf-8") as f:
+                f.write("export LD_PRELOAD={}".format(tcmalloc_minimal_path) + "\n")
+
+        setup_path = os.path.join(self._install_prefix, "setup.bash")
+        if os.path.exists(setup_path) and os.path.exists(tcmalloc_minimal_path):
+            with open(setup_path, "a", encoding="utf-8") as f:
+                f.write("export LD_PRELOAD={}".format(tcmalloc_minimal_path) + "\n")
         return None
 
     def _install_proj(self):

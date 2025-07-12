@@ -48,7 +48,7 @@ pkg_check_modules(Python REQUIRED python3)
 pkg_check_modules(Uuid REQUIRED uuid)
 pkg_check_modules(Gflags REQUIRED gflags)
 pkg_check_modules(NlohmannJson REQUIRED nlohmann_json)
-pkg_check_modules(GperfTools REQUIRED libtcmalloc)
+pkg_check_modules(GperfTools REQUIRED libtcmalloc) # libtcmalloc_minimal
 
 # set(Python_VERSION "${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}")
 set(Python_VERSION "${Python_VERSION}")
