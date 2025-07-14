@@ -132,6 +132,7 @@ class Install:
         self._install_gfamily()
         self._install_gperftools()  # apollo v10
         self._unpack_bvar()  # apollo v10
+        print("environment setup finished")
 
     def _clone_repo(self, repo_name: str, *args):
         dowload_path = os.path.join(self._dowload_path, repo_name)

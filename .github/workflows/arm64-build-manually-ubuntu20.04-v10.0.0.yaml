@@ -42,4 +42,4 @@ jobs:
           echo "Log level: ${{ github.event.inputs.logLevel }}"
           echo "Tags: ${{ github.event.inputs.tags }}"
           echo "Inputs: ${{ toJson(github.event.inputs) }}"
-          bash -c "python3 install.py && source install/setup.bash && mkdir -p build && cd build && cmake .. && make -j$(nproc)"
+          bash -c "python3 install.py && source install/setup.bash && cmake --build build --target install --parallel $(nproc)"
