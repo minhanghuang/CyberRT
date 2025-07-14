@@ -160,19 +160,9 @@ class Install:
 
     def _install_gcc(self):
         print("start to install gcc")
-        gcc_version = "0.0"
         try:
-            result = subprocess.run(
-                ["gcc", "--version"],
-                stdout=subprocess.PIPE,
-                universal_newlines=True,
-                check=True,
-            )
-            output = result.stdout.splitlines()[0]
-            match = re.search(r"(\d+\.\d+\.\d+)", output)
-            if match:
-                gcc_version = match.group(1)
-                print(f"GCC version: {gcc_version}")
+            gcc_version = self._get_gcc_version()
+            print(f"GCC version: {gcc_version}")
             if "8.1" < gcc_version:
                 print(
                     "GCC version is greater than or equal to 8.1.0, skip installation"
@@ -193,25 +183,14 @@ class Install:
             "sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 100"
         )
         self._cmd("sudo ldconfig")
-        self._cmd("gcc --version")
-        self._cmd("g++ --version")
+        self._cmd(f"GCC version: {self._get_gcc_version()}")
         return None
 
     def _install_cmake(self):
         print("start to install cmake")
-        cmake_version = "0.0.0"
         try:
-            result = subprocess.run(
-                ["cmake", "--version"],
-                stdout=subprocess.PIPE,
-                universal_newlines=True,
-                check=True,
-            )
-            output = result.stdout.splitlines()[0]
-            match = re.search(r"(\d+\.\d+\.\d+)", output)
-            if match:
-                cmake_version = match.group(1)
-                print(f"CMake version: {cmake_version}")
+            cmake_version = self._get_cmake_version()
+            print(f"CMake version: {cmake_version}")
             if "3.20" < cmake_version:
                 print("CMake version is greater than 3.20, skip installation")
                 return None
@@ -241,7 +220,7 @@ class Install:
         self._cmd("cp -r {}/share/* /usr/local/share".format(cmake_name))
         self._cmd("rm -rf {}*".format(cmake_name))
         self._cmd("sudo ldconfig")
-        self._cmd("cmake --version")
+        print(f"CMake version: {self._get_cmake_version()}")
         os.chdir(self._current_path)
         return None
 
@@ -297,18 +276,41 @@ class Install:
         os.chdir(self._current_path)
 
         # 追加环境变量(issue: https://github.com/minhanghuang/CyberRT/issues/110)
-        setup_path = os.path.join(self._install_prefix, "setup.zsh")
         tcmalloc_minimal_path = os.path.join(
             self._install_prefix, "lib/libtcmalloc_minimal.so"
         )
-        if os.path.exists(setup_path) and os.path.exists(tcmalloc_minimal_path):
-            with open(setup_path, "a", encoding="utf-8") as f:
-                f.write("export LD_PRELOAD={}".format(tcmalloc_minimal_path) + "\n")
+        if os.path.exists(tcmalloc_minimal_path):
+            setup_path = os.path.join(self._install_prefix, "setup.zsh")
+            if os.path.exists(setup_path):
+                var_exists = False
+                with open(setup_path, "r", encoding="utf-8") as f:
+                    lines = f.read().splitlines()
+                    if tcmalloc_minimal_path in lines:
+                        var_exists = True
+                if not var_exists:
+                    with open(setup_path, "a", encoding="utf-8") as f:
+                        f.write(
+                            "export LD_PRELOAD={}:$LD_PRELOAD".format(
+                                tcmalloc_minimal_path
+                            )
+                            + "\n"
+                        )
 
-        setup_path = os.path.join(self._install_prefix, "setup.bash")
-        if os.path.exists(setup_path) and os.path.exists(tcmalloc_minimal_path):
-            with open(setup_path, "a", encoding="utf-8") as f:
-                f.write("export LD_PRELOAD={}".format(tcmalloc_minimal_path) + "\n")
+            setup_path = os.path.join(self._install_prefix, "setup.bash")
+            if os.path.exists(setup_path):
+                var_exists = False
+                with open(setup_path, "r", encoding="utf-8") as f:
+                    lines = f.read().splitlines()
+                    if tcmalloc_minimal_path in lines:
+                        var_exists = True
+                if not var_exists:
+                    with open(setup_path, "a", encoding="utf-8") as f:
+                        f.write(
+                            "export LD_PRELOAD={}:$LD_PRELOAD".format(
+                                tcmalloc_minimal_path
+                            )
+                            + "\n"
+                        )
         return None
 
     def _install_proj(self):
@@ -556,6 +558,32 @@ class Install:
             )
         )
         return None
+
+    def _get_cmake_version(self) -> str:
+        result = subprocess.run(
+            ["cmake", "--version"],
+            stdout=subprocess.PIPE,
+            universal_newlines=True,
+            check=True,
+        )
+        output = result.stdout.splitlines()[0]
+        match = re.search(r"(\d+\.\d+\.\d+)", output)
+        if match:
+            return match.group(1)
+        return "0.0.0"
+
+    def _get_gcc_version(self) -> str:
+        result = subprocess.run(
+            ["gcc", "--version"],
+            stdout=subprocess.PIPE,
+            universal_newlines=True,
+            check=True,
+        )
+        output = result.stdout.splitlines()[0]
+        match = re.search(r"(\d+\.\d+\.\d+)", output)
+        if match:
+            return match.group(1)
+        return "0.0"
 
 
 def parse_config():
