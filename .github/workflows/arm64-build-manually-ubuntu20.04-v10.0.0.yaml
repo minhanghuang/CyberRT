@@ -24,22 +24,26 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Install
+      - name: Environment
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
           apt update
-          apt install -y sudo lsb-release git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
+          apt install -y lsb-release
+          echo "-----------------------"
+          uname -a
+          lsb_release -a
+          echo "-----------------------"
+
+      - name: Install
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          apt install -y sudo git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
+          python3 install.py
 
       - name: Build
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          echo "-----------------------"
-          uname -a
-          lsb_release -a
-          echo "-----------------------"
-          echo "Log level: ${{ github.event.inputs.logLevel }}"
-          echo "Tags: ${{ github.event.inputs.tags }}"
-          echo "Inputs: ${{ toJson(github.event.inputs) }}"
-          bash -c "python3 install.py && source install/setup.bash && cmake --build build --target install --parallel $(nproc)"
+          bash -c "source install/setup.bash && mkdir -p build && cmake -B build -S . && cmake --build build --parallel $(nproc)"

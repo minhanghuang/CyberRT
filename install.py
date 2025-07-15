@@ -125,7 +125,7 @@ class Install:
         self._install_cmake()
         self._install_setup()
         self._install_tinyxml2()
-        # # self._clone_dds()
+        # self._clone_dds()
         self._install_dds2()
         self._install_nlohmann_json()
         self._install_proj()  # ros_bridge of apollo v10
@@ -184,7 +184,7 @@ class Install:
             "sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 100"
         )
         self._cmd("sudo ldconfig")
-        self._cmd(f"GCC version: {self._get_gcc_version()}")
+        print(f"GCC version: {self._get_gcc_version()}")
         return None
 
     def _install_cmake(self):
@@ -284,34 +284,39 @@ class Install:
             setup_path = os.path.join(self._install_prefix, "setup.zsh")
             if os.path.exists(setup_path):
                 var_exists = False
-                with open(setup_path, "r", encoding="utf-8") as f:
-                    lines = f.read().splitlines()
-                    if tcmalloc_minimal_path in lines:
-                        var_exists = True
-                if not var_exists:
-                    with open(setup_path, "a", encoding="utf-8") as f:
-                        f.write(
-                            "export LD_PRELOAD={}:$LD_PRELOAD".format(
-                                tcmalloc_minimal_path
+                try:
+                    with open(setup_path, "r", encoding="utf-8") as f:
+                        lines = f.read().splitlines()
+                        if tcmalloc_minimal_path in lines:
+                            var_exists = True
+                    if not var_exists:
+                        with open(setup_path, "a", encoding="utf-8") as f:
+                            f.write(
+                                "export LD_PRELOAD={}:$LD_PRELOAD".format(
+                                    tcmalloc_minimal_path
+                                )
+                                + "\n"
                             )
-                            + "\n"
-                        )
-
+                except Exception as _:
+                    pass
             setup_path = os.path.join(self._install_prefix, "setup.bash")
             if os.path.exists(setup_path):
                 var_exists = False
-                with open(setup_path, "r", encoding="utf-8") as f:
-                    lines = f.read().splitlines()
-                    if tcmalloc_minimal_path in lines:
-                        var_exists = True
-                if not var_exists:
-                    with open(setup_path, "a", encoding="utf-8") as f:
-                        f.write(
-                            "export LD_PRELOAD={}:$LD_PRELOAD".format(
-                                tcmalloc_minimal_path
+                try:
+                    with open(setup_path, "r", encoding="utf-8") as f:
+                        lines = f.read().splitlines()
+                        if tcmalloc_minimal_path in lines:
+                            var_exists = True
+                    if not var_exists:
+                        with open(setup_path, "a", encoding="utf-8") as f:
+                            f.write(
+                                "export LD_PRELOAD={}:$LD_PRELOAD".format(
+                                    tcmalloc_minimal_path
+                                )
+                                + "\n"
                             )
-                            + "\n"
-                        )
+                except Exception as _:
+                    pass
         return None
 
     def _install_proj(self):
@@ -528,16 +533,17 @@ class Install:
         return None
 
     def _unpack_bvar(self):
-        download_url = (
-            "https://raw.githubusercontent.com/wiki/minhanghuang/CyberRT/libs"
-        )
+        print("start unpack bvar")
+        download_url = ""
         if "gitee" == self._proxy:
             download_url = "https://gitee.com/minhanghuang/CyberRT-Libs/raw/master/libs"
         else:
-            pass
-        bvar_name = "bvar_9.0.0-rc-r2_amd64.deb"
+            download_url = (
+                "https://raw.githubusercontent.com/wiki/minhanghuang/CyberRT/libs"
+            )
+        bvar_name = ""
         if "x86_64" == self._machine:
-            pass
+            bvar_name = "bvar_9.0.0-rc-r2_amd64.deb"
         else:
             bvar_name = "bvar_9.0.0-rc-r3_arm64.deb"
         download_url = download_url + "/" + bvar_name

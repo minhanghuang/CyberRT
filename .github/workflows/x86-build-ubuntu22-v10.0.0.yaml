@@ -17,18 +17,26 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
 
-      - name: Install
+      - name: Environment
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
           apt update
-          apt install -y sudo lsb-release git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
-          cd /workspace/${{ github.repository }} && python3 install.py
-
-      - name: Build
-        run: |
+          apt install -y lsb-release
           echo "-----------------------"
           uname -a
           lsb_release -a
           echo "-----------------------"
-          bash -c "cd /workspace/${{ github.repository }} && source install/setup.bash && mkdir -p build && cd build && cmake .. && make -j$(nproc)"
+
+      - name: Install
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          apt install -y sudo git wget libcurl4-openssl-dev pkg-config g++ cmake uuid-dev libncurses5-dev python3-dev autoconf automake libtool libeigen3-dev libtiff-dev libsqlite3-dev sqlite3
+          python3 install.py
+
+      - name: Build
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          bash -c "source install/setup.bash && mkdir -p build && cmake -B build -S . && cmake --build build --parallel $(nproc)"
