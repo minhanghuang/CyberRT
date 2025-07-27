@@ -62,6 +62,10 @@ file(COPY
   cyber_tools_auto_complete.bash
   DESTINATION ${CMAKE_BINARY_DIR}
 )
+file(COPY
+  cyber_tools_auto_complete.zsh
+  DESTINATION ${CMAKE_BINARY_DIR}
+)
 
 file(RENAME ${CMAKE_BINARY_DIR}/bin/cyber/tools/cyber_channel/cyber_channel.py ${CMAKE_BINARY_DIR}/bin/cyber/tools/cyber_channel/cyber_channel)
 file(RENAME ${CMAKE_BINARY_DIR}/bin/cyber/tools/cyber_launch/cyber_launch.py ${CMAKE_BINARY_DIR}/bin/cyber/tools/cyber_launch/cyber_launch)
@@ -80,6 +84,11 @@ install(FILES
 )
 install(FILES
   ${CMAKE_BINARY_DIR}/cyber_tools_auto_complete.bash
+  PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+  DESTINATION .
+)
+install(FILES
+  ${CMAKE_BINARY_DIR}/cyber_tools_auto_complete.zsh
   PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
   DESTINATION .
 )

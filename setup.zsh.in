@@ -50,4 +50,4 @@ export sysmo_start=0
 export CYBER_DOMAIN_ID=80
 export CYBER_IP=127.0.0.1
 
-source ${BUILD_PATH}/cyber_tools_auto_complete.bash
+source ${BUILD_PATH}/cyber_tools_auto_complete.zsh
