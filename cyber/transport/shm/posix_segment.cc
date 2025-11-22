@@ -251,7 +251,7 @@ bool PosixSegment::OpenOnly() {
 
   // get arena block buf
   uint32_t ai = 0;
-  for (; i < ShmConf::ARENA_BLOCK_NUM; ++ai) {
+  for (; ai < ShmConf::ARENA_BLOCK_NUM; ++ai) {
     uint8_t* addr = reinterpret_cast<uint8_t*>(
         static_cast<char*>(managed_shm_) + sizeof(State) + \
         conf_.block_num() * sizeof(Block) + ShmConf::ARENA_BLOCK_NUM * \
